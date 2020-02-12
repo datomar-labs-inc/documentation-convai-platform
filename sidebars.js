@@ -8,8 +8,7 @@
 module.exports = {
     someSidebar: {
         Nodes: [
-            'nodes/introduction',
-            {
+            'nodes/introduction', {
                 type: 'category',
                 label: 'Stock',
                 items: [
@@ -45,6 +44,19 @@ module.exports = {
                 label: 'Analytics',
                 items: ['nodes/analytics/dashbot']
             }
+        ],
+        'NodeJs SDK': [
+            'node-sdk/introduction',
+            'node-sdk/installation', {
+                type: 'category',
+                label: 'Methods',
+                items: [
+                    'node-sdk/methods/setup',
+                    'node-sdk/methods/query-users',
+                    'node-sdk/methods/query-executions',
+                ]
+            }
+
         ]
     }
 };

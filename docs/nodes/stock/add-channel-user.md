@@ -25,6 +25,9 @@ In order to understand the full flow, we currently have the following setup.
 3. Assuming that we are using NLP to capture and define the phone number, if the user response doesn't have a proper phone number, we fallback it to get the phone number again.
 
 4. If a phone number is provided, we attempt to add the Twilio SMS user.
+```go
+{{ d "phone-number" }}
+```
 <img alt="Response to ask phone number" src={useBaseUrl('img/nodes/stock/add-channel-user/3.png')} />
 
 5. _Bonus_ - Twilio SMS will return an error which we can capture and fallback to a user response. This can be in cases where user mentions an arbitrary phone number like 1234567890.
