@@ -1,0 +1,11 @@
+---
+id: log-entry
+title: Log Entry
+sidebar_label: Log Entry
+---
+
+| Key     | Attribute | Type                           | Description        |
+| ------- | --------- | ------------------------------ | ------------------ |
+| level   |           | [LogLevel](../enums/log-level) | Level of the log   |
+| message |           | string                         | Message in the log |
+| time    |           | Date                           | Time of the log    |

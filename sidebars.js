@@ -76,6 +76,8 @@ module.exports = {
                     'node-sdk/models/channel-user',
                     'node-sdk/models/super-user',
                     'node-sdk/models/query-check',
+                    'node-sdk/models/error',
+                    'node-sdk/models/log-entry',
                 ]
             }, {
                 type: 'category',
@@ -85,6 +87,8 @@ module.exports = {
                     'node-sdk/enums/user-query-operation',
                     'node-sdk/enums/execution-operation',
                     'node-sdk/enums/context-modifier-type',
+                    'node-sdk/enums/context-modifier-operation',
+                    'node-sdk/enums/log-level',
                 ]
             }
         ]
