@@ -1,14 +1,14 @@
 module.exports = {
-    title: 'Documentation',
+    title: 'Convai',
     tagline: 'Your Brand. Enabled.',
-    url: 'https://convai.studio',
-    baseUrl: '/',
+    url: 'https://datomar-labs-inc.github.io',
+    baseUrl: '/documentation-convai-platform/',
     favicon: 'img/favicon.ico',
     organizationName: 'Datomar Labs Inc.',
     projectName: 'Convai Platform Documentation',
     themeConfig: {
         navbar: {
-            title: 'Documentation',
+            title: 'Convai',
             logo: {
                 alt: 'Convai',
                 src: 'img/logo.png'
@@ -31,7 +31,7 @@ module.exports = {
             '@docusaurus/preset-classic', {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
-                    editUrl: 'https://github.com/facebook/docusaurus/edit/master/website/'
+                    editUrl: 'https://github.com/datomar-labs-inc/documentation-convai-platform'
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css')
