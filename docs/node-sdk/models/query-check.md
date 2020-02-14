@@ -1,0 +1,11 @@
+---
+id: query-check
+title: Query Check
+sidebar_label: Query Check
+---
+
+| Key       | Attribute | Type                                                |
+| --------- | --------- | --------------------------------------------------- |
+| field     |           | string                                              |
+| operation |           | [UserQueryOperation](../enums/user-query-operation) |
+| values    |           | string[]                                            |

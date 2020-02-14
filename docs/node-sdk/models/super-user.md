@@ -1,0 +1,14 @@
+---
+id: super-user
+title: Super User
+sidebar_label: Super User
+---
+
+| Key           | Attribute | Type                            |
+| ------------- | --------- | ------------------------------- |
+| id            |           | string                          |
+| environmentId |           | string                          |
+| data          |           | any                             |
+| createdAt     |           | Date                            |
+| updatedAt     |           | Date                            |
+| channelUsers  |           | [ChannelUser](./channel-user)[] |

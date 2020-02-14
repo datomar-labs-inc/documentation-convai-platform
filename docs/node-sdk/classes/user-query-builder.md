@@ -1,0 +1,127 @@
+---
+id: user-query-builder
+title: User Query Builder
+sidebar_label : User Query Builder
+---
+
+User Query Builder class is used to stack conditions and build a single query to filter user results from the API.
+
+## Example
+
+```js
+new UserQueryBuilder(UserQueryMode.ALL)
+    .where('first-name')
+    .equals('John')
+    .where('number-of-interactions')
+    .greaterThan('5')
+    .setOffset(1)
+    .build()
+```
+
+## Constructor
+
+| Key    | Attribute | Type          |
+| ------ | --------- | ------------- |
+| mode   | <ul><li>default : UserQueryMode.ALL</li></ul> | [UserQueryMode](../enums/user-query-mode) |
+| limit  | <ul><li>optional</li><li>default: 10</li></ul> | number |
+
+## Public Methods Summary
+
+| Public | Method |
+| --- | --- |
+| public | [setOffset](#public-setoffsetoffset--number-userquerybuilder)(offset : number) : UserQueryBuilder<br></br>&nbsp;&nbsp;&nbsp;Set the offset of the query |
+| public | [where](#public-wherefield--string-userquerybuilder)(field : string): UserQueryBuilder<br></br>&nbsp;&nbsp;&nbsp;Intialize the query to be performed. This method handles the 'key' part of the query |
+| public | [equals](#public-equalsvalue--string-userquerybuilder)(value : string[] : UserQueryBuilder)<br></br>&nbsp;&nbsp;&nbsp;Denotes that the return set from where 'key' is equal to 'value' |
+| public | [notEquals](#public-notequalsvalue--string-userquerybuilder)(value : string[]: UserQueryBuilder)<br></br>&nbsp;&nbsp;&nbsp;Denotes that the return set from where 'key' doesn't equal 'value' |
+| public | [startsWith](#public-startswithvalue--string-userquerybuilder)(value : string[]: UserQueryBuilder)<br></br>&nbsp;&nbsp;&nbsp;Denotes that the return set from the where 'key' starts with 'value' |
+| public | [greaterThan](#public-greaterthanvalue--string-userquerybuilder)(value : string[]: UserQueryBuilder)<br></br>&nbsp;&nbsp;&nbsp;Denotes that the return set from the where 'key' should be greater than 'value' |
+| public | [lessThan](#public-lessthanvalue--string-userquerybuilder)(value : string[]: UserQueryBuilder)<br></br>&nbsp;&nbsp;&nbsp;Denotes that the return set from the where 'key' should be less than 'value' |
+| public | [exists](#public-exists-userquerybuilder)(): UserQueryBuilder<br></br>&nbsp;&nbsp;&nbsp;Denotes that the user data should have the where 'key' |
+| public | [notExists](#public-notexists-userquerybuilder)(): UserQueryBuilder<br></br>&nbsp;&nbsp;&nbsp;Denotes that the user data should not have the where 'key' |
+| public | [build](#public-build-userquery)(): [UserQuery](../models/user-query)<br></br>&nbsp;&nbsp;&nbsp;Build all the conditions into a single user query |
+
+## Public Methods
+
+_**NOTE: All the methods defined below return the latest instance of UserQueryBuilder. This allows to stack different conditions as defined above**_
+
+#### ```public setOffset(offset : number): UserQueryBuilder```
+
+setOffset() method is used to set the offset for the user query
+
+| Name   | Type   | Attribute | Description               |
+| ------ | ------ | --------- | ------------------------- |
+| offset | number |           | Offset for the user query |
+
+#### ```public where(field : string): UserQueryBuilder```
+
+where() method is used to filter records. It is used to extract only those records that fulfill a specified condition. This method handles the 'key' part of the query.
+
+| Name  | Type   | Attribute | Description     |
+| ----- | ------ | --------- | --------------- |
+| field | string |           | Name of the key |
+
+#### ```public equals(value : string[]): UserQueryBuilder```
+
+equals() method is used to compare the key and value. A ```where('first-name').equals('John')``` would mean return the data set of all the users with ```first-name``` as ```John```.
+
+This method will return an error if a where method is not present.
+
+| Name  | Type   | Attribute | Description     |
+| ----- | ------ | --------- | --------------- |
+| value | string |           | Value           |
+
+#### ```public notEquals(value : string[]): UserQueryBuilder```
+
+notEquals() method is used to compare the key and value. A ```where('first-name').notEquals('John')``` would mean return the data set of all the users with ```first-name``` _**not**_ as ```John```.
+
+This method will return an error if a where method is not present.
+
+| Name  | Type   | Attribute | Description     |
+| ----- | ------ | --------- | --------------- |
+| value | string |           | Value           |
+
+#### ```public startsWith(value : string[]): UserQueryBuilder```
+
+startsWith() method is used to compare the key and value. A ```where('first-name').startsWith('John')``` would mean return the data set of all the users with ```first-name``` starting from ```John```.
+
+This method will return an error if a where method is not present.
+
+| Name  | Type   | Attribute | Description     |
+| ----- | ------ | --------- | --------------- |
+| value | string |           | Value           |
+
+#### ```public greaterThan(value : string[]): UserQueryBuilder```
+
+greaterThan() method is used to compare the key and value. A ```where('number-of-interactions').greaterThan('2')``` would mean return the data set of all the users with ```number-of-interactions``` greater than ```2```.
+
+This method will return an error if a where method is not present.
+
+| Name  | Type   | Attribute | Description     |
+| ----- | ------ | --------- | --------------- |
+| value | string |           | Value           |
+
+#### ```public lessThan(value : string[]): UserQueryBuilder```
+
+lessThan() method is used to compare the key and value. A ```where('number-of-interactions').lessThan('10')``` would mean return the data set of all the users with ```number-of-interactions``` less than ```10```.
+
+This method will return an error if a where method is not present.
+
+| Name  | Type   | Attribute | Description     |
+| ----- | ------ | --------- | --------------- |
+| value | string |           | Value           |
+
+#### ```public exists(): UserQueryBuilder```
+
+exists() method is used to compare the key and value. A ```where('previous-live-chat').exists()``` would mean return the data set of all the users that has ```previous-live-chat'``` as a key in their data.
+
+This method will return an error if a where method is not present.
+
+#### ```public notExists(): UserQueryBuilder```
+
+notExists() method is used to compare the key and value. A ```where('previous-live-chat').notExists()``` would mean return the data set of all the users that _**do not**_ have ```previous-live-chat'``` as a key in their data.
+
+This method will return an error if a where method is not present.
+
+#### ```public build(): UserQuery```
+
+build() method is used to convert all the stacked conditions into a single [User Query](../models/user-query)
