@@ -3,3 +3,5 @@ steps:
     entrypoint: bash
     args:
       - deploy.sh
+    env:
+      - GH_TOKEN=$_GH_TOKEN
