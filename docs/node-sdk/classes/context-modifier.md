@@ -21,24 +21,24 @@ cm.setSession('liveChatStartedAt', new Date());
 
 | Public | Method |
 | ------ | --- |
-| public | [set]()(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set the an execution scope variable |
-| public | [setSession]()(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set a session scope variable |
-| public | [setUser]()(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set a user scope variable |
-| public | [setEnvironment]()(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set an environment variable |
-| public | [delete]()(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete an execution scoped variable |
-| public | [deleteSession]()(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete a session scope variable |
-| public | [deleteUser]()(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete a user scope variable |
-| public | [deleteEnvironment]()(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete an environment variable |
-| public | [clear]()(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all execution scoped variables |
-| public | [clearSession]()(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all session scope variables |
-| public | [clearUser]()(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all user scope variables |
-| public | [clearEnvironment]()(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all environment variables |
-| public | [logTrace]()(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log a trace message |
-| public | [logDebug]()(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log a debug message |
-| public | [logInfo]()(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log an info message |
-| public | [logWarning]()(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log a warning message |
-| public | [logError]()(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log an error message |
-| public | [error]()(err: [Error](../models/error)): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Send/throw an error |
+| public | [set](#public-setkey-string-data-any-contextmodifier)(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set the an execution scope variable |
+| public | [setSession](#public-setsessionkey-string-data-any-contextmodifier)(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set a session scope variable |
+| public | [setUser](#public-setuserkey-string-data-any-contextmodifier)(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set a user scope variable |
+| public | [setEnvironment](#public-setenvironmentkey-string-data-any-contextmodifier)(key: string, data: any): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Set an environment variable |
+| public | [delete](#public-deletekey-string-contextmodifier)(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete an execution scoped variable |
+| public | [deleteSession](#public-deletesessionkey-string-contextmodifier)(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete a session scope variable |
+| public | [deleteUser](#public-deleteuserkey-string-contextmodifier)(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete a user scope variable |
+| public | [deleteEnvironment](#public-deleteenvironmentkey-string-contextmodifier)(key: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Delete an environment variable |
+| public | [clear](#public-clear-contextmodifier)(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all execution scoped variables |
+| public | [clearSession](#public-clearsession-contextmodifier)(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all session scope variables |
+| public | [clearUser](#public-clearuser-contextmodifier)(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all user scope variables |
+| public | [clearEnvironment](#public-clearenvironment-contextmodifier)(): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Clear all environment variables |
+| public | [logTrace](#public-logtracemessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log a trace message |
+| public | [logDebug](#public-logdebugmessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log a debug message |
+| public | [logInfo](#public-loginfomessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log an info message |
+| public | [logWarning](#public-logwarningmessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log a warning message |
+| public | [logError](#public-logerrormessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log an error message |
+| public | [error](#public-errorerr-error-contextmodifier)(err: [Error](../models/error)): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Send/throw an error |
 
 ## Public Methods
 
@@ -53,80 +53,125 @@ set() method is used to setup a variable that will only be used in the current e
 | key  | string |           | Name of the key   |
 | data | any    |           | Value for the key |
 
-#### ```public sortAsc(field: string): ExecutionMatcher```
+#### ```public setSession(key: string, data: any): ContextModifier```
 
-sortAsc() method is used to sort the executions by the field in ascending order
-
-| Name | Type   | Attribute | Description       |
-| ---- | ------ | --------- | ----------------- |
-| key  | string |           | Name of the key   |
-| data | any    |           | Value for the key |
-
-#### ```public sortDesc(field: string): ExecutionMatcher```
-
-sortDesc() method is used to sort the executions by the field in descending order
+setSession() method is used to setup a variable that can be used in the current session of the user. This variable can then be accessed using ```{{ s 'key-name-here' }}``` or ```s.key-name-here``` depending on the node you are using.
 
 | Name | Type   | Attribute | Description       |
 | ---- | ------ | --------- | ----------------- |
 | key  | string |           | Name of the key   |
 | data | any    |           | Value for the key |
 
-#### ```public where(field : string): ExecutionMatcher```
+#### ```public setUser(key: string, data: any): ContextModifier```
 
-where() method is used to filter records. It is used to extract only those records that fulfill a specified condition. This method handles the 'key' part of the query.
+setUser() method is used to add a key-value pair in the user data. This variable can then be accessed using ```{{ u 'key-name-here' }}``` or ```u.key-name-here``` depending on the node you are using.
 
 | Name | Type   | Attribute | Description       |
 | ---- | ------ | --------- | ----------------- |
 | key  | string |           | Name of the key   |
 | data | any    |           | Value for the key |
 
-#### ```public not(): ExecutionMatcher```
+#### ```public setEnvironment(key: string, data: any): ContextModifier```
 
-not() method is used to negate a condition. For example, if we want all the executions for a user except for the facebook channel
+setEnvironment() method is used to setup a variable for the bot. This variable can then be accessed using ```{{ e 'key-name-here' }}``` or ```e.key-name-here``` depending on the node you are using.
 
-```js
-new ExecutionMatcher()
-    .where('userId')
-    .equals('ef44ad85-b97a-477b-b314-abcdefghijkl')
-    .where('channel')
-    .equals('facebook')
-    .not()
-```
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
+| data | any    |           | Value for the key |
 
-#### ```public equals(value : string[]): ExecutionMatcher```
+#### ```public delete(key: string): ContextModifier```
 
-equals() method is used to compare the key and value. A ```where('userId').equals('ef44ad85-b97a-477b-b314-abcdefghijkl')``` would mean return the data set of all the executions with ```userId``` as ```ef44ad85-b97a-477b-b314-abcdefghijkl```.
+delete() method is used to delete a current execution scope variable.
 
-This method will return an error if a where method is not present.
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
 
-| Name  | Type   | Attribute | Description |
-| ----- | ------ | --------- | ----------- |
-| value | string |           | Value       |
+#### ```public deleteSession(key: string): ContextModifier```
 
-#### ```public hasPrefix(prefix: string): ExecutionMatcher```
+deleteSession() method is used to delete a session scoped variable.
 
-hasPrefix() method is used to compare the key and value. A ```where('channel').hasPrefix('mes')``` would mean return the data set of all the executions with ```channel``` that starts with ```mes```.
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
 
-This method will return an error if a where method is not present.
+#### ```public deleteUser(key: string): ContextModifier```
 
-| Name   | Type   | Attribute | Description |
-| ------ | ------ | --------- | ----------- |
-| prefix | string |           | Value       |
+deleteUser() method is used to delete a user's key-value pair.
 
-#### ```public exists(): ExecutionMatcher```
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
 
-exists() method is used to compare the key and value. A ```where('userId').exists()``` would mean return the data set of all the executions that has ```userId'``` as a key in their data.
+#### ```public deleteEnvironment(key: string): ContextModifier```
 
-This method will return an error if a where method is not present.
+deleteEnvironment() method is used to delete an environment variable.
 
-#### ```public between(low: string, high: string, inclusive: boolean): ExecutionMatcher```
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
 
-between() method is used to compare the key and value. Denotes that the return set from the where 'key' should be between (low, high) for inclusive = false or [low, high] for inclusive = true
+#### ```public clear(): ContextModifier```
 
-This method will return an error if a where method is not present.
+clear() method is used to delete all the execution scope variables.
 
-| Name   | Type   | Attribute | Description |
-| ------ | ------ | --------- | ----------- |
-| low | string | | The lower number |
-| high | string | | The higher number |
-| inclusive | boolean | | Specify if the lower and higher numbers should be inclusive or exclusive |
+#### ```public clearSession(): ContextModifier```
+
+clearSession() method is used to delete all the session scope variables.
+
+#### ```public clearUser(): ContextModifier```
+
+clearUser() method is used to delete all the user data.
+
+#### ```public clearEnvironment(): ContextModifier```
+
+clearEnvironment() method is used to delete all the environment variables.
+
+#### ```public logTrace(message: string): ContextModifier```
+
+logTrace() method is used to log a trace message.
+
+| Name    | Type   | Attribute | Description          |
+| ------- | ------ | --------- | -------------------- |
+| message | string |           | Message to be logged |
+
+#### ```public logDebug(message: string): ContextModifier```
+
+logDebug() method is used to log a debug message.
+
+| Name    | Type   | Attribute | Description          |
+| ------- | ------ | --------- | -------------------- |
+| message | string |           | Message to be logged |
+
+#### ```public logInfo(message: string): ContextModifier```
+
+logInfo() method is used to log an info message.
+
+| Name    | Type   | Attribute | Description          |
+| ------- | ------ | --------- | -------------------- |
+| message | string |           | Message to be logged |
+
+#### ```public logWarning(message: string): ContextModifier```
+
+logWarning() method is used to log a warning message.
+
+| Name    | Type   | Attribute | Description          |
+| ------- | ------ | --------- | -------------------- |
+| message | string |           | Message to be logged |
+
+#### ```public logError(message: string): ContextModifier```
+
+logError() method is used to log an error message.
+
+| Name    | Type   | Attribute | Description          |
+| ------- | ------ | --------- | -------------------- |
+| message | string |           | Message to be logged |
+
+#### ```public error(err: Error): ContextModifier```
+
+error() method is used to throw an error.
+
+| Name | Type                     | Attribute | Description        |
+| ---- | ------------------------ | --------- | ------------------ |
+| err  | [Error](../models/error) |           | Error to be thrown |

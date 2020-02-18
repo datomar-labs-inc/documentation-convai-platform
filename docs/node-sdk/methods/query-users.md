@@ -4,11 +4,11 @@ title: Query Users
 sidebar_label: Query Users
 ---
 
-Use the queryUsers() method to query users from the Convai bot. The queryUsers() method returns a promise with an array of users.
+Use the queryUsers() method to query users from the Convai bot. The queryUsers() method returns a promise with an array of users. To be more precise, it returns a promise with a [UserQueryResult](../models/user-query-result) object.
 
 The queryUsers() expects an object of type [UserQuery](./../models/user-query). You can use the [build()](../classes/user-query-builder#public-build-userquery) method of [UserQueryBuilder](../classes/user-query-builder) to return a UserQuery.
 
-*Note - All the queries use the data from the user scope for returning results.*
+_**Note - All the queries use the data from the user scope for returning results.**_
 
 ```js
 const {ConvaiAPIClient, UserQueryBuilder, UserQueryMode} = require('convai-sdk');
@@ -16,7 +16,7 @@ const {ConvaiAPIClient, UserQueryBuilder, UserQueryMode} = require('convai-sdk')
 const convai = new ConvaiAPIClient(API_KEY);
 
 convai
-    .queryUsers(new UserQueryBuilder(UserQueryMode.ALL).where('first-name').equals('John').build())
+    .queryUsers(new UserQueryBuilder(UserQueryMode.ALL).where('firstName').equals('John').build())
     .then(users => console.log(users))
     .catch(error => console.log(error));
 ```
@@ -25,9 +25,77 @@ To add multiple conditions, you can stack them on the [UserQueryBuilder](../clas
 
 ```js
 convai
-    .queryUsers(new UserQueryBuilder(UserQueryMode.ALL).where('first-name').equals('John').where('last-name').equals('Snow').build())
+    .queryUsers(new UserQueryBuilder(UserQueryMode.ALL).where('firstName').equals('John').where('lastName').equals('Snow').build())
     .then(users => console.log(users))
     .catch(error => console.log(error));
+```
+
+#### Example Response
+```js
+{
+  "count": 2,
+  "users": [
+    {
+      "id": "4f65e63a-24ab-42b6-9e16-9849cd1a2774",
+      "environment_id": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+      "data": {
+        "firstName": "John",
+        "lastName": "Snow"
+      },
+      "createdAt": "2020-02-03T18:04:12.794583Z",
+      "updatedAt": "2020-02-10T15:59:44.696206Z",
+      "channelUsers": [
+        {
+          "channelId": "twilsms:+12042952222",
+          "environmentId": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+          "channel": "twilio_sms",
+          "superUserId": "4f65e63a-24ab-42b6-9e16-9849cd1a2774",
+          "session": null,
+          "createdAt": "2020-02-10T15:57:52.432184Z",
+          "updatedAt": "2020-02-10T15:57:52.432184Z"
+        },
+        {
+          "channelId": "2372300866208557",
+          "environmentId": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+          "channel": "facebook",
+          "superUserId": "4f65e63a-24ab-42b6-9e16-9849cd1a2774",
+          "session": null,
+          "createdAt": "2020-02-03T18:04:12.794583Z",
+          "updatedAt": "2020-02-03T18:04:12.794583Z"
+        }
+      ]
+    },
+    {
+      "id": "ef44ad85-b97a-477b-b314-7702c32249be",
+      "environment_id": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+      "data": {
+        "firstName": "John"
+      },
+      "createdAt": "2020-02-03T16:23:06.081615Z",
+      "updatedAt": "2020-02-12T19:43:04.705694Z",
+      "channelUsers": [
+        {
+          "channelId": "twilsms:+12042257890",
+          "environmentId": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+          "channel": "twilio_sms",
+          "superUserId": "ef44ad85-b97a-477b-b314-7702c32249be",
+          "session": null,
+          "createdAt": "2020-02-10T15:53:22.453729Z",
+          "updatedAt": "2020-02-10T15:53:22.453729Z"
+        },
+        {
+          "channelId": "dev-console-1e6bb9d7-d25d-4dc4-8342-2d69d9a4de3a",
+          "environmentId": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+          "channel": "channel_dev",
+          "superUserId": "ef44ad85-b97a-477b-b314-7702c32249be",
+          "session": null,
+          "createdAt": "2020-02-03T16:23:06.081615Z",
+          "updatedAt": "2020-02-03T16:23:06.081615Z"
+        }
+      ]
+    }
+  ]
+}
 ```
 
 ## Reference

@@ -1,0 +1,10 @@
+---
+id: response
+title: Response
+sidebar_label: Response
+---
+
+| Key      | Attribute | Type      |
+| -------- | :-------: | --------- |
+| messages |           | [Message](./message)[] |
+
