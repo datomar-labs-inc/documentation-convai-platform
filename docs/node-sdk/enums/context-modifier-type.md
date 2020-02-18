@@ -8,9 +8,9 @@ sidebar_label: Context Modifier Type
 
 Different scoped variable types
 
-| Name        | Value |
-| ----------- | ----- |
-| CONTEXT     | 0     |
-| SESSION     | 1     |
-| USER        | 2     |
-| ENVIRONMENT | 3     |
+| Name        | Value | Description                                                           |
+| ----------- | ----- | --------------------------------------------------------------------- |
+| CONTEXT     | 0     | Variable scope in the current execution only. For example, a message  |
+| SESSION     | 1     | Variable scope in the current session. For example, liveChatStartedAt |
+| USER        | 2     | Variable scope in the user data. For example, firstName               |
+| ENVIRONMENT | 3     | Variable scope in the bot environment. For example, GOOGLE_SHEET_KEY  |

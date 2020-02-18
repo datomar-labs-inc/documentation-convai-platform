@@ -52,43 +52,45 @@ module.exports = {
                 type: 'category',
                 label: 'Methods',
                 items: [
-                    'node-sdk/methods/query-users',
                     'node-sdk/methods/query-executions',
+                    'node-sdk/methods/query-users',
                 ]
             }, {
                 type: 'category',
                 label: 'Classes',
                 items: [
-                    'node-sdk/classes/user-query-builder',
+                    'node-sdk/classes/context-modifier',
                     'node-sdk/classes/execution-matcher',
                     'node-sdk/classes/flaggable',
                     'node-sdk/classes/session',
+                    'node-sdk/classes/user-query-builder',
                 ]
             }, 
             {
                 type: 'category',
                 label: 'Models',
                 items: [
+                    'node-sdk/models/channel-user',
+                    'node-sdk/models/context-change',
+                    'node-sdk/models/error',
+                    'node-sdk/models/frame',
+                    'node-sdk/models/log-entry',
+                    'node-sdk/models/query-check',
+                    'node-sdk/models/stack',
+                    'node-sdk/models/super-user',
                     'node-sdk/models/user-query',
                     'node-sdk/models/user-query-result',
-                    'node-sdk/models/frame',
-                    'node-sdk/models/stack',
-                    'node-sdk/models/channel-user',
-                    'node-sdk/models/super-user',
-                    'node-sdk/models/query-check',
-                    'node-sdk/models/error',
-                    'node-sdk/models/log-entry',
                 ]
             }, {
                 type: 'category',
                 label: 'Enums',
                 items: [
-                    'node-sdk/enums/user-query-mode',
-                    'node-sdk/enums/user-query-operation',
-                    'node-sdk/enums/execution-operation',
                     'node-sdk/enums/context-modifier-type',
                     'node-sdk/enums/context-modifier-operation',
+                    'node-sdk/enums/execution-operation',
                     'node-sdk/enums/log-level',
+                    'node-sdk/enums/user-query-mode',
+                    'node-sdk/enums/user-query-operation',
                 ]
             }
         ]
