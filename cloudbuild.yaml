@@ -1,4 +1,5 @@
 steps:
   - name: 'node:13'
+    entrypoint: bash
     args:
-      - sh deploy.sh
+      - deploy.sh

@@ -1,7 +1,5 @@
-#!/bin/sh
-
-npm i
-npm run build
+npm ci
+yarn build
 echo "docs.convai.dev" > ./build/CNAME
 
 set -e
