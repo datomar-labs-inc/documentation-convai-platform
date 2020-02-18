@@ -1,7 +1,7 @@
 module.exports = {
     title: 'Convai',
     tagline: 'Your Brand. Enabled.',
-    url: 'https://datomar-labs-inc.github.io/documentation-convai-platform',
+    url: 'https://docs.convai.dev',
     baseUrl: '/',
     favicon: 'img/favicon.ico',
     organizationName: 'Datomar Labs Inc.',
