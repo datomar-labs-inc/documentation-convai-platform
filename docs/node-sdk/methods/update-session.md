@@ -1,0 +1,76 @@
+---
+id: update-session
+title: Update Session
+sidebar_label: Update Session
+---
+
+updateSession() method is used to update the session data of a session. The method returns a promise with the updated [Session](../classes/session).
+
+#### Current Session
+
+```js
+{
+   "data":{
+      "randomData":"random"
+   },
+   "stack":{
+      "frames":[
+         {
+            "m":0,
+            "n":0
+         }
+      ]
+   },
+   "ver":"",
+   "id":"9045d142-8155-4837-808a-f2ea371ffcd0"
+}
+```
+
+#### Example Code
+
+```js
+const {ConvaiAPIClient} = require('convai-sdk');
+
+const convai = new ConvaiAPIClient(API_KEY);
+
+convai.updateSession('dev-console-1e6bb9d7-d25d-4dc4-8342-2d69d9a4de3a', {
+    set: {
+        "firstName": "John",
+        "lastName": "Snow"
+    },
+    delete: ['randomData']
+})
+    .then(user => console.log(user))
+    .catch(error => console.log(error));
+```
+
+#### Example Response
+
+```js
+{
+  "data": {
+    "firstName": "John",
+    "lastName": "Snow"
+  },
+  "stack": {
+    "frames": [
+      {
+        "m": 0,
+        "n": 0
+      }
+    ]
+  },
+  "ver": "",
+  "id": "9045d142-8155-4837-808a-f2ea371ffcd0"
+}
+```
+
+## Reference
+
+#### ```updateSession(userId: string, input: UpdateUserDataInput): Promise<Session>```
+<br></br>
+
+| Name   | Type   | Attribute | Description          |
+| ------ | ------ | --------- | -------------------- |
+| userId | string | required  | Channel Id of the user |
+| input | [UpdateUserDataInput](../models/update-user-input-data) | required  |  |

@@ -1,0 +1,104 @@
+---
+id: update-user-data
+title: Update User Data
+sidebar_label: Update User Data
+---
+
+updateUserData() method is used to update the user data of the super user. The method returns a promise with the updated super user data.
+
+#### Current Super User
+
+```js
+{
+    "id":"ef44ad85-b97a-477b-1234-abcdefghijkl",
+    "environment_id":"a3c36585-6a7d-4369-1234-abcdefghijkl",
+    "data":{
+        "randomData" : "random"
+    },
+    "createdAt":"2020-02-03T16:23:06.081615Z",
+    "updatedAt":"2020-02-12T19:43:04.705694Z",
+    "channelUsers":[
+        {
+            "channelId":"twilsms:+12042222222",
+            "environmentId":"a3c36585-6a7d-4369-1234-abcdefghijkl",
+            "channel":"twilio_sms",
+            "superUserId":"ef44ad85-b97a-477b-1234-abcdefghijkl",
+            "session":null,
+            "createdAt":"2020-02-10T15:53:22.453729Z",
+            "updatedAt":"2020-02-10T15:53:22.453729Z"
+        },
+        {
+            "channelId":"dev-console-1e6bb9d7-d25d-4dc4-1234-abcdefghijkl",
+            "environmentId":"a3c36585-6a7d-4369-1234-abcdefghijkl",
+            "channel":"channel_dev",
+            "superUserId":"ef44ad85-b97a-477b-1234-abcdefghijkl",
+            "session":null,
+            "createdAt":"2020-02-03T16:23:06.081615Z",
+            "updatedAt":"2020-02-03T16:23:06.081615Z"
+        }
+    ]
+}
+```
+
+#### Example Code
+
+```js
+const {ConvaiAPIClient} = require('convai-sdk');
+
+const convai = new ConvaiAPIClient(API_KEY);
+
+convai.updateUserData('ef44ad85-b97a-477b-1234-abcdefghijkl', {
+    set: {
+        "firstName": "John",
+        "lastName": "Snow"
+    },
+    delete: ['randomData']
+})
+    .then(user => console.log(user))
+    .catch(error => console.log(error));
+```
+
+#### Example Response
+
+```js
+{
+    "id":"ef44ad85-b97a-477b-1234-abcdefghijkl",
+    "environment_id":"a3c36585-6a7d-4369-1234-abcdefghijkl",
+    "data": {
+        "firstName": "John",
+        "lastName": "Snow"
+    },
+    "createdAt":"2020-02-03T16:23:06.081615Z",
+    "updatedAt":"2020-02-12T19:43:04.705694Z",
+    "channelUsers":[
+        {
+            "channelId":"twilsms:+12042222222",
+            "environmentId":"a3c36585-6a7d-4369-1234-abcdefghijkl",
+            "channel":"twilio_sms",
+            "superUserId":"ef44ad85-b97a-477b-1234-abcdefghijkl",
+            "session":null,
+            "createdAt":"2020-02-10T15:53:22.453729Z",
+            "updatedAt":"2020-02-10T15:53:22.453729Z"
+        },
+        {
+            "channelId":"dev-console-1e6bb9d7-d25d-4dc4-1234-abcdefghijkl",
+            "environmentId":"a3c36585-6a7d-4369-1234-abcdefghijkl",
+            "channel":"channel_dev",
+            "superUserId":"ef44ad85-b97a-477b-1234-abcdefghijkl",
+            "session":null,
+            "createdAt":"2020-02-03T16:23:06.081615Z",
+            "updatedAt":"2020-02-03T16:23:06.081615Z"
+        }
+    ]
+}
+```
+
+## Reference
+
+#### ```updateUserData(superUserId: string, input: UpdateUserDataInput): Promise<SuperUser>```
+<br></br>
+
+| Name        | Type                                                    | Attribute | Description          |
+| ----------- | ------------------------------------------------------- | --------- | -------------------- |
+| superUserId | string                                                  | required  | Id of the super user |
+| input       | [UpdateUserDataInput](../models/update-user-input-data) | required  |                      |

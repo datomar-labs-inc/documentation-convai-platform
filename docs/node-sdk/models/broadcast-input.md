@@ -1,0 +1,12 @@
+---
+id: broadcast-input
+title: Broadcast Input
+sidebar_label: Broadcast Input
+---
+
+| Key             | Attribute | Type                                           |
+| --------------- | :-------: | ---------------------------------------------- |
+| broadcastType   |           | string                                         |
+| contextModifier | optional  | [ContextModifier](../classes/context-modifier) |
+| channel         |           | string                                         |
+| userQuery       |           | [UserQuery](./user-query)                      |

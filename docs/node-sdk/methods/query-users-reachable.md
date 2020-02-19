@@ -1,0 +1,38 @@
+---
+id: query-users-reachable
+title: Query Users Reachable
+sidebar_label: Query Users Reachable
+---
+
+queryUsersReachable() method to used to get the number of users who are reachable for a certain user set. This user set is defined using [UserQuery](./../models/user-query). You can use the [build()](../classes/user-query-builder#public-build-userquery) method of [UserQueryBuilder](../classes/user-query-builder) to return a UserQuery.
+
+The queryUsersReachable() returns a promise with the number of reachable users
+
+_**Note - All the queries use the data from the user scope for returning results.**_
+
+```js
+const {ConvaiAPIClient, UserQueryBuilder, UserQueryMode} = require('convai-sdk');
+
+const convai = new ConvaiAPIClient(API_KEY);
+
+convai
+    .queryUsersReachable(new UserQueryBuilder(UserQueryMode.ALL).where('firstName').equals('John').build())
+    .then(count => console.log(count))
+    .catch(error => console.log(error));
+```
+
+#### Example Response
+```js
+{
+  "count": 2,
+}
+```
+
+## Reference
+
+#### ```queryUsersReachable(query: UserQuery): Promise<UserQueryReachableResult>```
+<br></br>
+
+| Name  | Type                              | Attribute | Description                  |
+| ----- | --------------------------------- | --------- | ---------------------------- |
+| query | [UserQuery](../models/user-query) | required  | Query to filter user records |

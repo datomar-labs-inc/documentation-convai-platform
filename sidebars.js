@@ -51,7 +51,18 @@ module.exports = {
             'node-sdk/setup', {
                 type: 'category',
                 label: 'Methods',
-                items: ['node-sdk/methods/query-executions', 'node-sdk/methods/query-users']
+                items: [
+                    'node-sdk/methods/broadcast',
+                    'node-sdk/methods/delete-channel-user',
+                    'node-sdk/methods/delete-session',
+                    'node-sdk/methods/delete-super-user',
+                    'node-sdk/methods/merge-users',
+                    'node-sdk/methods/query-executions',
+                    'node-sdk/methods/query-users',
+                    'node-sdk/methods/query-users-reachable',
+                    'node-sdk/methods/update-session',
+                    'node-sdk/methods/update-user-data'
+                ]
             }, {
                 type: 'category',
                 label: 'Classes',
@@ -60,6 +71,8 @@ module.exports = {
                 type: 'category',
                 label: 'Models',
                 items: [
+                    'node-sdk/models/broadcast-input',
+                    'node-sdk/models/broadcast-result',
                     'node-sdk/models/channel-user',
                     'node-sdk/models/context-change',
                     'node-sdk/models/error',
@@ -68,13 +81,16 @@ module.exports = {
                     'node-sdk/models/execution-query-result',
                     'node-sdk/models/frame',
                     'node-sdk/models/log-entry',
+                    'node-sdk/models/merge-users-request',
                     'node-sdk/models/message',
                     'node-sdk/models/query-check',
                     'node-sdk/models/response',
                     'node-sdk/models/response-block',
                     'node-sdk/models/stack',
                     'node-sdk/models/super-user',
+                    'node-sdk/models/update-user-input-data',
                     'node-sdk/models/user-query',
+                    'node-sdk/models/user-query-reachable-result',
                     'node-sdk/models/user-query-result'
                 ]
             }, {

@@ -4,11 +4,11 @@ title: Message
 sidebar_label: Message
 ---
 
-| Key        | Attribute | Type            |
-| ---------- | :-------: | --------------- |
-| text       |           | string          |
-| typingTime |           | number          |
-| graphId    | optional  | number          |
-| nodeId     | optional  | number          |
+| Key        | Attribute | Type                                |
+| ---------- | :-------: | ----------------------------------- |
+| text       |           | string                              |
+| typingTime |           | number                              |
+| graphId    | optional  | number                              |
+| nodeId     | optional  | number                              |
 | blocks     |           | [ResponseBlock](./response-block)[] |
-| seq        |           | number          |
+| seq        |           | number                              |
