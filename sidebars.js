@@ -25,8 +25,8 @@ module.exports = {
                 ]
             }, {
                 type: 'category',
-                label: 'Spout',
-                items: ['nodes/spout/spout', 'nodes/spout/spout-feedback']
+                label: 'Knowledge Ai',
+                items: ['nodes/knowledge-ai/knowledge', 'nodes/knowledge-ai/knowledge-feedback']
             }, {
                 type: 'category',
                 label: 'NLP',
