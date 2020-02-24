@@ -4,9 +4,96 @@ title: Merge Users
 sidebar_label: Merge Users
 ---
 
-// TODO
+mergeUsers() method is used to merge different super users into a single super user.
 
-mergeUsers() method is used to merge different users.
+:::warning Important
+_**By default, mergeUsers() will add the key value pairs of both the users in a single super user. If there is a conflict in the key for both the users, the user which was created first will hold priority. This can be overwritten in the request.**_
+:::
+
+#### Current Super Users
+
+```js
+// Super User 1 (Old)
+{
+    "id": "ef44ad85-b97a-477b-b314-7702c32249be",
+    "environment_id": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+    "data": {
+        "firstName": "Foo",
+        "lastName": "Bar"
+    },
+    "createdAt": "2020-02-03T16:23:06.081615Z",
+    "updatedAt": "2020-02-24T20:24:03.353123Z",
+    "channelUsers": [
+        {
+            "channelId": "dev-console-1e6bb9d7-d25d-4dc4-8342-2d69d9a4de3a",
+            "environmentId": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+            "channel": "channel_dev",
+            "superUserId": "ef44ad85-b97a-477b-b314-7702c32249be",
+            "session": null,
+            "createdAt": "2020-02-03T16:23:06.081615Z",
+            "updatedAt": "2020-02-03T16:23:06.081615Z"
+        }
+    ]
+}
+
+// Super User 2 (New)
+{
+    "id": "7c04daab-b694-48a1-a834-0f45af415b26",
+    "environment_id": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+    "data": {
+        "firstName": "John",
+        "lastName": "Snow"
+    },
+    "createdAt": "2020-02-24T20:23:32.918213Z",
+    "updatedAt": "2020-02-24T20:24:45.311446Z",
+    "channelUsers": [
+        {
+            "channelId": "dev-console-1e6bb9d7-d25d-4dc4-8342-2d69d9a4de3a8777",
+            "environmentId": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+            "channel": "channel_dev",
+            "superUserId": "7c04daab-b694-48a1-a834-0f45af415b26",
+            "session": null,
+            "createdAt": "2020-02-24T20:23:32.921063Z",
+            "updatedAt": "2020-02-24T20:23:32.921063Z"
+        }
+    ]
+}
+```
+
+#### Example Code
+
+```js
+const {ConvaiAPIClient} = require('convai-sdk');
+
+const convai = new ConvaiAPIClient(API_KEY);
+
+convai.mergeUsers({
+    superUserIds: [
+        'ef44ad85-b97a-477b-b314-7702c32249be', '7c04daab-b694-48a1-a834-0f45af415b26'
+    ],
+        preferNewUserFields: ['firstName']
+})
+    .then(user => console.log(user))
+    .catch(error => console.log(error));
+```
+
+#### Example Response
+```js
+// Notice how the firstName is of the new user and the lastName is of the old user
+{
+  "id": "ef44ad85-b97a-477b-b314-7702c32249be",
+  "environment_id": "a3c36585-6a7d-4369-85b3-25b6cab01504",
+  "data": {
+    "_olduser_7c04daab-b694-48a1-a834-0f45af415b26": true,
+    "firstName": "John",
+    "lastName": "Bar"
+  },
+  "createdAt": "2020-02-03T16:23:06.081615Z",
+  "updatedAt": "2020-02-24T20:24:03.353123Z",
+  "channelUsers": null
+}
+```
+
 
 ## Reference
 
