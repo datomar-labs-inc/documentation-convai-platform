@@ -8,32 +8,29 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: <>Easy to Use</>,
-    imageUrl: 'img/undraw_docusaurus_mountain.svg',
+    title: <>Modular</>,
+    imageUrl: 'img/about/module.png',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Build bots... that go inside other bots... that go inside other bots, it's pretty neat
       </>
     ),
   },
   {
-    title: <>Focus on What Matters</>,
-    imageUrl: 'img/undraw_docusaurus_tree.svg',
+    title: <>Integratey</>,
+    imageUrl: 'img/about/integratey.png',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        We've gone and integrated our tool with 3rd party services, thus making it not useless
       </>
     ),
   },
   {
-    title: <>Powered by React</>,
+    title: <>Linky</>,
     imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Hate making decisions? Great! Links make them for you
       </>
     ),
   },
@@ -43,11 +40,11 @@ function Feature({imageUrl, title, description}) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
     <div className={classnames('col col--4', styles.feature)}>
-      {imgUrl && (
+      {/* {imgUrl && (
         <div className="text--center">
           <img className={styles.featureImage} src={imgUrl} alt={title} />
         </div>
-      )}
+      )} */}
       <h3>{title}</h3>
       <p>{description}</p>
     </div>
@@ -59,7 +56,7 @@ function Home() {
   const {siteConfig = {}} = context;
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+      title={`${siteConfig.title} Documentation`}
       description="Description will go into a meta tag in <head />">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
@@ -71,7 +68,7 @@ function Home() {
                 'button button--outline button--secondary button--lg',
                 styles.getStarted,
               )}
-              to={useBaseUrl('docs/doc1')}>
+              to={useBaseUrl('docs/nodes/introduction')}>
               Get Started
             </Link>
           </div>

@@ -1,0 +1,92 @@
+---
+id: webhook
+title: Webhook Node
+sidebar_label: Webhook Node
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Usage
+
+The webhook node is used to send a POST request to a URL. The webhook node sends the current execution data along with the user data and expects back a [ContextModifier](../../node-sdk/classes/context-modifier) Object to do any changes in the context.
+
+## Steps
+
+1. Setup your webhook url. You can directly input it in the webhook node but I have added it in the extensions graph in case I need to change it. You can also add it as an environment variable and then access it using ```{{ e "webhookUrl" }}```.
+<img alt="Setup Webhook" src={useBaseUrl('img/nodes/stock/webhook/1.png')} />
+
+2. Setup your webhook node. Here I am accessing my webhookUrl using ```{{ d "webhookUrl" }}```
+<img alt="Setup Webhook" src={useBaseUrl('img/nodes/stock/webhook/2.png')} />
+
+3. Send the context change back in the response. The response needs to be in a certain format as shown in the following code. If you don't want to do any code change, you can just send an empty object back as the response.
+
+
+<Tabs
+  defaultValue="withoutSdk"
+  values={[
+    { label: 'Without SDK', value: 'withoutSdk', },
+    { label: 'With SDK', value: 'withSdk', },
+  ]
+}>
+<TabItem value="withoutSdk">
+
+You can read more about [Change object](../../node-sdk/models/context-change), [Log Entry](../../node-sdk/models/log-entry) and [Error object](../../node-sdk/models/error)
+```js
+// In our example, we are setting a firstName and lastName for the user as John
+// and Snow respectively. Optionally, we are also logging in Convai that we
+// have changed the firstName
+
+app.post('/verifyByEmail', (req, res, next) => {
+
+    res.json({
+        changes: [
+            {
+                type: 2,
+                op: 0,
+                key: 'firstName',
+                data: 'John'
+            }, {
+                type: 2,
+                op: 0,
+                key: 'lastName',
+                data: 'Snow'
+            }
+        ],
+        logs: [
+            {
+                level: 10,
+                message: 'Changed firstName to John',
+                time: new Date()
+            }
+        ],
+        errors: []
+    });
+    
+})
+```
+
+</TabItem>
+<TabItem value="withSdk">
+
+```js
+const {ContextModifier} = require('convai-sdk')
+
+// In our example, we are setting a firstName and lastName for the user as John
+// and Snow respectively. Optionally, we are also logging in Convai that we
+// have changed the firstName
+
+app.post('/verifyByEmail', (req, res, next) => {
+    let cm = new ContextModifier();
+
+    cm.setUser('firstName', 'John');
+    cm.setUser('lastName', 'Snow');
+    cm.logInfo('Changed firstName to John');
+
+    res.json(cm);
+})
+```
+
+</TabItem>
+</Tabs>

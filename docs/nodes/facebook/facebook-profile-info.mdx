@@ -1,0 +1,33 @@
+---
+id: facebook-profile-info
+title: Facebook Profile Info Node
+sidebar_label: Facebook Profile Info Node
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+
+Facebook profile info node is used to get the user profile information from facebook. This only works if the user is either connected to the bot on the Facebook channel or has sent atleast 1 message to the bot in the past.
+
+The node saves the profile information in the current execution scope. So we can access the following information:
+
+- First Name - ```{{d "fbProfile.firstName" }}```
+- Last Name - ```{{d "fbProfile.lastName" }}```
+- Gender - ```{{d "fbProfile.gender" }}```
+- Locale - ```{{d "fbProfile.locale" }}```
+- Name - ```{{d "fbProfile.name" }}```
+- Profile picture - ```{{d "fbProfile.profilePicURL" }}```
+- Timezone - ```{{d "fbProfile.timezone" }}```
+
+:::tip Title
+The and title *can* include markdown.
+:::
+
+## Configuration
+
+The configuration of the node is as defined below:
+
+| Name          | Required |                      Description                                     |
+| ------------- | -------- | -------------------------------------------------------------------- |
+| Title         | Required | The title of the node                                                |

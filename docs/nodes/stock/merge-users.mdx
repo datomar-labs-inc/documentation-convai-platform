@@ -14,7 +14,10 @@ Let's say a user has in the past interacted with the bot on SMS and on Facebook.
 
 ## Steps
 
-1. 
+1. Setup an intent in Dialogflow to capture the phone numbers. In the example, we have named it PhoneNumber. We have also used Dialogflow's PhoneNumber system entity to extract the phone number.
+
+2. Dialogflow returns the phone number in the ```phone-number``` parameter which can then be extracted using ```{{ d "phone-number" }}```
+<img alt="Merge Users node explained" src={useBaseUrl('img/nodes/stock/merge-users/1.png')} />
 
 ## Configuration
 
