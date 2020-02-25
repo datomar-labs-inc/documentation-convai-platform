@@ -6,7 +6,7 @@ sidebar_label: Context Modifier
 
 Context Modifier class is used to change the context of the conversation. We can use the class to set or delete variables in different scope of the conversation. For example, you can set variables that will be used in the current execution only like a message or if you want to save some data for the session, like liveChatStartedAt, you can save that in the session variable.
 
-Refer to [Context Modifier Types](../enums/context-modifier-type.md) for more information on different variable scopes.
+Refer to [Context Modifier Types](../enums/context-modifier-type.mdx) for more information on different variable scopes.
 
 ## Example
 
@@ -38,7 +38,7 @@ cm.setSession('liveChatStartedAt', new Date());
 | public | [logInfo](#public-loginfomessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log an info message |
 | public | [logWarning](#public-logwarningmessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log a warning message |
 | public | [logError](#public-logerrormessage-string-contextmodifier)(message: string): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Log an error message |
-| public | [error](#public-errorerr-error-contextmodifier)(err: [Error](../models/error)): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Send/throw an error |
+| public | [error](#public-errorerr-error-contextmodifier)(err: [Error](../models/error.mdx)): ContextModifier<br></br>&nbsp;&nbsp;&nbsp;Send/throw an error |
 
 ## Public Methods
 
@@ -176,4 +176,4 @@ error() method is used to throw an error.
 
 | Name | Type                     | Attribute | Description        |
 | ---- | ------------------------ | --------- | ------------------ |
-| err  | [Error](../models/error) |           | Error to be thrown |
+| err  | [Error](../models/error.mdx) |           | Error to be thrown |

@@ -4,9 +4,9 @@ title: Query Users
 sidebar_label: Query Users
 ---
 
-Use the queryUsers() method to query users from the Convai bot. The queryUsers() method returns a promise with an array of users. To be more precise, it returns a promise with a [UserQueryResult](../models/user-query-result) object.
+Use the queryUsers() method to query users from the Convai bot. The queryUsers() method returns a promise with an array of users. To be more precise, it returns a promise with a [UserQueryResult](../models/user-query-result.mdx) object.
 
-The queryUsers() expects an object of type [UserQuery](./../models/user-query). You can use the [build()](../classes/user-query-builder#public-build-userquery) method of [UserQueryBuilder](../classes/user-query-builder) to return a UserQuery.
+The queryUsers() expects an object of type [UserQuery](./../models/user-query.mdx). You can use the [build()](../classes/user-query-builder#public-build-userquery.mdx) method of [UserQueryBuilder](../classes/user-query-builder.mdx) to return a UserQuery.
 
 :::note
 _**All the queries use the data from the user scope for returning results.**_
@@ -107,4 +107,4 @@ convai
 
 | Name  | Type                              | Attribute | Description                  |
 | ----- | --------------------------------- | --------- | ---------------------------- |
-| query | [UserQuery](../models/user-query) | required  | Query to filter user records |
+| query | [UserQuery](../models/user-query.mdx) | required  | Query to filter user records |

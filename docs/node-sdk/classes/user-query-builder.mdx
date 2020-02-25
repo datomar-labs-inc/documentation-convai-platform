@@ -22,7 +22,7 @@ new UserQueryBuilder(UserQueryMode.ALL)
 
 | Key    | Attribute | Type          |
 | ------ | --------- | ------------- |
-| mode   | <ul><li>default : UserQueryMode.ALL</li></ul> | [UserQueryMode](../enums/user-query-mode) |
+| mode   | <ul><li>default : UserQueryMode.ALL</li></ul> | [UserQueryMode](../enums/user-query-mode.mdx) |
 | limit  | <ul><li>optional</li><li>default: 10</li></ul> | number |
 
 ## Public Methods Summary
@@ -38,7 +38,7 @@ new UserQueryBuilder(UserQueryMode.ALL)
 | public | [lessThan](#public-lessthanvalue--string-userquerybuilder)(value : string[]: UserQueryBuilder)<br></br>&nbsp;&nbsp;&nbsp;Denotes that the return set from the where 'key' should be less than 'value' |
 | public | [exists](#public-exists-userquerybuilder)(): UserQueryBuilder<br></br>&nbsp;&nbsp;&nbsp;Denotes that the user data should have the where 'key' |
 | public | [notExists](#public-notexists-userquerybuilder)(): UserQueryBuilder<br></br>&nbsp;&nbsp;&nbsp;Denotes that the user data should not have the where 'key' |
-| public | [build](#public-build-userquery)(): [UserQuery](../models/user-query)<br></br>&nbsp;&nbsp;&nbsp;Build all the conditions into a single user query |
+| public | [build](#public-build-userquery)(): [UserQuery](../models/user-query.mdx)<br></br>&nbsp;&nbsp;&nbsp;Build all the conditions into a single user query |
 
 ## Public Methods
 
@@ -126,4 +126,4 @@ This method will return an error if a where method is not present.
 
 #### ```public build(): UserQuery```
 
-build() method is used to convert all the stacked conditions into a single [User Query](../models/user-query)
+build() method is used to convert all the stacked conditions into a single [User Query](../models/user-query.mdx)

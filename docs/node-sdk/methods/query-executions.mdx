@@ -7,7 +7,7 @@ sidebar_label: Query Executions
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Use the queryExecutions() method to query executions from the Convai bot. The queryExecutions() method returns a promise with an array of executions. To be more precise, it returns a promise with a [ExecutionQueryResult](../models/execution-query-result) object.
+Use the queryExecutions() method to query executions from the Convai bot. The queryExecutions() method returns a promise with an array of executions. To be more precise, it returns a promise with a [ExecutionQueryResult](../models/execution-query-result.mdx) object.
 
 ```js
 const {ConvaiAPIClient, ExecutionMatcher} = require('convai-sdk');
@@ -678,4 +678,4 @@ convai
 
 | Name  | Type                                             | Attribute | Description                |
 | ----- | ------------------------------------------------ | --------- | -------------------------- |
-| query | [ExecutionMatcher](../classes/execution-matcher) | required  | Query to filter executions |
+| query | [ExecutionMatcher](../classes/execution-matcher.mdx) | required  | Query to filter executions |
