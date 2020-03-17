@@ -6,6 +6,10 @@ sidebar_label: Update User Data
 
 updateUserData() method is used to update the user data of the super user. The method returns a promise with the updated super user data.
 
+:::important
+Even though the API sends back the updated user instantly, their is a delay of **1 sec** to update the user data in the database.
+:::
+
 #### Current Super User
 
 ```js
