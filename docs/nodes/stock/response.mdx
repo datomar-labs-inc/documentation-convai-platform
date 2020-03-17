@@ -72,6 +72,60 @@ Response node is used to send a response to the user. We can send 2 types of res
     <br></br>
     <br></br>
 
+## Tags Reference
+
+#### 1. Response ```<response>```
+The response tag is the highest level of tag used to draft the response. All the further tags have to be in the ```<response> </response>``` tag otherwise they will not be parsed.
+
+##### Example 
+```xml
+<response>
+	<message>
+		<text>Hi I am from Convai.</text>
+	</message>
+	<message>
+	    <text>Made with ❤️ on Convai.</text>
+	</message>
+</response>
+```
+<img alt="Response tag" src={useBaseUrl('img/nodes/stock/response/7.png')} />
+
+##### 
+
+##### Reference
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| Messages | Array | Required | Array of ```<message>``` |
+
+#### 2. Message ```<message>```
+The message tag is used to compose a single message. You can add an optional typing attribute in the message tag to indicate the amount of time (in seconds) to show typing before sending the message to the user. By default, the typing is set to 1 (second). For example, a typing of 4 seconds will be coded as ```<message typing='4'>```
+
+##### Example 
+```xml
+<response>
+	<message>
+		<text>Hi I am from Convai.</text>
+	</message>
+	<message>
+	    <text>Made with ❤️ on Convai.</text>
+	</message>
+</response>
+```
+<img alt="Response tag" src={useBaseUrl('img/nodes/stock/response/7.png')} />
+
+##### 
+
+##### Reference
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| Messages | Array | Required | Array of ```<message>``` |
+
+#### 2. Message ```<message>```
+- The message tag is used to compose a single message
+- 
+- A message can accept different type of tags - ```<text>```, ```<sender>```, array of ```<qr>```, ```<cards>```, ```<image>``` 
+
+
 ## Configuration
 
 The configuration of the node is as defined below:
