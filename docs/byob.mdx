@@ -42,6 +42,32 @@ In the Message Area, insert "Hello, I'm your Convai bot" between text tags. Once
 10. This bot seems not intelligient, it can only reply you a certain message no matter what you asked. So let's move on to build a more intelligent chat bot.
 
 ## Input Node and Set Data Node
+In this section, we will extend the simple bot we built by using Input Node and Set Data Node.
+
+1. Although dragging to create nodes is a simple way, it will be very annoying when you have added a lot of nodes and links on your graph. To make things neat, we use context menu to create nodes from now on. Right click on the graph at anywhere you'd like the node to be created to call the context menu.
+<img alt="context menu" src={useBaseUrl('img/tutorial/input-set-data-node/context_menu.png')} />
+
+ Click on "New Node >" 
+<img alt="context menu" src={useBaseUrl('img/tutorial/input-set-data-node/context_menu_new_node.png')} />
+
+ Then click on "Stock >"
+<img alt="context menu" src={useBaseUrl('img/tutorial/input-set-data-node/context_menu_input.png')} />
+
+ Find Input and click on it to create the Input Node.
+<img alt="context menu" src={useBaseUrl('img/tutorial/input-set-data-node/created_input_node.png')} />
+
+ Follow the same steps, create a Set Data Node.
+<img alt="context menu" src={useBaseUrl('img/tutorial/input-set-data-node/created_input_set_data.png')} />
+
+2. Delete the link of Bot's Response to Any Time. To delete a link, select it by left clicking on the link and hit Delete on your keyboard.
+<img alt="select link" src={useBaseUrl('img/tutorial/input-set-data-node/select_link.png')} />   
+<img alt="link deleted" src={useBaseUrl('img/tutorial/input-set-data-node/deleted_link.png')} height="358" />
+
+3. Reposition and link nodes as follow.
+<img alt="linked graph" src={useBaseUrl('img/tutorial/input-set-data-node/linked_graph.png')} />
+
+4. Select Set Data Node and view its configurations in Inspector tab in the right panel.
+
 
 ## Data scope (User, Session, Execution)
 
