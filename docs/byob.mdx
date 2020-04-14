@@ -3,3 +3,52 @@ id: byob
 title: Getting Started
 sidebar_label: Getting Started
 ---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Build your first chat bot
+
+In this section, we will build a very simple chat bot.
+
+1. Login to Convai Studio.
+
+2. Click on Make Bot Button to start making your bot.
+<img alt="make bot" src={useBaseUrl('img/tutorial/first-bot/make_bot.PNG')} />
+
+3. Name your bot as "Tutorial Bot".
+<img alt="name bot" src={useBaseUrl('img/tutorial/first-bot/name_bot.png')} />
+
+4. Once your bot is created, you are in the bot's page. Click on the double right arrow button on the left panel to show the details.
+<img alt="collapsed left panel" src={useBaseUrl('img/tutorial/first-bot/collapsed_left_panel.png')} height="678" />
+<img alt="detailed left panel" src={useBaseUrl('img/tutorial/first-bot/detailed_left_panel.png')} />
+
+5. Go to Graph, this is the place you will mostly working on with your bot. Let's start building a simple bot respond to user's message. You can zoom in/out using your mouse's wheel.
+<img alt="graph" src={useBaseUrl('img/tutorial/first-bot/graph.png')} />
+
+6. Click on Nodes tab in the right panel, select and drag the response node into the graph.
+<img alt="create response" src={useBaseUrl('img/tutorial/first-bot/drag_create_response.png')} />
+
+7. Link the Response Node to Any Time Node by dragging the yellow semi-circle on the top of the Response to the semi-circle at the bottom of Any Time Node. Then re-position the Response Node to where you prefer.
+<img alt="link nodes" src={useBaseUrl('img/tutorial/first-bot/link_nodes.png')} />
+
+8. Select the Resposne Node, then click on the Inspector tab on the right panel. There are configurations with the Node. You can always check out [Response Node](/nodes/stock/response.mdx)'s document for detailed informations. 
+For now, let's change the Response Node's name to "Bot's Response".
+<img alt="change response name" src={useBaseUrl('img/tutorial/first-bot/change_response_name.png')} />
+In the Message Area, insert "Hello, I'm your Convai bot" between text tags. Once you made any changes of the Response Node, there will be a preview of your response messages.
+<img alt="response preview" src={useBaseUrl('img/tutorial/first-bot/response_preview.png')} />
+
+9. Congratulations! You have made your own simple chat bot. Let's test it out. Click Dev Console tab on the right panel. Type any messages in the text field below, the bot will reply with the message in the response node you just edited.
+<img alt="created bot" src={useBaseUrl('img/tutorial/first-bot/created_bot.png')} />
+
+10. This bot seems not intelligient, it can only reply you a certain message no matter what you asked. So let's move on to build a more intelligent chat bot.
+
+## Input Node and Set Data Node
+
+## Data scope (User, Session, Execution)
+
+## Link Types
+
+## Script Node
+
+## Modules
+
+## Web Chat Embed
