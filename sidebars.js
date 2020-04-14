@@ -7,6 +7,9 @@
 
 module.exports = {
     someSidebar: {
+        Tutorial: [
+            'byob'
+        ],
         Nodes: [
             'nodes/introduction', {
                 type: 'category',
