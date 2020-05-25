@@ -7,6 +7,13 @@ module.exports = {
     organizationName: 'datomar-labs-inc',
     projectName: 'documentation-convai-platform',
     themeConfig: {
+        disableDarkMode: true,
+        announcementBar: {
+            id: 'work_in_progress',
+            content: 'The documentation is still a work in progress.',
+            backgroundColor: '#1a2a5f',
+            textColor: '#000000'
+        },
         navbar: {
             title: 'Convai',
             logo: {
@@ -15,7 +22,7 @@ module.exports = {
             },
             links: [
                 {
-                    to: 'docs/nodes/introduction',
+                    to: '/convai-studio/introduction',
                     label: 'Docs',
                     position: 'left'
                 }
@@ -30,13 +37,15 @@ module.exports = {
         [
             '@docusaurus/preset-classic', {
                 docs: {
+                    routeBasePath: '/',
+                    homePageId: 'convai-studio/introduction',
                     sidebarPath: require.resolve('./sidebars.js'),
-                    editUrl: 'https://github.com/datomar-labs-inc/documentation-convai-platform'
+                    editUrl: ''
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css')
                 }
             }
         ]
-    ],
+    ]
 };

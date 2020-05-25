@@ -1,0 +1,32 @@
+---
+id: twilio
+title: Twilio Integration
+sidebar_label: Twilio
+description: How to connect Twilio Voice and SMS with Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+This document outlines the process to integrate Twilio Voice and SMS with Convai Studio.
+
+1. Go to Settings and click edit on an environment you would like to configure.
+
+:::tip Note
+_**NOTE: If you are doing a new integration, add it into the Development environment before any other environments.**_
+:::
+
+2. In the integration settings, click on Add Integration and select Twilio. You will see something like this:
+<img alt="Add Twilio Integration" src={useBaseUrl('img/convai-studio/integrations/channels/twilio/image5.png')} />
+
+3. Click on Twilio and a dialog will open like below.
+<img alt="Twilio dialog" src={useBaseUrl('img/convai-studio/integrations/channels/twilio/image3.png')} />
+
+4. Go to your twilio account > Choose a project > Go to Console Dashboard > Settings > General > API Credentials. Copy the SID and Auth Token from the API Credentials section.
+<img alt="Twilio SID and token" src={useBaseUrl('img/convai-studio/integrations/channels/twilio/image4.png')} />
+
+5. Once you add the SID and Access Token, click on the Sending Number to select the phone number that will be attached to Convai.
+<img alt="Twilio SID and token" src={useBaseUrl('img/convai-studio/integrations/channels/twilio/image1.png')} />
+
+6. Once you select a number, click on Update Webhook to configure the webhooks on Twilio automatically.
+
+7. That’s it. Twilio is now connected to the environment.

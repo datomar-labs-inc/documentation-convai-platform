@@ -1,0 +1,189 @@
+---
+id: response
+title: Response Node
+sidebar_label: Response Node
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+
+Response node is used to send a response to the user. All the tags and responses defined below automatically parse depending on the platform the user is connecting via. If a feature is not supported by the platform (like cards in sms), it will be ignored by Convai when sending the response.
+
+### Text Response
+
+To send a text response, you can write it in the ```<text>``` tag.
+
+```xml
+<response>
+	<message>
+		<text>Hi I am from Convai.</text>
+	</message>
+	<message typing="4">
+	    <text>Made with ❤️ on Convai.</text>
+	</message>
+</response>
+```
+
+### Cards or Carousel Response
+
+To send a carousel/gallery as a response, you can use the ```<cards>``` tag. For a complete list of card properties, see the [Card tag reference](#3-card-collection-cards).
+
+```xml
+<response>
+	<message>
+		<cards>
+			<card>
+				<title>Convai White Hoodie</title>
+				<subtitle>Premium fabric</subtitle>
+				<image id="C6jM_zejn1zqBJMV87vu_" width="582" height="627" x="0" y="0"></image>
+				<button url="https://convai.studio">Buy Hoodie</button>
+			</card>
+			<card>
+				<title>Convai Black Hoodie</title>
+				<subtitle>Premium fabric</subtitle>
+				<image id="wR_sKzwm9uh2cKBstDygz" width="546" height="643" x="0" y="0"></image>
+				<button url="https://convai.studio">Buy Hoodie</button>
+			</card>
+			<card>
+				<title>Convai Black Zipper</title>
+				<subtitle>Premium fabric</subtitle>
+				<image id="iSNilG-4WQp0ABtliatdo" width="591" height="631" x="0" y="0"></image>
+				<button url="https://convai.studio">Buy Zipper</button>
+			</card>
+		</cards>
+	</message>
+</response>
+```
+
+To send a single card, you can add just 1 ```<card>``` tag.
+
+```xml
+<response>
+	<message>
+		<cards>
+			<card>
+				<title>Convai White Hoodie</title>
+				<subtitle>Premium fabric</subtitle>
+				<image id="C6jM_zejn1zqBJMV87vu_" width="582" height="627" x="0" y="0"></image>
+				<button url="https://convai.studio">Buy Hoodie</button>
+			</card>
+		</cards>
+	</message>
+</response>
+```
+
+
+### Quick Replies
+
+```<qr>``` tag is used to send a response with quick replies. A text message or a gallery is required to be sent before the quick replies. It is better to define the quick replies in the last message otherwise the quick replies will be replaced.
+
+```go
+Hi. How are you doing today?
+{{ qr "Doing Great!!" "WELCOME_GOOD"}} {{ qr "Not a great start :(" "WELCOME_BAD"}}
+```
+<img alt="Input Node explained" src={useBaseUrl('img/nodes/stock/response/5.png')} />
+
+
+
+## Tags Reference
+
+#### 1. Response ```<response>```
+The response tag is the highest level of tag used to draft the response. All the further tags have to be in the ```<response> </response>``` tag otherwise they will not be parsed.
+
+##### Example 
+```xml
+<response>
+	<message>
+		<text>Hi I am from Convai.</text>
+	</message>
+	<message>
+	    <text>Made with ❤️ on Convai.</text>
+	</message>
+</response>
+```
+
+##### Reference
+| Name     | Type  | Description              |
+| -------- | ----- | ------------------------ |
+| Messages | Array | Array of ```<message>``` |
+
+#### 2. Message ```<message>```
+The message tag is used to compose a single message. You can add an optional typing attribute in the message tag to indicate the amount of time (in seconds) to show typing before sending the message to the user. By default, the typing is set to 1 (second). For example, a typing of 4 seconds will be coded as ```<message typing='4'>```
+
+##### Example 
+```xml
+<response>
+	<message>
+		<text>Hi I am from Convai.</text>
+	</message>
+	<message typing="4">
+	    <text>Made with ❤️ on Convai.</text>
+	</message>
+</response>
+```
+
+##### Reference
+| Name          | Type           | Attribute       | Description                                                                                                 |
+| ------------- | -------------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
+| typing        | float64/double | Attribute       | ***Optional***. The number of seconds the typing indicator is shown before sending a message                |
+| text          | string         | ```<text>```    | Message text. Must be UTF-8. One of ```<text>```, ```<cards>``` or ```<image>``` must be set                |
+| sender        |                | ```<sender>```  | ***Optional***. See the ```<sender>``` reference                                                            |
+| Quick Replies | array          |                 | ***Optional***. Array of ```<qr>```. Can only be declared afer ```<cards>```, ```<image>``` or ```<text>``` |
+| cards         |                | ```<cards>```   | ***Optional***. See the ```<cards>``` reference                                                             |
+| image         |                | ```<image>```   | ***Optional***. Image to be sent                                                                            | 
+
+#### 3. Card Collection ```<cards>```
+The ```<cards>``` tag is used to hold different ```<card>``` in a single collection.
+
+##### Example 
+```xml
+<response>
+	<message>
+		<cards>
+			<card>
+				<title>Convai White Hoodie</title>
+				<subtitle>Premium fabric</subtitle>
+				<image id="C6jM_zejn1zqBJMV87vu_" width="582" height="627" x="0" y="0"></image>
+				<button url="https://convai.studio">Buy Hoodie</button>
+			</card>
+			<card>
+				<title>Convai Black Hoodie</title>
+				<subtitle>Premium fabric</subtitle>
+				<image id="wR_sKzwm9uh2cKBstDygz" width="546" height="643" x="0" y="0"></image>
+				<button url="https://convai.studio">Buy Hoodie</button>
+			</card>
+			<card>
+				<title>Convai Black Zipper</title>
+				<subtitle>Premium fabric</subtitle>
+				<image id="iSNilG-4WQp0ABtliatdo" width="591" height="631" x="0" y="0"></image>
+				<button url="https://convai.studio">Buy Zipper</button>
+			</card>
+		</cards>
+	</message>
+</response>
+```
+
+##### Reference
+| Name          | Type           | Attribute       | Description                                                                                                 |
+| ------------- | -------------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
+| typing        | float64/double | Attribute       | ***Optional***. The number of seconds the typing indicator is shown before sending a message                |
+| text          | string         | ```<text>```    | Message text. Must be UTF-8. One of ```<text>```, ```<cards>``` or ```<image>``` must be set                |
+| sender        |                | ```<sender>```  | ***Optional***. See the ```<sender>``` reference                                                            |
+| Quick Replies | array          |                 | ***Optional***. Array of ```<qr>```. Can only be declared afer ```<cards>```, ```<image>``` or ```<text>``` |
+| cards         |                | ```<cards>```   | ***Optional***. See the ```<cards>``` reference                                                             |
+| image         |                | ```<image>```   | ***Optional***. Image to be sent                                                                            | 
+
+
+## Configuration
+
+The configuration of the node is as defined below:
+
+| Name                    | Required |                      Description                                     |
+| ----------------------- | -------- | -------------------------------------------------------------------- |
+| Title | Required | The title of the node |
+| Send Now (Do not batch) | | Normally when a Convai request happens, all responses are collected and sent out at the end. When Send Now is enabled, the response will not wait until the request is finished. It will be sent immediately. Responses marked with Send Now will not be included when other batched messages are sent out at the end of a request. |
+| Channel | Required | Responses can be configured differently for different channels |
+| Message | Required | Message is a collection of messages. A single response can have more than 1 message. Click on <img alt="Input Node explained" src={useBaseUrl('img/nodes/stock/response/6.png')} /> to add more messages |
+| Message Editor | Required | The message editor is a [templating](https://golang.org/pkg/text/template/) enabled field where you can compose your response |
+| Typing Time | Required | Typing time defines the time to wait before sending the message to the user. During this time, the bot will show the typing indicator. |

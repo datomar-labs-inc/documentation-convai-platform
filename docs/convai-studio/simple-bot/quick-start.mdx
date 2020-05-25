@@ -1,0 +1,85 @@
+---
+id: quick-start
+title: Quick Start Guide
+sidebar_label: Quick Start Guide
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+Before we start, let's understand some of the concepts/pre-requisites required to make bots on Convai. 
+
+## Analogy for easy understanding
+Here is an analogy for easy understanding. Keep this analogy in mind and it will be easier as we proceed further.
+<img className="mb--10" alt="Create Bot" src={useBaseUrl('img/convai-studio/simple-bot/image1.png')} />
+
+- Organization - Github team
+- Bot - Github Repository
+- Bot Environment - Github branch
+- Graph - Consider a Graph as a file where different modules are written.
+- Modules - A module is like a function. It is a defined collection of a Bot logic that is reusable everywhere in the graph
+- Links - Links can be compared to the Conditional Logic statements. They are basically if-else loops
+- Nodes - Nodes are like a single line of code. It defines the logic of how the context is being modified. (or any other action in the bot)
+
+## Understanding Organizations, Accounts and Permissions
+
+### Accounts
+An account is a single email account that has access to the Convai Platform
+
+### Organizations
+Each bot is part of an organization. Each email account is therefore a part of an organization and has access to a bot as long as they are in the organization. 
+
+Accounts and Organizations are like a many-to-many relationship which means that each organization can have multiple accounts under them and each account can be a part of multiple organizations. For example, my email is a part of 2 organizations:
+<img alt="Create Bot" src={useBaseUrl('img/convai-studio/simple-bot/image2.png')} />
+
+### Permissions
+There are 2 levels of permissions in Convai. Organization level permissions and Bot level permissions.
+
+#### Organization Level Permissions
+The organization permission settings are accessible at Organizations > Select an organization > Organization Permissions.
+
+- **Account Permissions** - Accounts with these permissions can add and remove accounts from an organization.
+- **Bot Permissions** - Accounts with these permissions can add, edit and delete every bot in the organization.
+
+:::note
+System Admin permissions are currently on Convai level and can only be managed by Datomar Labs.
+:::
+
+<img alt="Organization level permissions" src={useBaseUrl('img/convai-studio/simple-bot/image3.png')} />
+
+#### Bot level permissions
+
+Bot level permissions are there to provide access for a bot to an account. The bot permission settings are accessible at Bots > Select a bot > Settings > Bot Permissions. The account in this case doesn’t need to be a part of the organization. Each account in the Bot permissions has the view permissions for the bot.
+
+- **Edit** Bot - Can edit a bot
+- **Edit** environments - Can edit an environment
+- **Delete** environments - Can delete an environment
+
+<img alt="Bot level permissions" src={useBaseUrl('img/convai-studio/simple-bot/image4.png')} />
+
+## Understanding Environments
+Most of the bot settings are configurable at an environment level. Consider an environment as a Github branch and the bot as a Github repository. Just like the build of a project is dependent on the branch, the build of a bot is dependent on the environment.
+
+A Development Environment is added to every bot by default. To create an environment:
+
+1. Go to Bots > Select a bot > Settings > Create Environment
+2. Click on Create Environment
+3. Add a name for the environment (For example, Production)
+4. Click on Create
+
+<img className="mb--10" alt="Create an environment" src={useBaseUrl('img/convai-studio/simple-bot/image5.png')} />
+
+Each environment has the following settings:
+
+- Name and Session Length
+- Version Select (this is only visible if the bot has at least 1 version. We will talk about versions in the deployment section)
+- Environment Variables
+- Integrations
+
+## Integrations
+
+Convai offers a lot of different type of integrations like NLP, CMS, Analytics etc. We are adding more as we go. For the tutorial, add:
+
+1. Facebook and Twilio for the channel
+2. Dialogflow for NLP
+3. Dashbot for Analytics

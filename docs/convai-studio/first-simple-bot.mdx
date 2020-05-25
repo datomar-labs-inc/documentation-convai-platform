@@ -1,0 +1,46 @@
+---
+id: first-simple-bot
+title: First Simple Bot
+sidebar_label: First Simple Bot
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Step 1 - Setting up the bot
+In this section, we will build a very simple chat bot.
+
+1. Login to Convai Studio.
+
+2. Click on the “Make Bot” Button to begin making your bot.
+<img alt="Create Bot" src={useBaseUrl('img/convai-studio/first-bot/image17.png')} />
+
+3. In the name field enter “Tutorial Bot”.
+<img alt="Enter Name" src={useBaseUrl('img/convai-studio/first-bot/image45.png')} />
+
+4. After the bot is created, you will be taken to the bot’s graph. Click on the double right arrow button at the bottom of the left side panel to view different bot features.
+<img alt="Dashboard collapsed" src={useBaseUrl('img/convai-studio/first-bot/image51.png')} /><img alt="Dashboard expanded" src={useBaseUrl('img/convai-studio/first-bot/image10.png')} />
+
+## Step 2 - Creating a simple bot
+
+1. Go to **Main Graph** in the nav. The majority of the work with your bot will take place here. Let’s start building a simple bot that will respond to a user's message. You can zoom in/out using your mouse’s wheel and left-click drag on empty space to move your view of the graph.
+<img alt="Main Graph" src={useBaseUrl('img/convai-studio/first-bot/image23.png')} />
+
+2. Click on the **Nodes** tab in the right panel: select and drag the response Node into the graph.
+<img alt="Nodes Tab" src={useBaseUrl('img/convai-studio/first-bot/image36.png')} />
+
+3. Link the **Response Node** to the Any Time Node by dragging the yellow semi-circle on the top of the Response to the semi-circle at the bottom of Any Time Node. Then reposition the Response Node as you see fit The ‘Any Time’ Node is triggered any time the bot receives a message.
+<img alt="Response Node" src={useBaseUrl('img/convai-studio/first-bot/image38.png')} />
+
+4. Select the **Response Node**, then click on the **Inspector** tab on the right panel. There are configurations with the Node. You can always check out Response Node’s document for detailed information.
+ 
+ For now, let’s change the **Response** Node’s name to “Bot’s Response”.
+<img alt="Response Node" src={useBaseUrl('img/convai-studio/first-bot/image40.png')} />
+
+ In the **Message** Area, insert “Hello, I’m your Convai bot” between text tags. The changes you make are saved automatically as you go. The message responses use an xml format to define rich media and text tags.
+<img alt="Response Node" src={useBaseUrl('img/convai-studio/first-bot/image1.png')} />
+
+5. Link the **Response Node** to the Any Time Node by dragging the yellow semi-circle on the top of the Response to the semi-circle at the bottom of Any Time Node. Then reposition the Response Node as you see fit The ‘Any Time’ Node is triggered any time the bot receives a message.
+<img alt="Response Node" src={useBaseUrl('img/convai-studio/first-bot/image38.png')} />
+
+## Step 3
