@@ -110,6 +110,8 @@ const analyticsIntegrations = ["convai-studio/integrations/analytics/chatbase", 
 
 const channelIntegrations = ["convai-studio/integrations/channels/facebook", "convai-studio/integrations/channels/slack", "convai-studio/integrations/channels/twilio"]
 
+const nlpIntegrations = ["convai-studio/integrations/nlp/dialogflow"]
+
 const integrations = [
     {
         type: 'category',
@@ -119,10 +121,14 @@ const integrations = [
         type: 'category',
         label: 'Channels',
         items: channelIntegrations
+    }, {
+        type: 'category',
+        label: 'NLP',
+        items: nlpIntegrations
     }
 ]
 
-const simpleBot = ["convai-studio/simple-bot/quick-start"]
+const simpleBot = ["convai-studio/simple-bot/understanding-convai", "convai-studio/simple-bot/building-a-bot"]
 
 const convaiStudio = [
     'convai-studio/introduction', {
@@ -143,6 +149,10 @@ const convaiStudio = [
 module.exports = {
     someSidebar: {
         'Convai Studio': convaiStudio,
-        'NodeJs SDK': nodeSdk
+        'NodeJs SDK': nodeSdk,
+        'Certification': {
+            type : 'doc',
+            id: 'certification'
+        }
     }
 };

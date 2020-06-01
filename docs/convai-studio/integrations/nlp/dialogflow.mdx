@@ -1,0 +1,41 @@
+---
+id: dialogflow
+title: Dialogflow Integration
+sidebar_label: Dialogflow
+description: How to connect Dialogflow with Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+This document outlines the process to integrate Dialogflow with Convai Studio.
+
+1. Go to Settings and click edit on an environment you would like to configure.
+
+:::tip Note
+_**NOTE: If you are doing a new integration, add it into the Development environment before any other environments.**_
+:::
+
+2. In the integration settings, click on Add Integration and select Dialogflow. You will see something like this:
+<img alt="Add Dialogflow Integration" src={useBaseUrl('img/convai-studio/integrations/nlp/dialogflow/image8.png')} />
+
+3. Click on Dialogflow and a dialog will open like below.
+<img alt="Dialogflow dialog" src={useBaseUrl('img/convai-studio/integrations/nlp/dialogflow/image1.png')} />
+
+4. Go to Dialogflow > Select your project > Settings > General > Google project. Click on the Service Account URL.
+<img alt="Dialogflow Service Account" src={useBaseUrl('img/convai-studio/integrations/nlp/dialogflow/image4.png')} />
+
+5. Once the Google Project opens, click on Create Service Account on the top.
+<img alt="Dialogflow Create Service Account" src={useBaseUrl('img/convai-studio/integrations/nlp/dialogflow/image3.png')} />
+
+6. Give it a name and description and click on create.
+
+7. On the account permissions, add the role as Dialogflow API Admin and click on Continue.
+<img alt="Dialogflow Admin Permissions" src={useBaseUrl('img/convai-studio/integrations/nlp/dialogflow/image5.png')} />
+
+8. On the next page, create a key of type json
+<img alt="Dialogflow Key" src={useBaseUrl('img/convai-studio/integrations/nlp/dialogflow/image7.png')} />
+
+9. Go back to Convai and add the file in Dialogflow Dialog and click Save.
+<img alt="Dialogflow Add Key" src={useBaseUrl('img/convai-studio/integrations/nlp/dialogflow/image6.png')} />
+
+10. Dialogflow is now connected to the bot.

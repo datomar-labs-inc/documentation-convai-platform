@@ -1,0 +1,39 @@
+---
+id: building-a-bot
+title: Building a Bot
+sidebar_label: 2. Building a Bot
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+New to Convai? Start from [Understanding Convai](./understanding-convai) guide.
+
+**Pre-requisites integrations**:
+- Channel
+    - Facebook
+    - Twilio
+- NLP
+    - Dialogflow
+- Analytics
+    - Dashbot
+
+## 1. Creating a Bot
+
+1. Login to Convai Studio.
+
+2. Click on the “Make Bot” Button to begin making your bot.
+<img alt="Create Bot" src={useBaseUrl('img/convai-studio/simple-bot/image6.png')} />
+
+3. In the name field enter “Tutorial Bot”.
+<img alt="Enter Name" src={useBaseUrl('img/convai-studio/simple-bot/image7.png')} />
+
+4. After the bot is created, you will be taken to the bot’s graph.
+
+## 2. Adding NLP and Analytics
+
+NLP and Analytics nodes are usually added in the Extension Graph. This is so the intent can be discovered before the request and we can log the request using analytics just before we send the response back to the channel.
+
+### NLP
+
+1. Switch to the Extension Graph
