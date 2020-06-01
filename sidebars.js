@@ -150,9 +150,5 @@ module.exports = {
     someSidebar: {
         'Convai Studio': convaiStudio,
         'NodeJs SDK': nodeSdk,
-        'Certification': {
-            type : 'doc',
-            id: 'certification'
-        }
     }
 };
