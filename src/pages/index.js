@@ -57,7 +57,7 @@ function Home() {
   return (
     <Layout
       title={`${siteConfig.title} Documentation`}
-      description="Description will go into a meta tag in <head />">
+      description="Convai is a truly flexible, robust, low-code solution for conversational engagement. Learn how you can customize it more to your needs.">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>

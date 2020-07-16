@@ -21,7 +21,7 @@ Here is an analogy for easy understanding. Keep this analogy in mind and it will
 - Links - Links can be compared to the Conditional Logic statements. They are basically if-else loops
 - Nodes - Nodes are like a single line of code. It defines the logic of how the context is being modified. (or any other action in the bot)
 
-## Understanding Organizations, Accounts and Permissions
+## Organizations, Accounts and Permissions
 
 ### Accounts
 An account is a single email account that has access to the Convai Platform
@@ -57,7 +57,7 @@ Bot level permissions are there to provide access for a bot to an account. The b
 
 <img alt="Bot level permissions" src={useBaseUrl('img/convai-studio/simple-bot/image4.png')} />
 
-## Understanding Environments
+## Environments
 Most of the bot settings are configurable at an environment level. Consider an environment as a Github branch and the bot as a Github repository. Just like the build of a project is dependent on the branch, the build of a bot is dependent on the environment.
 
 A Development Environment is added to every bot by default. To create an environment:
@@ -78,8 +78,47 @@ Each environment has the following settings:
 
 ## Integrations
 
-Convai offers a lot of different type of integrations like NLP, CMS, Analytics etc. We are adding more as we go. For the tutorial, add:
+Convai offers a lot of different types of integrations like NLP, CMS, Channels, Analytics, etc. We are adding more as we go. Integrations are currently only managed and available by the Convai team. You can add your own using Convai's scripting and SDK on a per bot basis. Read more in the integrations section.
 
-1. Facebook and Twilio for the channel
-2. Dialogflow for NLP
-3. Dashbot for Analytics
+## Graphs, Modules, Nodes and Links
+
+### Graphs
+Graphs are like a file in a program that contains all the logic. Convai has 3 type of graphs:
+:::info Note
+Graphs are only available for the Development environment.
+:::
+
+#### 1. Extension Graph
+Extension Graph is where the incoming and outgoing requests are processed. Incoming request is parsed into a convai readable format. All the requests are converted into a context format that is manipulated later in other graphs. At the end, the outgoing request is parsed depending on the channel the request came from.
+
+#### 2. Main Graph
+All the bot logic is defined in the Main graph. The request from the Extension graph is passed to the Main graph where the context is manipulated based on the logic. The best practice is to split the logic into smaller reusable modules.
+
+#### 3. Module Graph
+Module graphs are dynamic graphs generated for each module.
+
+### Modules
+Modules are structured reusable bot logic that is used to perform a single or set of actions. In a typical programming world, modules are like functions. In Convai, there are 2 types of modules:
+:::info Note
+Extension Graph doesn’t support User Made Modules
+:::
+
+#### System Modules
+System modules are added to the graphs by default. These modules cannot be deleted or used again. Currently there is only **1** System module - Main. Main is present in the Extension Graph. This is the module which later gets converted to the Main Graph.
+
+#### User Made Modules
+These modules are made by the users and are reusable in the same bot. The modules can be added anywhere as needed (_except for Extension Graph_).
+
+### Nodes
+Nodes are the smallest blocks/steps that define the activity to be performed by the bot. For example, you can send a message to the user, send user data to a server, collect data from the user, etc. In a typical programming world, nodes are like a single line of code to perform an action. There are 3 type of nodes present in Convai:
+
+#### System Nodes
+System nodes, just like system modules, are added to the graphs by default. These nodes cannot be deleted from a graph.
+
+- **Request Node on Extension Graph**: Request Node is used to parse the request from a channel into a Convai understandable format.
+- **Trigger Node on Extension Graph**: Trigger Node is used to handle broadcasts sent directly from Convai or from a third-party server using the API/SDK.
+- **Batch Responder Node on Extension Graph**: Batch Responder is used to parse the response back to the channel that initiated the request.
+- **Request Node on Extension Graph**: Request Node is used to parse the request from a channel into a Convai understandable format.
+- **Request Node on Extension Graph**: Request Node is used to parse the request from a channel into a Convai understandable format.
+- **Request Node on Extension Graph**: Request Node is used to parse the request from a channel into a Convai understandable format.
+- **Request Node on Extension Graph**: Request Node is used to parse the request from a channel into a Convai understandable format.

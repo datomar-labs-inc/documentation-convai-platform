@@ -11,7 +11,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 The Convai Platform is designed to automate conversations between businesses and their customers across multiple messaging channels. It provides the ability to make the chatbot once and launch it on different channels with zero to minimal changes.
 
 ## How does the Convai Platform works?
-When a user sends a message via any channel, it is first parsed into a Convai readable format using the **Request Module** in the **Extension Graph**. Then it goes through to the **Main Graph** using the **Main Module**. All the bot logic is written in the **Main Graph** using modules, nodes and links. After all the logic in the **Main Graph**, the **Batch Responder** parses the response back into a structure that is understandable by the messaging channel. Everything in Convai is a context modifier. The end result is based on how the context of the current execution is being modified.
+When a user sends a message via any channel, it is first parsed into a Convai readable format using the **Request Node** in the **Extension Graph**. Then it goes through to the **Main Graph** using the **Main Module**. All the bot logic is written in the **Main Graph** using modules, nodes and links. After all the logic in the **Main Graph**, the **Batch Responder** parses the response back into a structure that is understandable by the messaging channel. Everything in Convai is a context modifier. The end result is based on how the context of the current execution is being modified.
 <img alt="How does the Convai Platform works" src={useBaseUrl('img/convai-studio/how-it-works.png')} />
 
 ## How do I get started?
