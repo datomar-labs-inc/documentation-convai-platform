@@ -48,506 +48,531 @@ Go to Settings from Nav.
 
   Go to Extension Graph by clicking on the Extension Paginator
 
-
   Add the DialogFlow Node to the graph. Connect it between the Request Node and Main Node for NLP to function.
 
   Now you are able to use NLP from Intent Links by selecting the DialogFlow intents
 
+8. Back to the Main Graph by clicking the Paginator
+  Create a Module from the Context Menu by right clicking anywhere on the graph
 
+  Rename the Module as “Get Questions”, and connect it to the Any Time System Node
 
-Back to the Main Graph by clicking the Paginator
-Create a Module from the Context Menu by right clicking anywhere on the graph
+  Click on the link, change the link type to Intent Link, select AskQuestion(DialogFlow) as the Intent. Any User Input from the Any Time Node that matches this intent will proceed to the Get Questions Module.
 
-Rename the Module as “Get Questions”, and connect it to the Any Time System Node
+  The AskQuestion Intent in DialogFlow looks like this:
 
-Click on the link, change the link type to Intent Link, select AskQuestion(DialogFlow) as the Intent. Any User Input from the Any Time Node that matches this intent will proceed to the Get Questions Module.
+  The “triviacategory” entity will be used in the script to call the Trivia API to get quiz questions in different categories. This parameter will be saved in the execution scope.
 
+  Double click on the Get Question Module to get inside its graph.
 
-The AskQuestion Intent in DialogFlow looks like this:
+  Click on the Input Node, add a Module Variable like the following for the script to use
 
-The “triviacategory” entity will be used in the script to call the Trivia API to get quiz questions in different categories. This parameter will be saved in the execution scope.
+  Create a Script Node from Context Menu and Rename it as “Get Questions”, link it to the Input Node of this Module.
 
-Double click on the Get Question Module to get inside its graph.
+  Fill the following code in the Script Node:
 
-Click on the Input Node, add a Module Variable like the following for the script to use
+  ```js
+  const axios = require('axios');
+  
+  module.exports = async function main() {
+      try {
+          let amount = modvars.qAmount; //module variable
+          
+          //get triviacategory from Context Data
+          let category = ctx.get("triviacategory"); 
+          category = category || '';
+          
+          //set up the baseUrl for API call
+          let baseUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}`;
+          
+          let {data} = await axios.get(baseUrl);
+          let questions = data.results;
+          
+          //set Session Data questions equal to the result from API Call
+          setSession("questions", questions)
+      } catch (e) {
+          console.error(e.message)
+      }
+  }
+  ```
 
-Create a Script Node from Context Menu and Rename it as “Get Questions”, link it to the Input Node of this Module.
+  :::tip Note
+  Here we used AXIOS as the HTTP library to call the Open Trivia Database API to get Quiz questions and store data of questions in the Session Scope Data. Script in Script Node is basically JavaScript, you can use AXIOS or any other HTTP libraries to call external APIs. You can read the document about Context in Script if you want to know what the script does exactly here.
+  :::
 
+9. Go to the Dev Console on the Right Side Panel (we will refer to it as Side Panel for short). Type “Ask a film question” and hit Enter. Click on View under the bot’s response, scroll down a little bit to inspect the Session Data and the Entity we got from DialogFlow, that is what the Script Node did for us.
 
-Fill the following code in the Script Node:
-```js
-const axios = require('axios');
+  If the AskQuestion Intent did not match, session data will look like this
 
-module.exports = async function main() {
-    try {
-        let amount = modvars.qAmount; //module variable
+10. We have the Get Question Module Ready, let’s add another Module named “Ask Question” on the Main Graph, connect it after the Get Question Module. Double click to enter its graph. 
+
+  Create a graph like below:
+
+  Edit the script of Format Question Script Node:
+
+  ```js
+  const _ = require('lodash');
+
+  module.exports = async function main() {
+      try {
         
-        //get triviacategory from Context Data
-        let category = ctx.get("triviacategory"); 
-        category = category || '';
+          //for challenge, save the index
+          let index = ctx.session.get("index");
+          let currentQuestion = {};
+          if(index === undefined){
+              index = 0;
+          }
+          
+          //get one question from Session Data
+          q = ctx.session.get('questions')[index];
         
-        //set up the baseUrl for API call
-        let baseUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}`;
+          let options = [];
         
-        let {data} = await axios.get(baseUrl);
-        let questions = data.results;
+          //set question type in Context Data
+          //multiple choice or true/false
+          if (q.type === "boolean") {
+              set("type", "tf");
+          } else {
+              set("type", "mc");
+          }
         
-        //set Session Data questions equal to the result from API Call
-        setSession("questions", questions)
-    } catch (e) {
-        console.error(e.message)
-    }
-}
-```
-
-Here we use AXIOS as the HTTP library to call the Open Trivia Database API to get Quiz questions and store data of questions in the Session Scope Data. Script in Script Node is basically JavaScript, you can use AXIOS or any other HTTP libraries to call external APIs. You can read the document about Context in Script if you want to know what the script does exactly here.
-Go to the Dev Console on the Right Side Panel (we will refer to it as Side Panel for short). Type “Ask a film question” and hit Enter. Click on View under the bot’s response, scroll down a little bit to inspect the Session Data and the Entity we got from DialogFlow, that is what the Script Node did for us.
-
-
-
-If the AskQuestion Intent did not match, session data will look like this
-
-We have the Get Question Module Ready, let’s add another Module named “Ask Question” on the Main Graph, connect it after the Get Question Module. Double click to enter its graph. 
-
-Create a graph like below:
-
-Edit the script of Format Question Script Node:
-```js
-const _ = require('lodash');
-
-module.exports = async function main() {
-    try {
+          options.push(q.correct_answer);
         
-        //for challenge, save the index
-        let index = ctx.session.get("index");
-        let currentQuestion = {};
-        if(index === undefined){
-            index = 0;
-        }
+          q.incorrect_answers.forEach(o => options.push(o));
+    
+          //shuffle the answer options
+          options = _.shuffle(options);
+    
+          options.forEach((o, i) => {
+              if (o === q.correct_answer) {
+                  currentQuestion.correctIndex = i;
+              }
+          });
         
-        //get one question from Session Data
-        q = ctx.session.get('questions')[index];
+          //replace character code to character
+          question = _.replace(_.replace(q.question, "&quot;", '"'), "&", "&amp;");
+    
+          //put the currentQuestion things in one object
+          currentQuestion.options = options;
+          currentQuestion.question = question;
+          currentQuestion.correctAnswer = q.correct_answer;
         
-        let options = [];
+          //set currentQuestion in Session Data
+          setSession("currentQuestion", currentQuestion);
+      } catch (e) {
+          console.log(e.message);
+      }
+  }
+  ```
+  :::tip Note
+  Here we used the Lodash utility library to format quiz questions. As mentioned before, Script Node is just JavaScript, you can use any JavaScript features here.
+  :::
+
+  Edit Question Response Node:
+
+    ```xml
+    <response>
+        <message typing="1">
+        <text>{{ session.data.question }}
+        {%- for op in session.data.options -%}
+                    {{- forloop.index -}}. {{ op }}
+        {% endfor %}
+        </text>
+        {% for op in session.data.options %}
+                    <qr value="{{ forloop.index | minus: 1 }}">{{ op }}</qr>
+            {% endfor %}
+        </message>
+    </response>
+    ```
+
+    The Response Node is in Liquid Template. The preview of this response will look like this:
+
+    Edit Validate Answer Script Node:
+
+    ```js
+    module.exports = async function main() {
+        //user input
+        txt = ctx.text.replace("%s+", "");
+        //correct index
+        correct = ctx.session.get("currentQuestion").correctIndex;
         
-        //set question type in Context Data
-        //multiple choice or true/false
-        if (q.type === "boolean") {
-            set("type", "tf");
+        if (txt == correct) {
+            set("correct", true);
         } else {
-            set("type", "mc");
+            set("incorrect", true);
+        }
+    }
+    ```
+
+    Edit Correct, Incorrect Response Nodes:
+    ```xml
+    <response>
+        <message>
+            <text>Correct! Added 1 to your score.</text>
+        </message>
+    </response>
+    ```
+    ```xml
+    <response>
+        <message>
+            <text>Incorrect! Subtracted 1 to your score.</text>
+        </message>
+    </response>
+    ```
+
+    Edit Update Point Script Node:
+    ```js
+    module.exports = async function main() {
+        //get point from User Data
+        point = ctx.user.get("point");
+        
+        //set point to 0 if it does not exist
+        if (point === undefined) {
+            point = 0;
         }
         
-        options.push(q.correct_answer);
+        //get correct or incorrect from Context Data
+        if (ctx.get("correct")) {
+            point++;
+        }else if (ctx.get("incorrect")){
+            point--;
+        }else {
+            point += 0;
+        }
         
-        q.incorrect_answers.forEach(o => options.push(o));
+        //set point in User Data
+        setUser("point",point);
+    }
+    ```
+
+    Notice that Validate Answer Script Node has two links to two Response Nodes. We need to take some action on these links otherwise the flow of the graph will always go to the Correct Response Node.
     
-        //shuffle the answer options
-        options = _.shuffle(options);
-    
-        options.forEach((o, i) => {
-            if (o === q.correct_answer) {
-                currentQuestion.correctIndex = i;
-            }
-        });
+    Review the script code in Validate Answers Script Node, it sets the execution scope variable “correct” to true if the answer is correct, otherwise it sets “incorrect” to true. We can take this as an advantage in Data Equals Link (Actually the Validate Answers Script Node is intended to do so). 
+    ```js
+    module.exports = async function main() {
+        //user input
+        txt = ctx.text.replace("%s+", "");
+        //correct index
+        correct = ctx.session.get("currentQuestion").correctIndex;
         
-        //replace character code to character
-        question = _.replace(_.replace(q.question, "&quot;", '"'), "&", "&amp;");
-    
-        //put the currentQuestion things in one object
-        currentQuestion.options = options;
-        currentQuestion.question = question;
-        currentQuestion.correctAnswer = q.correct_answer;
-        
-        //set currentQuestion in Session Data
-        setSession("currentQuestion", currentQuestion);
-    } catch (e) {
-        console.log(e.message);
+        if (txt == correct) {
+            set("correct", true);
+        } else {
+            set("incorrect", true);
+        }
     }
-}
-```
-Here we used the Lodash utility library to format quiz questions. As mentioned before, Script Node is just JavaScript, you can use any JavaScript features here.
-Edit Question Response Node:
+    ```
 
-```xml
-<response>
-	<message typing="1">
-	<text>{{ session.data.question }}
-	{%- for op in session.data.options -%}
-        		{{- forloop.index -}}. {{ op }}
-	{% endfor %}
-	</text>
-	{% for op in session.data.options %}
-        		<qr value="{{ forloop.index | minus: 1 }}">{{ op }}</qr>
-    	{% endfor %}
-	</message>
-</response>
-```
+    Set the link between Validate Answer Script Node and Correct Response Node to be Data Equals Link. Set Field Type as Data, Field Name as “correct”, Operation as Exists.
 
-The Response Node is in Liquid Template. The preview of this response will look like this:
+    Set the link between Validate Answer Script Node and Incorrect Response Node to be Data Equals Link. Set Field Type as Data, Field Name as “incorrect”, Operation as Exists.
 
-Edit Validate Answer Script Node:
-module.exports = async function main() {
-    //user input
-    txt = ctx.text.replace("%s+", "");
-    //correct index
-    correct = ctx.session.get("currentQuestion").correctIndex;
+    After the bot updates the user’s point, the stored quiz questions in Session Data are no longer useful. These data should be deleted (clean up). So we add a Delete Data Node at the end of this Module.
+
+    Back to the Main Graph, add a Delete Data Node after the Ask Questions Module.
+
+  :::info Note
+  We will explain why we don’t delete s.questions inside the Ask Questions Module in the next section. You can inspect that after the user answers the quiz question, questions stored in Session Data are cleared.
+  :::
+
+11. Go to Dev Console in the Side Panel, send “Ask a film question” to the bot. The Bot will respond with the quiz question and you can play with it.
+
+    Congratulations, you have built your first Convai chatbot. In this section, you have learned how to use NLP via intent links, and how to call external APIs via Script Nodes. In the next section, we will enhance the bot by reusing the modules you created in this section, and give you an image on how convenient to develop a bot with Modules.
     
-    if (txt == correct) {
-        set("correct", true);
-    } else {
-        set("incorrect", true);
-    }
-}
-
-Edit Correct, Incorrect Response Nodes:
-```xml
-<response>
-	<message>
-		<text>Correct! Added 1 to your score.</text>
-	</message>
-</response>
-
-<response>
-	<message>
-		<text>Incorrect! Subtracted 1 to your score.</text>
-	</message>
-</response>
-```
-
-Edit Update Point Script Node:
-module.exports = async function main() {
-    //get point from User Data
-    point = ctx.user.get("point");
-    
-    //set point to 0 if it does not exist
-    if (point === undefined) {
-        point = 0;
-    }
-    
-    //get correct or incorrect from Context Data
-    if (ctx.get("correct")) {
-        point++;
-    }else if (ctx.get("incorrect")){
-        point--;
-    }else {
-        point += 0;
-    }
-    
-    //set point in User Data
-    setUser("point",point);
-}
-
-Notice that Validate Answer Script Node has two links to two Response Nodes. We need to take some action on these links otherwise the flow of the graph will always go to the Correct Response Node.
-Review the script code in Validate Answers Script Node, it sets the execution scope variable “correct” to true if the answer is correct, otherwise it sets “incorrect” to true. We can take this as an advantage in Data Equals Link (Actually the Validate Answers Script Node is intended to do so). 
-module.exports = async function main() {
-    //user input
-    txt = ctx.text.replace("%s+", "");
-    //correct index
-    correct = ctx.session.get("currentQuestion").correctIndex;
-    
-    if (txt == correct) {
-        set("correct", true);
-    } else {
-        set("incorrect", true);
-    }
-}
-
-Set the link between Validate Answer Script Node and Correct Response Node to be Data Equals Link. Set Field Type as Data, Field Name as “correct”, Operation as Exists.
-
-Set the link between Validate Answer Script Node and Incorrect Response Node to be Data Equals Link. Set Field Type as Data, Field Name as “incorrect”, Operation as Exists.
-
-After the bot updates the user’s point, the stored quiz questions in Session Data are no longer useful. These data should be deleted (clean up). So we add a Delete Data Node at the end of this Module.
-
-Back to the Main Graph, add a Delete Data Node after the Ask Questions Module.
-
-We will explain why we don’t delete s.questions inside the Ask Questions Module in the next section. You can inspect that after the user answers the quiz question, questions stored in Session Data are cleared.
-
-
-Go to Dev Console in the Side Panel, send “Ask a film question” to the bot. The Bot will respond with the quiz question and you can play with it.
-
-Congratulations, you have built your first Convai chatbot. In this section, you have learned how to use NLP via intent links, and how to call external APIs via Script Nodes. In the next section, we will enhance the bot by reusing the modules you created in this section, and give you an image on how convenient to develop a bot with Modules.
-The final Main graph looks like this:
+    The final Main graph looks like this:
 
 
 ## Enhance the Tutorial Bot
 In this section, we are going to add a challenge feature which allows the user to answer ten quiz questions and show the user’s final score. And a Get Point feature allows the user to get its points and reset it. And Finally, add a welcome message to give a hint to the user on how to interact with the bot.
-On the Main Graph, create a module named “Challenge” and connect it to Any Time System Node with Challenge intent Link, enter its graph.
 
-The Challenge Intent in DialogFlow:
+1. On the Main Graph, create a module named “Challenge” and connect it to Any Time System Node with Challenge intent Link, enter its graph.
 
-Create the graph like below (Set Loop Index is a Set Data Node):
+    The Challenge Intent in DialogFlow:
 
-Notice that we are reusing the module we created before - Get Questions and Ask Question Module (Modules has an icon on its top-left corner). When you develop your own bot, think carefully about how to modularize your bot functionalities so that you can reuse them anywhere you need, this makes the development process very flexible.
-Edit the Challenge Starts Response Node:
-<response>
-	<message>
-		<text>Let's start the challenge!</text>
-	</message>
-</response>
+    Create the graph like below (Set Loop Index is a Set Data Node):
 
-Remember in the Main graph, the Get Questions Module is connected to the Any Time system Node with AskQuestion intent link. Think Any Time Node as a User Input Node. Therefore, set the link between the User Input Node and Get Questions Module to be AskQuestion intent link.
+    Notice that we are reusing the module we created before - Get Questions and Ask Question Module (Modules has an icon on its top-left corner). When you develop your own bot, think carefully about how to modularize your bot functionalities so that you can reuse them anywhere you need, this makes the development process very flexible.
+    Edit the Challenge Starts Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>Let's start the challenge!</text>
+        </message>
+    </response>
+    ```
 
-Click on the Get Questions Module, edit its module variable “qAmount” to 10 in order to get 10 questions from the Trivia API.
+    Remember in the Main graph, the Get Questions Module is connected to the Any Time system Node with AskQuestion intent link. Think Any Time Node as a User Input Node. Therefore, set the link between the User Input Node and Get Questions Module to be AskQuestion intent link.
 
-We have got 10 quiz questions from the Get Questions Module, then we need the user to answer these 10 questions. However, the Ask Question Module only asks and lets the user answer one question. Using a loop to loop 10 times of the Ask Question Module is a straightforward strategy here.
-Edit the Set Loop Index Set Data Node:
+    Click on the Get Questions Module, edit its module variable “qAmount” to 10 in order to get 10 questions from the Trivia API.
 
-Edit Index++ Script Node:
-module.exports = async function main() {
-    //get index from Session Data
-    let index = ctx.session.get("index");
-    index++;
-    //set index in Session Data
-    setSession("index",index);
-}
+    We have got 10 quiz questions from the Get Questions Module, then we need the user to answer these 10 questions. However, the Ask Question Module only asks and lets the user answer one question. Using a loop to loop 10 times of the Ask Question Module is a straightforward strategy here.
+    Edit the Set Loop Index Set Data Node:
 
-We need to determine when the loop is finished by using Data Equals Link.
+    Edit Index++ Script Node:
+    ```js
+    module.exports = async function main() {
+        //get index from Session Data
+        let index = ctx.session.get("index");
+        index++;
+        //set index in Session Data
+        setSession("index",index);
+    }
+    ```
 
-This loop can be illustrated in the following pseudo-code
-index = 0 // Set Loop Index Node
-start loop
-      Ask Questions
-      index++  // Index++ Node
-      if (index == 10)
-          end loop 
--> Delete Data Node
+    We need to determine when the loop is finished by using Data Equals Link.
 
-Edit Delete Data Node:
+    This loop can be illustrated in the following pseudo-code
+    ```js
+    index = 0 // Set Loop Index Node
+    start loop
+        Ask Questions
+        index++  // Index++ Node
+        if (index == 10)
+            end loop 
+    -> Delete Data Node
+    ```
 
-Remember that we have deleted s.currentQuestions inside the Ask Question Module, if we delete s.questions we got from the API call in that module then we are not able to make the bot ask the next 9 questions in the Challenge Module. So we delete s.questions outside of the Ask Question Module.
-Edit Final Score Response Node:
-```xml
-<response>
-	<message>
-		<text>You have finished the challenge. Your final score is: {{user\.data\.point}}</text>
-	</message>
-</response>
-```
+    Edit Delete Data Node:
 
-The execution of Challenge Module:
+    Remember that we have deleted s.currentQuestions inside the Ask Question Module, if we delete s.questions we got from the API call in that module then we are not able to make the bot ask the next 9 questions in the Challenge Module. So we delete s.questions outside of the Ask Question Module.
+    Edit Final Score Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>You have finished the challenge. Your final score is: {{user\.data\.point}}</text>
+        </message>
+    </response>
+    ```
 
-We have the Challenge Module ready, now we need a Get Point Module for the user to get its score or reset it. Create this Module on the Main graph and connect it to Any Time system Node with GetPoints intent link.
+    The execution of Challenge Module:
 
-GetPoints Intent in DialogFlow:
+2. We have the Challenge Module ready, now we need a Get Point Module for the user to get its score or reset it. Create this Module on the Main graph and connect it to Any Time system Node with GetPoints intent link.
 
-Inside the module, create the graph (Reset Point is Set Data Node):
+    GetPoints Intent in DialogFlow:
 
-Edit Your Score Response Node:
-```xml
-<response>
-	<message>
-		<text>Your Score is: {{user.data.point}}
-Do you want to reset your score to Zero?
-</text>
-	</message>
-</response>
-```
+    Inside the module, create the graph (Reset Point is Set Data Node):
 
-This Response Prompts the user to reset its point or not. Use Affirm intent link to ensure that the flow goes to Reset Point Node if the user confirms to reset its point. Otherwise prompt a Continue message.
+    Edit Your Score Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>Your Score is: {{user.data.point}}
+    Do you want to reset your score to Zero?
+    </text>
+        </message>
+    </response>
+    ```
 
-Edit Reset Point Set Data Node:
+    This Response Prompts the user to reset its point or not. Use Affirm intent link to ensure that the flow goes to Reset Point Node if the user confirms to reset its point. Otherwise prompt a Continue message.
 
-Edit Continue Response Node:
+    Edit Reset Point Set Data Node:
 
-```xml
-<response>
-	<message>
-		<text>You can continue on what you want to do.</text>
-	</message>
-</response>
-```
+    Edit Continue Response Node:
 
-Edit Reseted Point Response Node:
-```xml
-<response>
-	<message>
-		<text>Your score is set to Zero!</text>
-	</message>
-</response>
-```
+    ```xml
+    <response>
+        <message>
+            <text>You can continue on what you want to do.</text>
+        </message>
+    </response>
+    ```
 
-The execution of Get Point Module:
+    Edit Reseted Point Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>Your score is set to Zero!</text>
+        </message>
+    </response>
+    ```
 
-The main functionalities of this bot is set. But we do need a welcome message. A user is new to this bot, and has completely no idea how this bot works. Welcome message is an essential tool.
+    The execution of Get Point Module:
+
+3. The main functionalities of this bot is set. But we do need a welcome message. A user is new to this bot, and has completely no idea how this bot works. Welcome message is an essential tool.
 Create the Welcome Response Node, link it to Start and Any Time System Node with Welcome intent link.
+    
+  Welcome Intent in DialogFlow:
 
-Welcome Intent in DialogFlow:
+  Edit the Welcome Response Node:
+  ```xml
+  <response>
+      <message>
+          <text>Hi I am the trivia bot. How can I help you?</text>
+      </message>
+  </response>
+  ```
+  
+  This is just a demonstration of the welcome message, you can add more information to optimize user experience.
+    
+  The final graph of the enhanced Tutorial Bot:
 
-Edit the Welcome Response Node:
-```xml
-<response>
-	<message>
-		<text>Hi I am the trivia bot. How can I help you?</text>
-	</message>
-</response>
-```
+  The overall execution of the enhanced Tutorial Bot:
 
-Here is just a demonstration of the welcome message, you can add more information to optimize user experience.
-The final graph of the enhanced Tutorial Bot:
-
-The overall execution of the enhanced Tutorial Bot:
-
-That’s it! You have learned how to create a bot with NLP and External APIs, and how to use Modules to make your development process flexible. Now let’s proceed to integrate the bot into Facebook
+4. That’s it! You have learned how to create a bot with NLP and External APIs, and how to use Modules to make your development process flexible. Now let’s proceed to integrate the bot into Facebook
 
 ## Facebook Channel
 In this section, we will integrate the bot into Facebook so that you can chat to the bot on Facebook.
-In Convai, go to Settings via Side Nav. Add Facebook integration, leave the configurations blank and save it. For now you have Facebook and DialogFlow integrations.
 
-Login to Facebook for Developer. Click on My Apps
+1. In Convai, go to Settings via Side Nav. Add Facebook integration, leave the configurations blank and save it. For now you have Facebook and DialogFlow integrations.
 
-Click on Add a New App, choose Manage Business Integrations
+2. Login to Facebook for Developer. Click on My Apps
 
+  Click on Add a New App, choose Manage Business Integrations
 
-Enter the App Display Name and choose Just me to use the app for demonstration. Click Create App ID and confirm the security check.
+  Enter the App Display Name and choose Just me to use the app for demonstration. Click Create App ID and confirm the security check.
 
-On the left side panel, click on the + button on the right of PRODUCTS.
+3. On the left side panel, click on the + button on the right of PRODUCTS.
 
-Find Messenger and click Set Up.
+  Find Messenger and click Set Up.
 
-Go to Settings -> Basic, copy the App Secret into Convai Facebook Integration Configuration
+4. Go to Settings -> Basic, copy the App Secret into Convai Facebook Integration Configuration
 
+5. On Facebook for Developer, go back to Messenger Settings
 
-On Facebook for Developer, go back to Messenger Settings
+  Scroll down a little bit to find the Access Tokens section, click on Add or Remove Pages
 
-Scroll down a little bit to find the Access Tokens section, click on Add or Remove Pages
+  A new window will pop up, click Continue.
 
-A new window will pop up, click Continue.
+  Select Convai Tutorial Bot, click Next.
 
-Select Convai Tutorial Bot, click Next.
+  Click Done
 
-Click Done
+  Click OK
 
-Click OK
+  You are brought back to the Messenger Settings. In the Access Tokens section, you can find the created Page, click on Generate Token.
 
-You are brought back to the Messenger Settings. In the Access Tokens section, you can find the created Page, click on Generate Token.
+  Check I Understand and copy the generated Page Token in Convai Facebook Configuration.
 
-Check I Understand and copy the generated Page Token in Convai Facebook Configuration.
+  Save the Facebook Integration Configuration in Convai, click the < button, copy the Facebook webhook URL.
 
+  Back in Facebook Messenger Settings, Click Done on the Generate Token page. Scroll down to find the Webhooks Section, click on Add Callback URL.
 
-Save the Facebook Integration Configuration in Convai, click the < button, copy the Facebook webhook URL.
+  Fill the Callback URL with the Facebook webhook URL copied in Convai
 
+  Next, go back to Convai, open the Facebook Integration Configuration, enter any password you like in the Verification Token field and Save it. Here we use “convai” as the Verification Token for demonstration, you can use anything more secure you like. 
 
-Back in Facebook Messenger Settings, Click Done on the Generate Token page. Scroll down to find the Webhooks Section, click on Add Callback URL.
+  In Facebook for Developers, enter the Verification Token you entered and saved in Convai. Click Verify and Save.
 
-Fill the Callback URL with the Facebook webhook URL copied in Convai
+6. Next you need to Add Subscription for the webhook we added in the previous step.
 
-Next, go back to Convai, open the Facebook Integration Configuration, enter any password you like in the Verification Token field and Save it. Here we use “convai” as the Verification Token for demonstration, you can use anything more secure you like. 
+  In the Webhook Section at Convai Tutorial Bot Page, click Add Subscription. Check messages, messaging_postbacks, message_deliveries, message_reads and Save.
 
-In Facebook for Developers, enter the Verification Token you entered and saved in Convai. Click Verify and Save.
+  For your own developed bot, you might want to read Facebook Messenger’s Documentation about the webhook subscription.
 
-Next you need to Add Subscription for the webhook we added in the previous step.
-In the Webhook Section at Convai Tutorial Bot Page, click Add Subscription. Check messages, messaging_postbacks, message_deliveries, message_reads and Save.
+7. Now the bot is integrated in Facebook Channel, you don’t need to do anything else, it just works. Let’s test it out.
 
-For your own developed bot, you might want to read Facebook Messenger’s Documentation about the webhook subscription.
-Now the bot is integrated in Facebook Channel, you don’t need to do anything else, it just works. Let’s test it out.
-Login to Messenger with your Facebook Developer Account, start a New Message, enter the bot’s name (Convai Tutorial Bot, or your own Facebook App name).
+8. Login to Messenger with your Facebook Developer Account, start a New Message, enter the bot’s name (Convai Tutorial Bot, or your own Facebook App name).
 
 
 ## Analytics Integration
 Convai by itself has a Dashboard of Analytics, but you can use other chatbot analytics, such as Dashbot. In this section, we will use Dashbot integration to extend the Analytics in the bot.
-In Convai, go to settings, add Dashbot integration, leave the Dashbot API Key configuration empty. 
 
-Login to Dashbot, click on Add Chatbot.
+1. In Convai, go to settings, add Dashbot integration, leave the Dashbot API Key configuration empty. 
 
-Fill in the bot’s name and select “Universal” as the Dashbot platform. Click on Register.
+2. Login to Dashbot, click on Add Chatbot.
 
-Copy the API key into Convai’s integration configuration and Save it.
+  Fill in the bot’s name and select “Universal” as the Dashbot platform. Click on Register.
+
+3. Copy the API key into Convai’s integration configuration and Save it.
+
+4. Back to the bot’s graph. Go to Extension Graph via Paginator.
+
+  Add a Dashbot Node by Context Menu
+
+5. In Dashbot under the Integration Code Section, click View Reports to go to the Dashboard.
 
 
+6. Back to Convai. Do some simple execution in the Dev Console.
 
-Back to the bot’s graph. Go to Extension Graph via Paginator.
-Add a Dashbot Node by Context Menu
-
-In Dashbot under the Integration Code Section, click View Reports to go to the Dashboard.
-
-
-Back to Convai. Do some simple execution in the Dev Console.
-
-In Dashbot dashboard, you can see that the Live Message Rate has changed, and in Recent Transcripts, there’s a “dev-console-...” which means Dashbot has recorded the transcript of the Dev Console execution in Convai. The other one is the just the execution we tested for our Facebook integration.
+  In Dashbot dashboard, you can see that the Live Message Rate has changed, and in Recent Transcripts, there’s a “dev-console-...” which means Dashbot has recorded the transcript of the Dev Console execution in Convai. The other one is the just the execution we tested for our Facebook integration.
 
 
 ## User Experience
 Let’s take a tour back to the execution of the bot we built. You may already find out that it is ambiguous for new users of this bot. In this section, we will optimize the bot’s response and add some Fallbacks to unknown User Inputs. By the way, you don’t need to do any other work for Facebook Channel as Convai does it for you, it just works!
-Go to the Main Graph of the bot
-Observe the graph, you can find that there’s a situation we did not handle. When the user input is not one of the intents in the graph, the bot will not respond.
 
+1. Go to the Main Graph of the bot
 
-In Dev Console, we are able to see this No responses received message, but not in other Channels like Facebook. We need to handle this by using Fallback.
-Create a new Module named “Fallback”. Connect it to the Any Time System Node with a basic link - user input is anything other than the intents we have on other modules and nodes. 
+  Observe the graph, you can find that there’s a situation we did not handle. When the user input is not one of the intents in the graph, the bot will not respond.
 
-Edit the graph of the Fallback Module
+  In Dev Console, we are able to see this No responses received message, but not in other Channels like Facebook. We need to handle this by using Fallback.
 
-Edit the General Fallback Response Node
-```xml
-<response>
-	<message>
-		<text>Sorry, I don't understand.</text>
-		<qr value="ask a question">A single Quiz</qr>
-		<qr value="challenge me">Challenge 10 Quizzes</qr>
-		<qr value="what is my point">Check your score</qr>
-	</message>
-</response>
-```
+2. Create a new Module named “Fallback”. Connect it to the Any Time System Node with a basic link - user input is anything other than the intents we have on other modules and nodes. 
 
-The Preview of this Response looks like this:
+  Edit the graph of the Fallback Module
 
-This response uses Quick Reply. Quick Replies gives the user a convenient way to send predefined messages to the bot by clicking on them. Use this wisely as the user may rely solely on quick reply, in our case, the “Ask a question” quick reply asks a question of random category for a user to answer. The bot is capable of user inputs like “Ask sports questions”, this is more about the prompt for user input, we will discuss it later.
-By its nature, Fallback should always be considered after a User Input Node (as well as Any Time System Node which we have covered). But sometimes it is not necessary. For example in Ask Question Module, we validate user input which gives only two results - correct or incorrect answer in the Validate Answer Script Node. The execution flow is closed, unlike the flow in the Main graph before we added the Fallback Module.
+  Edit the General Fallback Response Node
+    ```xml
+    <response>
+        <message>
+            <text>Sorry, I don't understand.</text>
+            <qr value="ask a question">A single Quiz</qr>
+            <qr value="challenge me">Challenge 10 Quizzes</qr>
+            <qr value="what is my point">Check your score</qr>
+        </message>
+    </response>
+    ```
 
-We can find the execution flow through the User Input Node in the Challenge Module is not closed. Users could input anything that does not match the AskQuestion Intent. We can use Quick Replies in Challenge Starts Response Node, but this makes the AskQuestion Intent meaningless and there are too many categories of questions, we might need to add a bunch of redundant Quick Replies. So we need a Fallback to handle this. 
-Connect the Fallback Module to the User Input Node.
+  The Preview of this Response looks like this:
 
-But the General Fallback Response does not fit in this situation. Because all we want is to prompt the user input to match AskQuestion intent.
+  This response uses Quick Reply. Quick Replies gives the user a convenient way to send predefined messages to the bot by clicking on them. Use this wisely as the user may rely solely on quick reply, in our case, the “Ask a question” quick reply asks a question of random category for a user to answer. The bot is capable of user inputs like “Ask sports questions”, this is more about the prompt for user input, we will discuss it later.
 
-We need another Fallback Response for this situation. Add a Set Data Node before Fallback Module. This makes sure the bot knows which Fallback Response it should go to.
+3. By its nature, Fallback should always be considered after a User Input Node (as well as Any Time System Node which we have covered). But sometimes it is not necessary. For example in Ask Question Module, we validate user input which gives only two results - correct or incorrect answer in the Validate Answer Script Node. The execution flow is closed, unlike the flow in the Main graph before we added the Fallback Module.
 
-Edit Fallback Module. If d.challengeFallback, that means the execution flow comes from the Challenge Module. Since d.challengeFallback is in the Context(Execution) scope, it is deleted every time there’s a user input.
+4. We can find the execution flow through the User Input Node in the Challenge Module is not closed. Users could input anything that does not match the AskQuestion Intent. We can use Quick Replies in Challenge Starts Response Node, but this makes the AskQuestion Intent meaningless and there are too many categories of questions, we might need to add a bunch of redundant Quick Replies. So we need a Fallback to handle this. 
 
-Edit Challenge Fallback Response Node
-```xml
-<response>
-	<message>
-		<text>Sorry, I don't understand.
-		
-Type "ask [category] questions" to start challenge
+  Connect the Fallback Module to the User Input Node.
 
-[category] can be any category of questions you'd like to challenge, or you can just type "ask questions" to challenge questions from random categories.
-</text>
-	</message>
-</response>
-```
+  But the General Fallback Response does not fit in this situation. Because all we want is to prompt the user input to match AskQuestion intent.
 
-Using Fallback optimizes User Experience when the user input something wrong. And it is the bot developer’s responsibility to let users know how to do things right. That means we need to tell the user how to do things correctly in ANY Response Node that prompts a user input.
-Go to Main Graph, edit the Welcome Response Node
-```xml
-<response>
-	<message>
-		<text>Hi, I am the trivia bot.
-		
-You can do a quiz question by type "ask a [category name or nothing] question". 
-		
-And I can make you a challenge of 10 questions, type "challenge me".
+  We need another Fallback Response for this situation. Add a Set Data Node before Fallback Module. This makes sure the bot knows which Fallback Response it should go to.
 
-If you want to know your point, type "what is my point"
-</text>
-	</message>
-</response>
-```
+  Edit Fallback Module. If d.challengeFallback, that means the execution flow comes from the Challenge Module. Since d.challengeFallback is in the Context(Execution) scope, it is deleted every time there’s a user input.
 
-Go to Challenge Module, edit the Challenge Starts Response Node
-```xml
-<response>
-	<message>
-		<text>Preparing challenge...
+  Edit Challenge Fallback Response Node
+    ```xml
+    <response>
+        <message>
+            <text>Sorry, I don't understand.
+            
+    Type "ask [category] questions" to start challenge
 
-Type "ask [category or nothing] questions" to start the challenge		
-</text>
-	</message>
-</response>
-```
+    [category] can be any category of questions you'd like to challenge, or you can just type "ask questions" to challenge questions from random categories.
+    </text>
+        </message>
+    </response>
+    ```
 
-The overall execution of the User Experience Optimized bot
+5. Using Fallback optimizes User Experience when the user input something wrong. And it is the bot developer’s responsibility to let users know how to do things right. That means we need to tell the user how to do things correctly in ANY Response Node that prompts a user input.
 
-Congratulations, you have learned all of the basics you need to develop a chatbot in Convai. You can always check back here if you have any questions. It is good for you to start developing your own bot and check out other detailed documentations of Convai.
+  Go to Main Graph, edit the Welcome Response Node
+    ```xml
+    <response>
+        <message>
+            <text>Hi, I am the trivia bot.
+            
+    You can do a quiz question by type "ask a [category name or nothing] question". 
+            
+    And I can make you a challenge of 10 questions, type "challenge me".
+
+    If you want to know your point, type "what is my point"
+    </text>
+        </message>
+    </response>
+    ```
+
+  Go to Challenge Module, edit the Challenge Starts Response Node
+    ```xml
+    <response>
+        <message>
+            <text>Preparing challenge...
+
+    Type "ask [category or nothing] questions" to start the challenge		
+    </text>
+        </message>
+    </response>
+    ```
+
+6. The overall execution of the User Experience Optimized bot
+
+7. Congratulations, you have learned all of the basics you need to develop a chatbot in Convai. You can always check back here if you have any questions. It is good for you to start developing your own bot and check out other detailed documentations of Convai.
 
