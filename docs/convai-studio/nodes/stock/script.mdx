@@ -6,21 +6,271 @@ sidebar_label: Script Node
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-## TODO
-Add image
-
 ## Usage
 
-A script node is used to add custom functions/scripts in the bot. We use Lua for the scripting language. Refer to the documentation [here](https://devhints.io/lua)
+A script node is used to add custom functions/scripts in the bot. We use JavaScript for the scripting language. Refer to the documentation [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
 
-<img alt="One Time Broadcast Node explained" src={useBaseUrl('img/nodes/stock/script/1.png')} />
+:::tip Note
+_**You can use any NPM library in script. Script Nodes only support async/await.**_
+:::
+
+<img alt="script node configuration" src={useBaseUrl('img/nodes/stock/script/script-node-config.png')} />
 
 ## Configuration
 
 The configuration of the node is as defined below:
 
-| Name          | Required |                      Description                                     |
-| ------------- | -------- | -------------------------------------------------------------------- |
-| Title         | Required | The title of the node                                                |
-| Asynchronous  |          | Determine if the message should be sent asynchronously or not        |
-| Script Editor | Required | Editor for writing the script                                        |
+| Name                      | Required | Description                                                   |
+|---------------------------|----------|---------------------------------------------------------------|
+| Title                     | Required | The title of the node                                         |
+| Asynchronous              |          | Determine if the message should be sent asynchronously or not |
+| Include Convai SDK        |          | Include Convai SDK or not                                     |
+| Include Twilio API Client |          | Include Twilio API Client or not                              |
+| Script Editor             | Required | Editor for writing the script                                 |
+
+## Context Object
+
+Convai provides a Context Object for you to access and modify data of different scopes in script.
+
+#### Example
+```js
+module.exports = async function main() {
+    let d = ctx.user.data.key;
+    //print the user scope data - key
+    console.log(d)
+}
+```
+
+#### Context Object Structure
+```js
+ctx: {
+    id: string;
+    user: {
+        id: string;
+        channelId: string;
+        data: {
+            [key: string]: any
+        };
+    };
+
+    session: {
+        data: {
+            [key: string]: any
+        };
+    };
+
+    text: string;
+    channel: string;
+    source: any;
+    isStart: boolean;
+    isTrigger: boolean;
+    errors: {
+        message: string;
+    }[];
+    response: {
+        messages: {
+            data: {
+                text: string;
+            };
+        };
+    };
+}
+```
+
+| Name            | Description                             | Usage                                    | Output                                                            |
+|-----------------|-----------------------------------------|------------------------------------------|-------------------------------------------------------------------|
+| id              | Context ID of current execution         | ctx\.id                                  | e\.g\. 01cff307\-0ebe\-4009\-b988\-2105ecea7d3e                   |
+| user\.id        | User ID of the current user             | ctx\.user\.id                            | e\.g\. 056971c0\-8775\-446e\-9c6a\-69ea35b063e2                   |
+| user\.channelId | Channel ID of the user                  | ctx\.user\.channelId                     | e\.g\. 056971c0\-8775\-446e\-9c6a\-69ea35b063e2                   |
+| data            | Data in current context/execution scope | ctx\.data\.\[key\]                       | Value of corresponding key\-value pair in Context/Execution Scope |
+| user\.data      | Data in current user scope              | ctx\.user\.data\.\[key\]                 | Value of corresponding key\-value pair in User Scope              |
+| session\.data   | Data in current session scope           | ctx\.session\.data\.\[key\]              | Value of corresponding key\-value pair in Session Scope           |
+| text            | Text of the user’s input text           | ctx\.text                                | User input text                                                   |
+| channel         | Channel of the current context          | ctx\.channel                             | Channel name of the current context                               |
+| source          | Source of the current context           | ctx\.source                              | Source of the current context                                     |
+| isStart         | If current context is Start             | ctx\.isStart                             | True or False                                                     |
+| isTrigger       | If current context is Trigger           | ctx\.isTrigger                           | True or False                                                     |
+| errors          | Error of the current context            | ctx\.errors                              | Array of errors objects                                           |
+|                 |                                         | ctx\.errors\[i\]\.message                | Text of an error message of index i                               |
+| response        | Responses of the current context        | ctx\.response                            | Array of response objects                                         |
+|                 |                                         | ctx\.response\.messages\[i\]\.data\.text | Text of a response message of index i                             |
+
+Convai also provides a method to get data in different scopes conveniently.
+
+#### ```get(key: string): value```
+
+| Description                           | Usage                          | Output                                                            |
+|---------------------------------------|--------------------------------|-------------------------------------------------------------------|
+| Get data from context/execution scope | ctx\.get\("\[key\]"\)          | Value of corresponding key\-value pair in Context/Execution Scope |
+| Get data from session scope           | ctx\.session\.get\("\[key\]"\) | Value of corresponding key\-value pair in Session Scope           |
+| Get data from user scope              | ctx\.user\.get\("\[key\]"\)    | Value of corresponding key\-value pair in User Scope              |
+
+## Modification Methods on Context Object
+
+The Modification Methods basically do edits on data in different data scopes of the Context Object.
+
+## Methods Summary
+| Method                               | Description                                                   |
+|--------------------------------------|---------------------------------------------------------------|
+| set\(key: string, data: any\)        | Add/Set a key\-value pair in the context/execution scope      |
+| setUser\(key: string, data: any\)    | Add/Set a key\-value pair in the user scope                   |
+| setSession\(key: string, data: any\) | Add/Set a key\-value pair in the session scope                |
+| del\(key: string\)                   | Delete a key\-value pair in the context/execution scope       |
+| delUser\(key: string\)               | Delete a key\-value pair in the user scope                    |
+| delSession\(key: string\)            | Delete a key\-value pair in the session scope                 |
+| clear\(\)                            | Clear all the key\-value pairs in the context/execution scope |
+| clearUser\(\)                        | Clear all the key\-value pairs in the user scope              |
+| clearSession\(\)                     | Clear all the key\-value pairs in the session scope           |
+
+#### ```set(key: string, data: any)```
+
+Add/Set a key-value pair in the context/execution scope
+
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
+| data | any    |           | Value for the key |
+
+#### Example
+
+| Input                 | Output |
+|-----------------------|--------|
+|  set\("key", "val"\); |<img alt="example set" src={useBaseUrl('img/nodes/stock/script/image10.png')} />|
+
+
+#### ```setUser(key: string, data: any)```
+
+Add/Set a key-value pair in the user scope
+
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
+| data | any    |           | Value for the key |
+
+#### Example
+
+| Input                 | Output |
+|-----------------------|--------|
+|  setUser\("key", "val"\); |<img alt="example setUser" src={useBaseUrl('img/nodes/stock/script/image12.png')} />|
+
+#### ```setSession(key: string, data: any)```
+
+Add/Set a key-value pair in the session scope
+
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
+| data | any    |           | Value for the key |
+
+#### Example
+
+| Input                 | Output |
+|-----------------------|--------|
+|  setSession\("key", "val"\); |<img alt="example setSession" src={useBaseUrl('img/nodes/stock/script/image6.png')} />|
+
+
+#### ```del(key: string)```
+
+Delete a key-value pair in the context/execution scope
+
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
+
+#### Example
+
+| Input                                                                                 | Output |
+|---------------------------------------------------------------------------------------|--------|
+| set\("key", "val"\);<br/> set\("nonDeleteKey", "nonDeleteVal"\);<br/> del\("key"\);|<img alt="example del" src={useBaseUrl('img/nodes/stock/script/image4.png')} />|
+
+
+#### ```delUser(key: string)```
+
+Delete a key-value pair in the user scope
+
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
+
+#### Example
+
+| Input                                                                                 | Output |
+|---------------------------------------------------------------------------------------|--------|
+| setUser\("key", "val"\);<br/> setUser\("nonDeleteKey", "nonDeleteVal"\);<br/> delUser\("key"\);|<img alt="example delUser" src={useBaseUrl('img/nodes/stock/script/image5.png')} />|
+
+#### ```delSession(key: string)```
+
+Delete a key-value pair in the session scope
+
+| Name | Type   | Attribute | Description       |
+| ---- | ------ | --------- | ----------------- |
+| key  | string |           | Name of the key   |
+
+#### Example
+
+| Input                                                                                 | Output |
+|---------------------------------------------------------------------------------------|--------|
+| setSession\("key", "val"\);<br/> setSession\("nonDeleteKey", "nonDeleteVal"\);<br/> delSession\("key"\);|<img alt="example delSession" src={useBaseUrl('img/nodes/stock/script/image7.png')} />|
+
+#### ```clear()```
+
+Clear all the key-value pairs in the context/execution scope
+
+#### Example
+
+| Input                                                                                 | Output |
+|---------------------------------------------------------------------------------------|--------|
+| set\("key", "val"\);<br/> set\("nonDeleteKey", "nonDeleteVal"\);<br/> clear\(\);|<img alt="example clear" src={useBaseUrl('img/nodes/stock/script/image9.png')} />|
+
+#### ```clearUser()```
+
+Clear all the key-value pairs in the user scope
+
+#### Example
+
+| Input                                                                                 | Output |
+|---------------------------------------------------------------------------------------|--------|
+| set\("key", "val"\);<br/> set\("nonDeleteKey", "nonDeleteVal"\);<br/> clearUser\(\);|<img alt="example clearUser" src={useBaseUrl('img/nodes/stock/script/image13.png')} />|
+
+#### ```clearSession()```
+
+Clear all the key-value pairs in the session scope
+
+#### Example
+
+| Input                                                                                 | Output |
+|---------------------------------------------------------------------------------------|--------|
+| set\("key", "val"\);<br/> set\("nonDeleteKey", "nonDeleteVal"\);<br/> clear\(\);|<img alt="example clearSession" src={useBaseUrl('img/nodes/stock/script/image11.png')} />|
+
+
+## Environment Variable and Module Variable Access
+
+Convai provides ways to access Environment Variables and Module Variables
+
+#### ```process.env.[key]```
+This gives the value of the environment variable with corresponding key-value pair.
+
+#### Example
+
+|  Environment Variable Setting | Input                                    | Output |
+|-------------------------------|------------------------------------------|--------|
+|<img alt="example env setting" src={useBaseUrl('img/nodes/stock/script/image3.png')} />|console\.log\(process\.env\.ENV\_VAR\);|<img alt="example process.env output" src={useBaseUrl('img/nodes/stock/script/image1.png')} />|
+
+#### ```env.[key]```
+This gives exactly the same output as process.env.\[key\].
+
+#### Example
+
+|  Environment Variable Setting | Input                                    | Output |
+|-------------------------------|------------------------------------------|--------|
+|<img alt="example env setting" src={useBaseUrl('img/nodes/stock/script/image3.png')} />|console\.log\(env\.ENV\_VAR\);|<img alt="example env output" src={useBaseUrl('img/nodes/stock/script/image1.png')} />|
+
+
+#### ```modvars.[key]```
+This gives the value of the Module Variable with corresponding key-value pair.
+
+#### Example
+
+|  Module Variable Setting | Input                                    | Output |
+|-------------------------------|------------------------------------------|--------|
+|<img alt="example modvar setting" src={useBaseUrl('img/nodes/stock/script/image8.png')} />|console\.log\(modvars\.moduleVar\);|<img alt="example modvars output" src={useBaseUrl('img/nodes/stock/script/image2.png')} />|
