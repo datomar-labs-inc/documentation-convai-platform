@@ -1,0 +1,16 @@
+---
+id: data-scope
+title: Data Scope
+sidebar_label: Data Scope
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+New to Convai? Start from [Understanding Convai](./understanding-convai) guide.
+
+In Convai, we store data in three different scopes - context(execution), session, user.
+Context(execution) data only exists in an execution(before the next user input).
+Session data by default exists 24 hours, and you are able to change the session length in the bot’s settings.
+User data is considered as persistent data, it exists as long as the user exists.
+In Set Data Node, we use the prefix “d.”, “s.”, “u.” before the key of the data to announce the data is in Context(Execution) Scope, Session Scope or User Scope.

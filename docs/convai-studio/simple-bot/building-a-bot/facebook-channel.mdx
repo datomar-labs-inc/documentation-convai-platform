@@ -1,0 +1,110 @@
+---
+id: facebook-channel
+title: Facebook Channel Integration
+sidebar_label: Facebook Channel Integration
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+In this section, we will integrate the bot into Facebook so that you can chat to the bot on Facebook.
+
+1. In Convai, go to Settings via Side Nav. Add Facebook integration, leave the configurations blank and save it. For now you have Facebook and DialogFlow integrations.
+
+  <img alt="add facebook integration" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image98.png')} />
+
+2. Login to [Facebook for Developer](https://developers.facebook.com/). Click on My Apps
+
+  <img alt="facebook my apps" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image67.png')} />
+
+  Click on Add a New App, choose Manage Business Integrations
+
+  <img alt="add new app" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image86.png')} />
+
+  <img alt="choose business integration" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image48.png')} />
+
+  Enter the App Display Name and choose Just me to use the app for demonstration. Click Create App ID and confirm the security check.
+
+  <img alt="configure app" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image77.png')} />
+
+3. On the left side panel, click on the + button on the right of PRODUCTS.
+
+  <img alt="add products" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image93.png')} />
+
+  Find Messenger and click Set Up.
+
+  <img alt="set up messenger" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image64.png')} />
+
+4. Go to Settings -> Basic, copy the App Secret into Convai Facebook Integration Configuration
+
+  <img alt="copy app secret" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image70.png')} />
+
+  <img alt="paste app secret into convai" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image68.png')} />
+
+5. On Facebook for Developer, go back to Messenger Settings
+
+  <img alt="messenger settings" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image52.png')} />
+
+  Scroll down a little bit to find the Access Tokens section, click on Add or Remove Pages
+
+  <img alt="add page" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image22.png')} />
+
+  A new window will pop up, click Continue.
+
+  <img alt="continue pop up" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image94.png')} />
+
+  Select Convai Tutorial Bot, click Next.
+
+  <img alt="select tutorial bot" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image5.png')} />
+
+  Click Done
+
+  <img alt="done" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image41.png')} />
+
+  Click OK
+
+  <img alt="ok" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image51.png')} />
+
+  You are brought back to the Messenger Settings. In the Access Tokens section, you can find the created Page, click on Generate Token.
+
+  <img alt="generate token" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image6.png')} />
+
+  Check I Understand and copy the generated Page Token in Convai Facebook Configuration.
+
+  <img alt="token generated" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image21.png')} />
+
+  Save the Facebook Integration Configuration in Convai, click the < button, copy the Facebook webhook URL.
+
+  <img alt="save facebook integration" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image18.png')} />
+
+  <img alt="copy facebook webhook" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image73.png')} />
+
+  Back in Facebook Messenger Settings, Click Done on the Generate Token page. Scroll down to find the Webhooks Section, click on Add Callback URL.
+
+  <img alt="add callback url" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image101.png')} />
+
+  Fill the Callback URL with the Facebook webhook URL copied in Convai
+
+  <img alt="fill url" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image90.png')} />
+
+  Next, go back to Convai, open the Facebook Integration Configuration, enter any password you like in the Verification Token field and Save it. Here we use “convai” as the Verification Token for demonstration, you can use anything more secure you like. 
+
+  <img alt="convai verify token" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image53.png')} />
+
+  In Facebook for Developers, enter the Verification Token you entered and saved in Convai. Click Verify and Save.
+
+  <img alt="facebook verify token" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image54.png')} />
+
+6. Next you need to Add Subscription for the webhook we added in the previous step.
+
+  In the Webhook Section at Convai Tutorial Bot Page, click Add Subscription. Check messages, messaging_postbacks, message_deliveries, message_reads and Save.
+
+  <img alt="facebook webhook subs" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image71.png')} />
+
+  For your own developed bot, you might want to read Facebook Messenger’s Documentation about the [Facebook Messenger Webhook Subscription](https://developers.facebook.com/docs/messenger-platform/webhook).
+
+7. Now the bot is integrated in Facebook Channel, you don’t need to do anything else, it just works. Let’s test it out.
+
+8. Login to Messenger with your Facebook Developer Account, start a New Message, enter the bot’s name (Convai Tutorial Bot, or your own Facebook App name).
+
+  <img alt="facebook execution" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image107.gif')} />

@@ -1,0 +1,354 @@
+---
+id: build-bot-nlp-api
+title: Build a chat bot with NLP and use External APIs
+sidebar_label: Build a chat bot with NLP and use External APIs
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+We will start building a Chatbot with Convai using NLP and External APIs here.
+
+1. Login to Convai Studio.
+
+2. Click on the “Make Bot” Button to begin making your bot.
+
+  <img alt="make bot" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image78.png')} />
+
+3. In the name field enter “Tutorial Bot”.
+
+  <img alt="create tutorial bot" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image103.png')} />
+
+4. After the bot is created, you will be taken to the bot’s Dashboard by default. Click on the double right arrow button at the bottom of the left side panel to view different Side Navigation(we will refer to it as Nav by short) of this bot.
+    
+  <img alt="nav collapsed" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image44.png')} />
+
+  <img alt="nav expanded" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image29.png')} />
+
+5. Go to Graph in the Nav. The majority of the work with your bot will take place here. You can zoom in/out using your mouse’s wheel and left-click drag on empty space to move your view of the graph..
+
+  <img alt="graph overview" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image66.png')} />
+
+6. In this tutorial we will be making a quiz bot that uses NLP and External API. Let’s add the NLP integration as a starting point. You can always check the Integrations document if you don’t understand what we are doing here. Here we will use DialogFlow as the bot’s NLP. 
+
+  Go to Settings from Nav. 
+
+  <img alt="to settings" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image99.png')} />
+
+  Under the Development Environment section, click on Edit
+
+  <img alt="edit development" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image17.png')} />
+
+  Scroll down to the bottom to find the Integrations section, select DialogFlow and then click on the DialogFlow Configuration, import the DialogFlow JSON file and click on Save.
+
+  <img alt="select dialogflow" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image57.png')} />
+
+  <img alt="dialogflow selected" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image31.png')} />
+
+  <img alt="dialogflow config" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image7.png')} />
+
+7. The bot’s NLP Integration is set. Let’s go back to the graph via Nav.
+
+  Go to Extension Graph by clicking on the Extension Paginator
+
+  <img alt="go to extension" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image107.png')} />
+
+  <br/>
+
+  <img alt="extension graph" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image9.png')} />
+
+  Add the DialogFlow Node to the graph. Connect it between the Request Node and Main Node for NLP to function.
+
+  <img alt="add dialogflow node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image16.png')} />
+
+  Now you are able to use NLP from Intent Links by selecting the DialogFlow intents
+
+  <img alt="intent link" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image95.png')} />
+
+  <img alt="select intent" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image80.png')} />
+
+8. Back to the Main Graph by clicking the Paginator
+  Create a Module from the Context Menu by right clicking anywhere on the graph
+
+  <img alt="create module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image47.png')} />
+
+  Rename the Module as “Get Questions”, and connect it to the Any Time System Node
+
+  <img alt="rename module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image33.png')} />
+
+  Click on the link, change the link type to Intent Link, select AskQuestion(DialogFlow) as the Intent. Any User Input from the Any Time Node that matches this intent will proceed to the Get Questions Module.
+
+  <img alt="select ask question intent" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image50.png')} />
+
+  <img alt="graph of module and intent link" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image104.png')} />
+
+  The AskQuestion Intent in DialogFlow looks like this:
+
+  <img alt="ask question intent contents" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image75.png')} />
+
+  The “triviacategory” entity will be used in the script to call the Trivia API to get quiz questions in different categories. This parameter will be saved in the execution scope.
+
+  <img alt="triviacategory entity" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image35.png')} />
+
+  Double click on the Get Question Module to get inside its graph.
+
+  <img alt="get question graph" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image37.png')} />
+
+  Click on the Input Node, add a Module Variable like the following for the script to use
+
+  <img alt="set mod var" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image15.png')} />
+
+  Create a Script Node from Context Menu and Rename it as “Get Questions”, link it to the Input Node of this Module.
+
+  <img alt="new node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image38.png')} />
+
+  <img alt="stock node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image72.png')} />
+
+  <br/>
+
+  <img alt="script node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image81.png')} />
+
+  Fill the following code in the Script Node:
+
+  ```js
+  const axios = require('axios');
+  
+  module.exports = async function main() {
+      try {
+          let amount = modvars.qAmount; //module variable
+          
+          //get triviacategory from Context Data
+          let category = ctx.get("triviacategory"); 
+          category = category || '';
+          
+          //set up the baseUrl for API call
+          let baseUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}`;
+          
+          let {data} = await axios.get(baseUrl);
+          let questions = data.results;
+          
+          //set Session Data questions equal to the result from API Call
+          setSession("questions", questions)
+      } catch (e) {
+          console.error(e.message)
+      }
+  }
+  ```
+
+  :::tip Note
+  Here we used [AXIOS](https://www.npmjs.com/package/axios) as the HTTP library to call the [Open Trivia Database API](https://opentdb.com/api_config.php) to get Quiz questions and store data of questions in the [Session Scope Data](#data-scope-you-can-come-back-to-this-section-later). Script in Script Node is basically JavaScript, you can use AXIOS or any other HTTP libraries to call external APIs. You can read the document about [Script Node](/convai-studio/nodes/stock/script) if you want to know what the script does exactly here.
+  :::
+
+9. Go to the Dev Console on the Right Side Panel (we will refer to it as Side Panel for short). Type “Ask a film question” and hit Enter. Click on View under the bot’s response, scroll down a little bit to inspect the Session Data and the Entity we got from DialogFlow, that is what the Script Node did for us.
+
+  <img alt="get question exec" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image74.png')} />
+
+  <img alt="triviacategory data" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image59.png')} />
+
+  <img alt="question in session data" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image39.png')} />
+
+  If the AskQuestion Intent did not match, session data will look like this
+
+  <img alt="ask question intent no match" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image60.png')} />
+
+10. We have the Get Question Module Ready, let’s add another Module named “Ask Question” on the Main Graph, connect it after the Get Question Module. Double click to enter its graph. 
+  
+  <img alt="add ask question module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image105.png')} />
+
+  Make the module's graph like below:
+
+  <img alt="ask question module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image42.png')} />
+
+  Edit the script of Format Question Script Node:
+
+  ```js
+  const _ = require('lodash');
+
+  module.exports = async function main() {
+      try {
+        
+          //for challenge, save the index
+          let index = ctx.session.get("index");
+          let currentQuestion = {};
+          if(index === undefined){
+              index = 0;
+          }
+          
+          //get one question from Session Data
+          q = ctx.session.get('questions')[index];
+        
+          let options = [];
+        
+          //set question type in Context Data
+          //multiple choice or true/false
+          if (q.type === "boolean") {
+              set("type", "tf");
+          } else {
+              set("type", "mc");
+          }
+        
+          options.push(q.correct_answer);
+        
+          q.incorrect_answers.forEach(o => options.push(o));
+    
+          //shuffle the answer options
+          options = _.shuffle(options);
+    
+          options.forEach((o, i) => {
+              if (o === q.correct_answer) {
+                  currentQuestion.correctIndex = i;
+              }
+          });
+        
+          //replace character code to character
+          question = _.replace(_.replace(q.question, "&quot;", '"'), "&", "&amp;");
+    
+          //put the currentQuestion things in one object
+          currentQuestion.options = options;
+          currentQuestion.question = question;
+          currentQuestion.correctAnswer = q.correct_answer;
+        
+          //set currentQuestion in Session Data
+          setSession("currentQuestion", currentQuestion);
+      } catch (e) {
+          console.log(e.message);
+      }
+  }
+  ```
+  :::tip Note
+  Here we used the [Lodash](https://lodash.com/docs/4.17.15) utility library to format quiz questions. As mentioned before, Script Node is just JavaScript, you can use any JavaScript features here.
+  :::
+
+  Edit Question Response Node:
+
+    ```xml
+    <response>
+        <message typing="1">
+        <text>{{ session.data.question }}
+        {%- for op in session.data.options -%}
+                    {{- forloop.index -}}. {{ op }}
+        {% endfor %}
+        </text>
+        {% for op in session.data.options %}
+                    <qr value="{{ forloop.index | minus: 1 }}">{{ op }}</qr>
+            {% endfor %}
+        </message>
+    </response>
+    ```
+
+    The Response Node is in [Liquid Template](https://shopify.github.io/liquid/). The preview of this response will look like this:
+
+    <img alt="response preview" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image91.png')} />
+
+    Edit Validate Answer Script Node:
+
+    ```js
+    module.exports = async function main() {
+        //user input
+        txt = ctx.text.replace("%s+", "");
+        //correct index
+        correct = ctx.session.get("currentQuestion").correctIndex;
+        
+        if (txt == correct) {
+            set("correct", true);
+        } else {
+            set("incorrect", true);
+        }
+    }
+    ```
+
+    Edit Correct, Incorrect Response Nodes:
+    ```xml
+    <response>
+        <message>
+            <text>Correct! Added 1 to your score.</text>
+        </message>
+    </response>
+    ```
+    ```xml
+    <response>
+        <message>
+            <text>Incorrect! Subtracted 1 to your score.</text>
+        </message>
+    </response>
+    ```
+
+    Edit Update Point Script Node:
+    ```js
+    module.exports = async function main() {
+        //get point from User Data
+        point = ctx.user.get("point");
+        
+        //set point to 0 if it does not exist
+        if (point === undefined) {
+            point = 0;
+        }
+        
+        //get correct or incorrect from Context Data
+        if (ctx.get("correct")) {
+            point++;
+        }else if (ctx.get("incorrect")){
+            point--;
+        }else {
+            point += 0;
+        }
+        
+        //set point in User Data
+        setUser("point",point);
+    }
+    ```
+
+    Notice that Validate Answer Script Node has two links to two Response Nodes. We need to take some action on these links otherwise the flow of the graph will always go to the Correct Response Node.
+    
+    Review the script code in Validate Answers Script Node, it sets the execution scope variable “correct” to true if the answer is correct, otherwise it sets “incorrect” to true. We can take this as an advantage in Data Equals Link (Actually the Validate Answers Script Node is intended to do so). 
+    ```js
+    module.exports = async function main() {
+        //user input
+        txt = ctx.text.replace("%s+", "");
+        //correct index
+        correct = ctx.session.get("currentQuestion").correctIndex;
+        
+        if (txt == correct) {
+            set("correct", true);
+        } else {
+            set("incorrect", true);
+        }
+    }
+    ```
+
+    Set the link between Validate Answer Script Node and Correct Response Node to be Data Equals Link. Set Field Type as Data, Field Name as “correct”, Operation as Exists.
+
+    <img alt="correct link" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image88.png')} />
+
+    Set the link between Validate Answer Script Node and Incorrect Response Node to be Data Equals Link. Set Field Type as Data, Field Name as “incorrect”, Operation as Exists.
+
+    <img alt="incorrect link" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image30.png')} />
+
+    After the bot updates the user’s point, the stored quiz questions in Session Data are no longer useful. These data should be deleted (clean up). So we add a Delete Data Node at the end of this Module.
+
+    <img alt="delete current question" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image3.png')} />
+  
+    Back to the Main Graph, add a Delete Data Node after the Ask Questions Module.
+
+    <img alt="delete current question" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image87.png')} />
+
+  :::info Note
+  We will explain why we don’t delete s.questions inside the Ask Questions Module in the next section.
+  :::
+
+  You can inspect that after the user answers the quiz question, questions stored in Session Data are cleared.
+
+  <img alt="session data before delete" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image40.png')} />
+
+  <img alt="session data cleared" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image19.png')} />
+
+11. Go to Dev Console in the Side Panel, send “Ask a film question” to the bot. The Bot will respond with the quiz question and you can play with it.
+
+    <img alt="execution result in this section" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image58.png')} />
+
+    Congratulations, you have built your first Convai chatbot. In this section, you have learned how to use NLP via intent links, and how to call external APIs via Script Nodes. In the next section, we will enhance the bot by reusing the modules you created in this section, and give you an image on how convenient to develop a bot with Modules.
+    
+    The Main graph looks like this at the end of this section:
+
+    <img alt="graph in this section" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image4.png')} />
+  
