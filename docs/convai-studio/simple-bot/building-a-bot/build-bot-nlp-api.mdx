@@ -136,7 +136,7 @@ We will start building a Chatbot with Convai using NLP and External APIs here.
   ```
 
   :::tip Note
-  Here we used [AXIOS](https://www.npmjs.com/package/axios) as the HTTP library to call the [Open Trivia Database API](https://opentdb.com/api_config.php) to get Quiz questions and store data of questions in the [Session Scope Data](#data-scope-you-can-come-back-to-this-section-later). Script in Script Node is basically JavaScript, you can use AXIOS or any other HTTP libraries to call external APIs. You can read the document about [Script Node](/convai-studio/nodes/stock/script) if you want to know what the script does exactly here.
+  Here we used [AXIOS](https://www.npmjs.com/package/axios) as the HTTP library to call the [Open Trivia Database API](https://opentdb.com/api_config.php) to get Quiz questions and store data of questions in the [Session Scope Data](./data-scope). Script in Script Node is basically JavaScript, you can use AXIOS or any other HTTP libraries to call external APIs. You can read the document about [Script Node](/convai-studio/nodes/stock/script) if you want to know what the script does exactly here.
   :::
 
 9. Go to the Dev Console on the Right Side Panel (we will refer to it as Side Panel for short). Type “Ask a film question” and hit Enter. Click on View under the bot’s response, scroll down a little bit to inspect the Session Data and the Entity we got from DialogFlow, that is what the Script Node did for us.
