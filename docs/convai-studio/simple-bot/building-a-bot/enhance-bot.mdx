@@ -1,0 +1,176 @@
+---
+id: enhance-bot
+title: Enhance the Tutorial Bot
+sidebar_label: Enhance the Tutorial Bot
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Enhance the Tutorial Bot
+In this section, we are going to add a challenge feature which allows the user to answer ten quiz questions and show the user’s final score. And a Get Point feature allows the user to get its points and reset it. And Finally, add a welcome message to give a hint to the user on how to interact with the bot.
+
+1. On the Main Graph, create a module named “Challenge” and connect it to Any Time System Node with Challenge intent Link, enter its graph.
+
+    <img alt="add challenge module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image24.png')} />
+
+    The Challenge Intent in DialogFlow:
+
+    <img alt="challenge intent contents" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image102.png')} />
+
+    Create the graph like below (Set Loop Index is a Set Data Node):
+
+    <img alt="challenge module graph" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image14.png')} />
+
+    Notice that we are reusing the module we created before - Get Questions and Ask Question Module (Modules has an icon on its top-left corner). When you develop your own bot, think carefully about how to modularize your bot functionalities so that you can reuse them anywhere you need, this makes the development process very flexible.
+    Edit the Challenge Starts Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>Let's start the challenge!</text>
+        </message>
+    </response>
+    ```
+
+    Remember in the Main graph, the Get Questions Module is connected to the Any Time system Node with AskQuestion intent link. Think Any Time Node as a User Input Node. Therefore, set the link between the User Input Node and Get Questions Module to be AskQuestion intent link.
+
+    <img alt="set ask question intent link" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image25.png')} />
+
+    Click on the Get Questions Module, edit its module variable “qAmount” to 10 in order to get 10 questions from the Trivia API.
+
+    <img alt="set qAmount to 10" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image100.png')} />
+
+    We have got 10 quiz questions from the Get Questions Module, then we need the user to answer these 10 questions. However, the Ask Question Module only asks and lets the user answer one question. Using a loop to loop 10 times of the Ask Question Module is a straightforward strategy here.
+    
+    Edit the Set Loop Index Set Data Node:
+
+    <img alt="set loop index" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image2.png')} />
+
+    Edit Index++ Script Node:
+    ```js
+    module.exports = async function main() {
+        //get index from Session Data
+        let index = ctx.session.get("index");
+        index++;
+        //set index in Session Data
+        setSession("index",index);
+    }
+    ```
+
+    We need to determine when the loop is finished by using Data Equals Link.
+
+    <img alt="end loop" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image43.png')} />
+
+    This loop can be illustrated in the following pseudo-code
+    ```js
+    index = 0 // Set Loop Index Node
+    start loop
+        Ask Questions
+        index++  // Index++ Node
+        if (index == 10)
+            end loop 
+    -> Delete Data Node
+    ```
+
+    Edit Delete Data Node:
+
+    <img alt="delete index and questions" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image61.png')} />
+
+    Remember that we have deleted s.currentQuestions inside the Ask Question Module, if we delete s.questions we got from the API call in that module then we are not able to make the bot ask the next 9 questions in the Challenge Module. So we delete s.questions outside of the Ask Question Module.
+    Edit Final Score Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>You have finished the challenge. Your final score is: {{user\.data\.point}}</text>
+        </message>
+    </response>
+    ```
+
+    The execution of Challenge Module:
+
+    <img alt="challenge module execution" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image1.gif')} />
+
+2. We have the Challenge Module ready, now we need a Get Point Module for the user to get its score or reset it. Create this Module on the Main graph and connect it to Any Time system Node with GetPoints intent link.
+
+    <img alt="add get points" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image36.png')} />
+
+    GetPoints Intent in DialogFlow:
+
+    <img alt="get points intent contents" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image45.png')} />
+
+    Inside the module, create the graph (Reset Point is Set Data Node):
+
+    <img alt="get points graph" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image23.png')} />
+
+    Edit Your Score Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>Your Score is: {{user.data.point}}
+    Do you want to reset your score to Zero?
+    </text>
+        </message>
+    </response>
+    ```
+
+    This Response Prompts the user to reset its point or not. Use Affirm intent link to ensure that the flow goes to Reset Point Node if the user confirms to reset its point. Otherwise prompt a Continue message.
+
+    <img alt="continue or reset" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image97.png')} />
+    
+    Edit Reset Point Set Data Node:
+
+    <img alt="reset point" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image69.png')} />
+
+    Edit Continue Response Node:
+
+    ```xml
+    <response>
+        <message>
+            <text>You can continue on what you want to do.</text>
+        </message>
+    </response>
+    ```
+
+    Edit Reseted Point Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>Your score is set to Zero!</text>
+        </message>
+    </response>
+    ```
+
+    The execution of Get Point Module:
+
+    <img alt="get point execution" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image84.png')} />
+
+3. The main functionalities of this bot is set. But we do need a welcome message. A user is new to this bot, and has completely no idea how this bot works. Welcome message is an essential tool.
+
+  Create the Welcome Response Node, link it to Start and Any Time System Node with Welcome intent link.
+
+  <img alt="add welcome" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image55.png')} />
+    
+  Welcome Intent in DialogFlow:
+
+  <img alt="welcome intent contents" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image8.png')} />
+
+  Edit the Welcome Response Node:
+  ```xml
+  <response>
+      <message>
+          <text>Hi I am the trivia bot. How can I help you?</text>
+      </message>
+  </response>
+  ```
+  
+  This is just a demonstration of the welcome message, you can add more information to optimize user experience.
+    
+  The graph of the enhanced Tutorial Bot:
+
+  <img alt="enhanced bot graph" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image83.png')} />
+
+  The overall execution of the enhanced Tutorial Bot:
+
+  <img alt="overall execution" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image82.png')} />
+
+4. That’s it! You have learned how to create a bot with NLP and External APIs, and how to use Modules to make your development process flexible. Now let’s proceed to integrate the bot into Facebook

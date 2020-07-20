@@ -1,0 +1,48 @@
+---
+id: dashbot-analytics
+title: Dashbot Analytics
+sidebar_label: Dashbot Analytics Integration
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+Convai by itself has a Dashboard of Analytics, but you can use other chatbot analytics, such as Dashbot. In this section, we will use Dashbot integration to extend the Analytics in the bot. You can also check the [Dashbot Integration](/convai-studio/integrations/analytics/dashbot).
+
+1. In Convai, go to settings, add Dashbot integration, leave the Dashbot API Key configuration empty.
+
+  <img alt="dashbot integration" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image12.png')} />
+
+2. Login to Dashbot, click on Add Chatbot.
+
+  <img alt="add chatbot" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image11.png')} />
+
+  Fill in the bot’s name and select “Universal” as the Dashbot platform. Click on Register.
+
+  <img alt="chatbot configs" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image46.png')} />
+
+3. Copy the API key into Convai’s integration configuration and Save it.
+
+  <img alt="copy api key" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image92.png')} />
+
+  <img alt="paste api key" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image76.png')} />
+
+4. Back to the bot’s graph. Go to Extension Graph via Paginator.
+
+  Add a Dashbot Node by Context Menu and make the graph like below
+
+  <img alt="add dashbot node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image16.png')} />
+
+5. In Dashbot under the Integration Code Section, click View Reports to go to the Dashboard.
+  
+  <img alt="view reports" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image34.png')} />
+
+  <img alt="dashboard" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image62.png')} />
+
+6. Back to Convai. Do some simple execution in the Dev Console.
+
+  <img alt="simple execution" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image27.png')} />
+
+  In Dashbot dashboard, you can see that the Live Message Rate has changed, and in Recent Transcripts, there’s a “dev-console-...” which means Dashbot has recorded the transcript of the Dev Console execution in Convai. The other one is the just the execution we tested for our Facebook integration.
+
+  <img alt="analytics" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image63.png')} />
