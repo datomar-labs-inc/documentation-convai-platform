@@ -9,18 +9,6 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Before we start, let's understand some of the concepts/pre-requisites required to make bots on Convai. 
 
-## Analogy for easy understanding
-Here is an analogy for easy understanding. Keep this analogy in mind and it will be easier as we proceed further.
-<img className="mb--10" alt="Create Bot" src={useBaseUrl('img/convai-studio/simple-bot/image1.png')} />
-
-- Organization - Github team
-- Bot - Github Repository
-- Bot Environment - Github branch
-- Graph - Consider a Graph as a file where different modules are written.
-- Modules - A module is like a function. It is a defined collection of a Bot logic that is reusable everywhere in the graph
-- Links - Links can be compared to the Conditional Logic statements. They are basically if-else loops
-- Nodes - Nodes are like a single line of code. It defines the logic of how the context is being modified. (or any other action in the bot)
-
 ## Organizations, Accounts and Permissions
 
 ### Accounts
@@ -123,12 +111,44 @@ System nodes, just like system modules, are added to the graphs by default. Thes
 
 - **Start Node on Main Graph**: Start Node is fired when a user initiates a bot using an action other than text. For example, this node will be fired when the user clicks on the call button for an IVR connected to Convai or when the user clicks on web chat for the first time.
 
-:::info Note
+:::danger Note
 Facebook's Get Started button is not currently supported by the Start node
 :::
 
 - **Any Time Node on Main Graph**: Any Time node is the point of receiver for all the requests incoming from the Extension Graph (except for the requests received by Start Node and Trigger Node).
 
-- **Trigger Node on Main Graph**: Trigger Node is used to parse the request from a channel into a Convai understandable format.
+- **Trigger Node on Main Graph**: Trigger Node receives the request from the Trigger node in the Extension Graph. 
 
-- **Input Node on User Made Module Graph**: Request Node is used to parse the request from a channel into a Convai understandable format.
+- **Input Node on User Made Module Graph**: Input Node is the entry point to recieve the current execution context for a module.
+
+#### Stock Nodes
+Stock nodes are platform wide nodes that are available for all the bots irrespective of the settings. To read more about stock nodes, refer to the [nodes documentation](../nodes/introduction).
+
+#### Channel Nodes
+Channel nodes are platform wide nodes that are dependent on your environment settings. Channel nodes are only available after you have added the channel from the integrations section of your environment settings.
+
+### Links
+Links are logic gates between the nodes. Links can be compared to the Conditional Logic statements. They are basically if-else loops
+
+## Data Scope
+In Convai, we store data in four different scopes:
+
+- Execution: Execution data is stored for a single execution. This data is tracked from the moment the request enters Convai till it leaves. If you are using an input node to wait for user data, note that all the execution data that was saved before the input node will not be available once the user provides their input. To reference/use execution data in any node, refer to the documentation of that node.
+
+- Session: Session data is stored for a single session. This data is tracked from the time a user interacts with the bot until the session expires. Session data is valid for 24 hours by default but the settings can be changed under the [environment settings](#environments). To reference/use session data in any node, refer to the documentation of that node.
+
+- User: User data is considered as persistent data, it exists as long as the user exists. To reference/use user data in any node, refer to the documentation of that node.
+
+- Module: Module data is only accessible in a module. This data is like setting up variables that can be used later in the module. The module data is initialized when the instance of the module is initialized. To reference/use module data in any node, refer to the documentation of that node.
+
+## Summary
+Here is an analogy for easy understanding. Keep this analogy in mind and it will be easier as we proceed further.
+<img className="mb--10" alt="Create Bot" src={useBaseUrl('img/convai-studio/simple-bot/image1.png')} />
+
+- Organization - Github team
+- Bot - Github Repository
+- Bot Environment - Github branch
+- Graph - Consider a Graph as a file where different modules are written.
+- Modules - A module is like a function. It is a defined collection of a Bot logic that is reusable everywhere in the graph
+- Links - Links can be compared to the Conditional Logic statements. They are basically if-else loops
+- Nodes - Nodes are like a single line of code. It defines the logic of how the context is being modified. (or any other action in the bot)

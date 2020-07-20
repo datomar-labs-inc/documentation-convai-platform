@@ -7,10 +7,14 @@ description: Step by step guide to make your first simple bot on Convai Studio
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-New to Convai? Start from [Understanding Convai](./understanding-convai) guide.
+New to Convai? Start from [Understanding Convai](../understanding-convai) guide.
 
-In Convai, we store data in three different scopes - context(execution), session, user.
-Context(execution) data only exists in an execution(before the next user input).
-Session data by default exists 24 hours, and you are able to change the session length in the bot’s settings.
-User data is considered as persistent data, it exists as long as the user exists.
-In Set Data Node, we use the prefix “d.”, “s.”, “u.” before the key of the data to announce the data is in Context(Execution) Scope, Session Scope or User Scope.
+In Convai, we store data in four different scopes:
+
+- Execution: Execution data is stored for a single execution. This data is tracked from the moment the request enters Convai till it leaves. If you are using an input node to wait for user data, note that all the execution data that was saved before the input node will not be available once the user provides their input. To reference/use execution data in any node, refer to the documentation of that node.
+
+- Session: Session data is stored for a single session. This data is tracked from the time a user interacts with the bot until the session expires. Session data is valid for 24 hours by default but the settings can be changed under the [environment settings](../understanding-convai#environments). To reference/use session data in any node, refer to the documentation of that node.
+
+- User: User data is considered as persistent data, it exists as long as the user exists. To reference/use user data in any node, refer to the documentation of that node.
+
+- Module: Module data is only accessible in a module. This data is like setting up variables that can be used later in the module. The module data is initialized when the instance of the module is initialized. To reference/use module data in any node, refer to the documentation of that node.
