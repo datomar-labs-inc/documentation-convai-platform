@@ -43,7 +43,7 @@ You can make your own dataset or you can download one from here - [_IMPORT ME IN
 
 <img alt="add dialogflow node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image16.png')} />
 
-3. Now you are able to use NLP from Intent Links by selecting the DialogFlow intents
+3. Now you are able to use the NLP using the Intent Links anywhere in the bot. Intent links are like normal if/else loop. For example, if (intent == 'welcome') { goForward() }. When you join 2 nodes, click on the link and on the right, you will see a link config. Change the link type to intent and the choose the intent.
 
 <img alt="intent link" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image95.png')} />
 
@@ -227,14 +227,14 @@ In this section we will add the functionality to get and ask a single question f
     ```xml
     <response>
         <message typing="1">
-        <text>{{ session.data.question }}
-        {%- for op in session.data.options -%}
-                    {{- forloop.index -}}. {{ op }}
+        <text>{{ session.data.currentQuestion.question }}
+        {%- for op in session.data.currentQuestion.options -%}
+            {{- forloop.index -}}. {{ op }}
         {% endfor %}
         </text>
-        {% for op in session.data.options %}
-                    <qr value="{{ forloop.index | minus: 1 }}">{{ op }}</qr>
-            {% endfor %}
+        {% for op in session.data.currentQuestion.options %}
+            <qr value="{{ forloop.index | minus: 1 }}">{{ op }}</qr>
+        {% endfor %}
         </message>
     </response>
     ```
