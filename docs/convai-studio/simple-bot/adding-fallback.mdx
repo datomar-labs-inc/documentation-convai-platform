@@ -1,0 +1,125 @@
+---
+id: adding-fallback
+title: Adding Fallback - Enhancing User Experience
+sidebar_label: 3. Adding Fallback
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+Let’s take a tour back to the execution of the bot we built. You may already find out that it is ambiguous for new users of this bot. In this section, we will optimize the bot’s response and add some Fallbacks to unknown User Inputs. By the way, you don’t need to do any other work for Facebook Channel as Convai does it for you, it just works!
+
+1. Go to the Main Graph of the bot
+
+  Observe the graph, you can find that there’s a situation we did not handle. When the user input is not one of the intents in the graph, the bot will not respond.
+
+  <img alt="enhanced bot graph" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image83.png')} />
+
+  In Dev Console, we are able to see this No responses received message, but not in other Channels like Facebook. We need to handle this by using Fallback.
+
+  <img alt="no response" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image79.png')} />
+
+2. Create a new Module named “Fallback”. Connect it to the Any Time System Node with a basic link - user input is anything other than the intents we have on other modules and nodes. 
+
+  <img alt="add fallback module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image85.png')} />
+
+  Edit the graph of the Fallback Module:
+
+  <img alt="fallback module graph" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image106.png')} />
+
+  Edit the General Fallback Response Node:
+    ```xml
+    <response>
+        <message>
+            <text>Sorry, I don't understand.</text>
+            <qr value="ask a question">A single Quiz</qr>
+            <qr value="challenge me">Challenge 10 Quizzes</qr>
+            <qr value="what is my point">Check your score</qr>
+        </message>
+    </response>
+    ```
+
+  The Preview of this Response looks like this:
+
+  <img alt="fallback response preview" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image26.png')} />
+
+  This response uses Quick Reply. Quick Replies gives the user a convenient way to send predefined messages to the bot by clicking on them. Use this wisely as the user may rely solely on quick reply, in our case, the “Ask a question” quick reply asks a question of random category for a user to answer. The bot is capable of user inputs like “Ask sports questions”, this is more about the prompt for user input, we will discuss it later.
+
+3. By its nature, Fallback should always be considered after a User Input Node (as well as Any Time System Node which we have covered). But sometimes it is not necessary. For example in Ask Question Module, we validate user input which gives only two results - correct or incorrect answer in the Validate Answer Script Node. The execution flow is closed, unlike the flow in the Main graph before we added the Fallback Module.
+
+  <img alt="ask question module no fallback" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image96.png')} />
+
+4. We can find the execution flow through the User Input Node in the Challenge Module is not closed. Users could input anything that does not match the AskQuestion Intent. We can use Quick Replies in Challenge Starts Response Node, but this makes the AskQuestion Intent meaningless and there are too many categories of questions, we might need to add a bunch of redundant Quick Replies. So we need a Fallback to handle this. 
+
+  Connect the Fallback Module to the User Input Node.
+
+  <img alt="connect to user input" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image10.png')} />
+
+  But the General Fallback Response does not fit in this situation. Because all we want is to prompt the user input to match AskQuestion intent.
+
+  <img alt="general fallback no good" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image28.png')} />
+
+  We need another Fallback Response for this situation. Add a Module Variable in Fallback Module. This makes sure the bot knows which Fallback Response it should go to.
+
+  <img alt="add mod var" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image108.png')} />
+
+  Edit Fallback Module in Challenge Module
+
+  <img alt="edit mod var" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image111.png')} />
+
+  Edit Fallback Module. If m.comingModule = general, Fallback responds with the General Fallback Message. If m.comingModule = challenge, Fallback responds with Challenge Fallback Message.
+
+  <img alt="edit fallback module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image109.png')} />
+
+  <img alt="edit fallback module" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image110.png')} />
+
+  Edit Challenge Fallback Response Node
+    ```xml
+    <response>
+        <message>
+            <text>Sorry, I don't understand.
+            
+    Type "ask [category] questions" to start challenge
+
+    [category] can be any category of questions you'd like to challenge, or you can just type "ask questions" to challenge questions from random categories.
+    </text>
+        </message>
+    </response>
+    ```
+
+5. Using Fallback optimizes User Experience when the user input something wrong. And it is the bot developer’s responsibility to let users know how to do things right. That means we need to tell the user how to do things correctly in ANY Response Node that prompts a user input.
+
+  Go to Main Graph, edit the Welcome Response Node
+    ```xml
+    <response>
+        <message>
+            <text>Hi, I am the trivia bot.
+            
+    You can do a quiz question by type "ask a [category name or nothing] question". 
+            
+    And I can make you a challenge of 10 questions, type "challenge me".
+
+    If you want to know your point, type "what is my point"
+    </text>
+        </message>
+    </response>
+    ```
+
+  Go to Challenge Module, edit the Challenge Starts Response Node
+    ```xml
+    <response>
+        <message>
+            <text>Preparing challenge...
+
+    Type "ask [category or nothing] questions" to start the challenge		
+    </text>
+        </message>
+    </response>
+    ```
+
+6. The overall execution of the User Experience Optimized bot
+
+  <img alt="user exp execution" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image112.gif')} />
+
+Congratulations, you have learned all of the basics you need to develop a chatbot in Convai. Let's add some channels.
+
