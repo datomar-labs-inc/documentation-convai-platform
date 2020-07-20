@@ -132,15 +132,13 @@ const simpleBot = ["convai-studio/simple-bot/understanding-convai", {
         "type": "category",
         "label": "2. Building a bot",
         "items": [
-            "convai-studio/simple-bot/building-a-bot/data-scope",
             "convai-studio/simple-bot/building-a-bot/build-bot-nlp-api",
             "convai-studio/simple-bot/building-a-bot/enhance-bot",
             "convai-studio/simple-bot/building-a-bot/facebook-channel",
             "convai-studio/simple-bot/building-a-bot/dashbot-analytics",
-            "convai-studio/simple-bot/building-a-bot/user-exp",
-            "convai-studio/simple-bot/building-a-bot/deployment"
+            "convai-studio/simple-bot/building-a-bot/user-exp"
         ]
-    }
+    }, "convai-studio/simple-bot/deployment"
 ]
 
 const convaiStudio = [

@@ -131,7 +131,7 @@ Channel nodes are platform wide nodes that are dependent on your environment set
 Links are logic gates between the nodes. Links can be compared to the Conditional Logic statements. They are basically if-else loops
 
 ## Data Scope
-In Convai, we store data in four different scopes:
+In Convai, we store data at four different scope levels:
 
 - Execution: Execution data is stored for a single execution. This data is tracked from the moment the request enters Convai till it leaves. If you are using an input node to wait for user data, note that all the execution data that was saved before the input node will not be available once the user provides their input. To reference/use execution data in any node, refer to the documentation of that node.
 
