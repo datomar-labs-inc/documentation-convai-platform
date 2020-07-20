@@ -14017,8 +14017,6 @@ module.exports = async function main() {
         point++;
     }else if (ctx.get("incorrect")){
         point--;
-    }else {
-        point += 0;
     }
     
     //set point in User Data
