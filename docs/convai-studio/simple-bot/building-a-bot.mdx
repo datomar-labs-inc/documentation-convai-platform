@@ -165,58 +165,59 @@ In this section we will add the functionality to get and ask a single question f
 9. Edit the script of Format Question Script Node:
 
   ```js
-  const _ = require('lodash');
+    const _ = require('lodash');
 
-  module.exports = async function main() {
-      try {
+    module.exports = async function main() {
+        try {
+            
+            //for challenge, save the index
+            let index = ctx.session.get("index");
+            let currentQuestion = {};
+            if(index === undefined){
+                index = 0;
+            }
+            
+            //get one question from Session Data
+            q = ctx.session.get('questions')[index];
+            
+            let options = [];
+            
+            //set question type in Context Data
+            //multiple choice or true/false
+            if (q.type === "boolean") {
+                set("type", "tf");
+            } else {
+                set("type", "mc");
+            }
+            
+            options.push(q.correct_answer);
+            
+            q.incorrect_answers.forEach(o => options.push(o));
         
-          //for challenge, save the index
-          let index = ctx.session.get("index");
-          let currentQuestion = {};
-          if(index === undefined){
-              index = 0;
-          }
-          
-          //get one question from Session Data
-          q = ctx.session.get('questions')[index];
+            //shuffle the answer options
+            options = _.shuffle(options);
         
-          let options = [];
+            options.forEach((o, i) => {
+                if (o === q.correct_answer) {
+                    currentQuestion.correctIndex = i;
+                }
+            });
+            
+            //replace character code to character
+            question =  q.question.replace(/&amp;/g, "&").replace(/&quot;/g, "'").replace(/&#039;/g, "'");
         
-          //set question type in Context Data
-          //multiple choice or true/false
-          if (q.type === "boolean") {
-              set("type", "tf");
-          } else {
-              set("type", "mc");
-          }
+            //put the currentQuestion things in one object
+            currentQuestion.options = options;
+            currentQuestion.question = question;
+            currentQuestion.correctAnswer = q.correct_answer;
+            
+            //set currentQuestion in Session Data
+            setSession("currentQuestion", currentQuestion);
+        } catch (e) {
+            console.log(e.message);
+        }
         
-          options.push(q.correct_answer);
-        
-          q.incorrect_answers.forEach(o => options.push(o));
-    
-          //shuffle the answer options
-          options = _.shuffle(options);
-    
-          options.forEach((o, i) => {
-              if (o === q.correct_answer) {
-                  currentQuestion.correctIndex = i;
-              }
-          });
-        
-          //replace character code to character
-          question = _.replace(_.replace(q.question, "&quot;", '"'), "&", "&amp;");
-    
-          //put the currentQuestion things in one object
-          currentQuestion.options = options;
-          currentQuestion.question = question;
-          currentQuestion.correctAnswer = q.correct_answer;
-        
-          //set currentQuestion in Session Data
-          setSession("currentQuestion", currentQuestion);
-      } catch (e) {
-          console.log(e.message);
-      }
-  }
+    }
   ```
   :::tip Note
   Here we used the [Lodash](https://lodash.com/docs/4.17.15) utility library to format quiz questions. As mentioned before, Script Node is just JavaScript, you can use any JavaScript features here.
