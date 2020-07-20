@@ -1,0 +1,29 @@
+---
+id: deployment
+title: Deployment
+sidebar_label: Deployment
+description: Step by step guide to make your first simple bot on Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+For best practices, we should use versioning in the bot so in case you update the logic for the graph, it doesn’t affect the production bot.
+
+1. Go to Settings > Version Management
+
+  <img alt="version management" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image113.png')} />
+
+2. Click on Create Version. 
+
+
+3. Add a version number and changelog and click on publish version. Clicking on publish version, creates a copy of the version which cannot be edited.
+
+
+4. Now click on edit for the environment that you are using for production. For my case, it was called Production. 
+
+
+5. Under Version Select, select a version and click on Set Version.
+
+  <img alt="set version" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image114.png')} />
+
+6. You will be prompted to confirm the change. Click on CHANGE to confirm. 

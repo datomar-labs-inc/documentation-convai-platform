@@ -137,7 +137,8 @@ const simpleBot = ["convai-studio/simple-bot/understanding-convai", {
             "convai-studio/simple-bot/building-a-bot/enhance-bot",
             "convai-studio/simple-bot/building-a-bot/facebook-channel",
             "convai-studio/simple-bot/building-a-bot/dashbot-analytics",
-            "convai-studio/simple-bot/building-a-bot/user-exp"
+            "convai-studio/simple-bot/building-a-bot/user-exp",
+            "convai-studio/simple-bot/building-a-bot/deployment"
         ]
     }
 ]
