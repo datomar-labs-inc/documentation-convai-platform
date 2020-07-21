@@ -1,0 +1,68 @@
+---
+id: data-equals-link
+title: Data Equals Link
+sidebar_label: Data Equals Link
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+
+Data Equals Links are used to determine the flow by the bot's data. 
+
+It's like an IF block in code. If the check of the Data Equals matches (result is true). The flow goes to the linked node.
+
+<img alt="data equals link" src={useBaseUrl('img/links/data-equals-link/image1.png')} />
+
+Mode is the boolean operation on multiple checks.
+
+You can add checks by clicking on the "+" button. Delete a check by clicking on the "-" button.
+
+Field Type defines the **[Data Scope](/convai-studio/simple-bot/understanding-convai/#data-scope)** to be checked.
+
+Field Name is what your data's key is.
+
+Operations is the specific check condition to be applied on the data.
+
+## Mode
+
+- ```All``` - equivalent to AND (&&)
+
+- ```Any``` - equivalent to OR (||)
+
+- ```None``` - equivalent to NOT (!)
+
+## Operations
+
+- ```Equals``` - checks data with Field Name matches the Value
+
+- ```Not Equals``` - checks data with Field Name does not match the Value
+
+- ```Exists``` - checks data with Field Name exists
+
+- ```Doesn't Exists``` - checks data with Field Name does not exist
+
+- ```==RegExp``` - checks data with Field Name matches the Regular Expression
+
+- ```!=RegExp``` - checks data with Field Name does not match the Regular Expression
+
+- ```Starts With``` - checks data with Field Name's Value starts with the entered Value
+
+- ```Not Starts With``` - checks data with Field Name's Value does not start with the entered Value
+
+- ```Type Of``` - checks data with Field Name matches the pre-defined Regular Expression
+
+- ```Not Type Of```- checks data with Field Name does not match the pre-defined Regular Expression
+
+
+## Configuration
+
+| Name           | Required                                                                                         | Description                          |
+|----------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| Link Type      | Required to be Data Equals                                                                       | Type of the Link                     |
+| Priority       | Required                                                                                         | Priority of the Link                 |
+| Mode           | Required                                                                                         | Mode of Data Equals Link checks      |
+| Field Type     | Required                                                                                         | Data Scope of the data to be checked |
+| Field Name     | Required                                                                                         | Field Name \(key\) of the data       |
+| Operation      | Required                                                                                         | Check Condition                      |
+| Match\(Value\) | Required when Operation is Equals, Not Equals, ==RegExp, \!=RegExp, Starts With, Not Starts With | The match value of the operation     |
+| Type Of        | Required when Operation is Type Of, Not Type Of                                                  | Pre\-defined regular expressions     |

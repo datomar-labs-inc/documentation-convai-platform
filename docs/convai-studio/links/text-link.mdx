@@ -1,0 +1,40 @@
+---
+id: text-link
+title: Text Link
+sidebar_label: Text Link
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+
+Text Link evaluates the user input text via its operation to determine the flow. This link should always be connected from an Input Node or Any Time System Node to another node.
+
+
+<img alt="text link" src={useBaseUrl('img/links/text-link/image1.png')} />
+
+## Mode
+
+- ```All``` - equivalent to AND (&&)
+
+- ```Any``` - equivalent to OR (||)
+
+- ```None``` - equivalent to NOT (!)
+
+## Operations
+
+- ```== text``` - The user input should exact match "text"
+
+- ```\* text``` - The user input has "text" exist
+
+- ```rx Regex``` - The user input matches the regular expression
+
+- ```^ text``` - The user input starts with "text"
+
+## Configuration
+
+| Name        | Required | Description                       |
+|-------------|----------|-----------------------------------|
+| Link Type   | Required | Type of the Link                  |
+| Priority    | Required | Priority of the Link              |
+| Mode        | Required | Mode of Text Link checks          |
+| Match Value | Required | Match Value of text and operation |
