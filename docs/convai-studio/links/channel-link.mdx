@@ -1,0 +1,35 @@
+---
+id: channel-link
+title: Channel Link
+sidebar_label: Channel Link
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+
+Channel Link is used to determine the flow on the channel. That is, if the current channel (we are executing the bot in Facebook/Twilio) is Facebook/Twilio, the flow continues to the node it is connected. 
+
+<img alt="facebook/twilio" src={useBaseUrl('img/links/channel-link/image1.png')} />
+
+If the current channel is Dev Console (we are executing the bot in Dev Console), the flow will not go to the connected Node.
+
+<img alt="dev console" src={useBaseUrl('img/links/channel-link/image2.png')} />
+
+## Mode
+
+You can select multiple channels by Shift+Click
+
+- ```All``` - equivalent to AND (&&)
+
+- ```Any``` - equivalent to OR (||)
+
+- ```None``` - equivalent to NOT (!)
+
+## Configuration
+
+| Name      | Required | Description              |
+|-----------|----------|--------------------------|
+| Link Type | Required | Type of the Link         |
+| Priority  | Required | Priority of the Link     |
+| Mode      | Required | Mode of Text Link checks |
+| Channels  | Required | Channels to be selected  |

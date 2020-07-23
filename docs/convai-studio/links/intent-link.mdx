@@ -1,0 +1,26 @@
+---
+id: intent-link
+title: Intent Link
+sidebar_label: Intent Link
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+
+Intent links works only if you have NLP Integration and **[NLP Node](/convai-studio/nodes/nlp/nlp)** set. Currently Convai supports **[DialogFlow](/convai-studio/integrations/nlp/dialogflow)** and **[LUIS]()** integrations.
+
+Intent link determines the flow once the selected intent is matched. It is usally connected from an Input Node or Any Time System node to another node. You can use the Intent Selector in the Link's configuration to select an Intent.
+
+<img alt="intent in dialogflow" src={useBaseUrl('img/links/intent-link/image1.png')} />
+
+<img alt="intent link" src={useBaseUrl('img/links/intent-link/image2.png')} />
+
+## Configuration
+
+| Name            | Required | Description               |
+|-----------------|----------|---------------------------|
+| Link Type       | Required | Type of the Link          |
+| Priority        | Required | Priority of the Link      |
+| Check Operation | Required | Check Operation of Intent |
+| Intent Name     | Required | Name of Intent            |
+| Intent Selector | Optional | Selector of Intent        |

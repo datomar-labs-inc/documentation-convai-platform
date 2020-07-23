@@ -1,0 +1,20 @@
+---
+id: broadcast-type-link
+title: Broadcast Type Link
+sidebar_label: Broadcast Type Link
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+
+Broadcast Type link determines the flow when a Broadcast is triggered by the **[Convai SDK Broadcast](/node-sdk/methods/broadcast)** or a **[One Time Broadcast Node](/convai-studio/nodes/stock/one-time-broadcast)** with specified Broadcast Type. This link should always be connected from Trigger System Node to other nodes. Or connected from a Module's Input System Node to other nodes in which the Module is connected to the Trigger System Node on the Main Graph. 
+
+<img alt="broadcast triggered" src={useBaseUrl('img/links/broadcast-type-link/image1.png')} />
+
+## Configuration
+
+| Name           | Required | Description                                                           |
+|----------------|----------|-----------------------------------------------------------------------|
+| Link Type      | Required | Type of the Link                                                      |
+| Priority       | Required | Priority of the Link                                                  |
+| Broadcast Type | Required | The Broadcast Type triggered by Convai SDK or One Time Broadcast Node |
