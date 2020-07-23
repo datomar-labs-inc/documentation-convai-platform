@@ -1,0 +1,99 @@
+---
+id: update-session
+title: Update Session
+sidebar_label: Update Session
+---
+
+The ```UpdateSession()``` method is used to update the session data of a session. It returns a response and an error (error will not be nil if there's an error). The response is a **[Session]()** type that is the session updated.
+
+The ```UpdateSession()``` method expects the ID of channel user which is a string type and the input which is **[```UpdateUserDataInput```]()** type. You can get the channel user ID in ```Users > Click on the user > find the channel user id above Session Data section on the right```.
+
+#### Current Session
+```json
+{
+    //hide for brief
+    "session": {
+        "data": {
+        "random": "randomData"
+        },
+        "stack": {
+        "frames": [
+            {
+            "m": 0,
+            "n": 0,
+            "v": null
+            }
+        ]
+        },
+        "ver": "",
+        "id": "9699c618-b91f-48da-99ef-26bb1fdedf93"
+    },
+    //......
+}
+```
+
+#### Example Code
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+
+	var deleteData []string
+	deleteData = append(deleteData, "random")
+	updateData := make(map[string]interface{})
+	updateData["foo"] = "bar"
+	updateData["jhon"] = "snow"
+
+    // notice that the id we use here is the channel user id of the session
+	res, err := convaiClient.UpdateSession("dev-console-81085beb-a6fd-48dd-ad09-522da3b6b251",&convai.UpdateUserDataInput{
+		Set:    updateData,
+		Delete: deleteData,
+	})
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+		fmt.Println(string(prettyRes))
+	}
+}
+```
+
+
+#### Example Response
+```json
+{
+  "data": {
+    "foo": "bar",
+    "jhon": "snow"
+  },
+  "stack": {
+    "frames": [
+      {
+        "m": 0,
+        "n": 0,
+        "v": null
+      }
+    ]
+  },
+  "ver": "",
+  "id": "9699c618-b91f-48da-99ef-26bb1fdedf93"
+}
+```
+
+## Reference
+```UpdateSession(userID string, input *UpdateUserDataInput) (*Session, error)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| userId | string     | Required | Channel User ID |
+| input | \*UpdateUserDataInput | Required | UpdateUserDataInput type |

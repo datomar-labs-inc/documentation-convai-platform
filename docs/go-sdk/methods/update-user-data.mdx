@@ -9,7 +9,7 @@ The ```UpdateUserData()``` method is used to update the user data of the super u
 The ```DeleteSuperUser()``` method expects the ID of super user which is a UUID type and the input which is **[```UpdateUserDataInput```]()** type. You can get the super user ID in ```Users > Click on the user > find the super user id above User Data section on the right```.
 
 :::important
-Even though the API sends back the updated user instantly, their is a delay of **1 sec** to update the user data in the database.
+Even though the API sends back the updated user instantly, there is a delay of **1 sec** to update the user data in the database.
 :::
 
 ### Current User
@@ -49,7 +49,7 @@ func main() {
 	// setup the data to be deleted and updated
 	var deleteData []string
 	deleteData = append(deleteData, "lastName")
-	var updateData map[string]interface{}
+	updateData := make(map[string]interface{})
     updateData["foo"] = "bar"
     
     //update user data

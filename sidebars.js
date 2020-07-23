@@ -20,6 +20,8 @@ const goSdk =[
             "go-sdk/methods/delete-super-user",
             "go-sdk/methods/update-user-data",
             "go-sdk/methods/query-executions",
+            "go-sdk/methods/update-session",
+            "go-sdk/methods/delete-session",
             "go-sdk/methods/broadcast"
         ]
     },
