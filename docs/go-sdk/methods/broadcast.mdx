@@ -1,0 +1,63 @@
+---
+id: broadcast
+title: Broadcast
+sidebar_label: Broadcast
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+Use the ```Broadcast()``` method to send an outgoing message to a set of users. The Broadcast method returns a response and an error (error will not be nil if there's an error). The response has a BroadcastResult type with the status of the broadcast and the number of users who were delivered the broadcast.
+
+The ```Broadcast()``` method expects an input of type **[BroadcastInput]()**.
+
+## Example
+1. We have the following setup in Convai. Our link is of **[broadcast type](/convai-studio/links/broadcast-type-link)** with the Broadcast Type as 'broadcast-type-set-in-convai
+<img alt="Broadcast Type Setup" src={useBaseUrl('img/node-sdk/methods/broadcast/1.png')} />
+
+2. Then use the following code in your Go project. Make sure you set Broadcast Permission for your API key. Here we want to send a message on Dev Console for yourself. You can get your own super user ID in ```Users > Click on the user > find the super user id above User Data section```
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+    cm := convai.NewContextModifier()
+    channel := "channel_dev"
+    userQuery := *convai.UserQueryBuilder().Any().Where("id").Equals("2a34d08b-fecc-4154-a0ae-eabe6135bbab").Build()
+
+    res, err := convaiClient.Broadcast(&convai.BroadcastInput{
+        BroadcastType:   "broadcast-type-set-in-convai",
+        ContextModifier: cm,
+        Channel:         channel,
+        UserQuery:       userQuery,
+    })
+
+    if err != nil {
+        fmt.Println(err.Error())
+    } else {
+        prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+		fmt.Println(string(prettyRes))
+    }
+}
+```
+#### Example Response
+```json
+{
+    "status": "ok",
+    "users": 1
+}
+```
+
+## Reference
+```Broadcast(input *BroadcastInput) (*BroadcastResult, error)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| input | \*BroadcastInput | Required | Broadcast input type |
+

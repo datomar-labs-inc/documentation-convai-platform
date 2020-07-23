@@ -1,0 +1,291 @@
+---
+id: query-executions
+title: Query Executions
+sidebar_label: Query Executions
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Use the ```QueryExecutions()``` method to query executions from the Convai bot. It returns a response and an error (error will not be nil if there's an error). The response is a **[ExecutionQueryResult]()** type.
+
+The ```QueryExecutions()``` method expects an input of **[ExecutionMatcher]()** type. You can use **[NewExecutionMatcher]()** to build ```ExecutionMatcher``` input.
+
+#### Example Code
+
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+	res, err := convaiClient.QueryExecutions(convai.NewExecutionMatcher().Where("userId").Equals("a399fb53-3747-4a9c-9812-9c333645f0c1"))
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+		fmt.Println(string(prettyRes))
+	}
+}
+```
+
+#### Example Response
+
+<Tabs
+  defaultValue="condensed"
+  values={[
+    { label: 'Condensed View', value: 'condensed', },
+    { label: 'Detailed View', value: 'detailed', },
+  ]
+}>
+<TabItem value="condensed">
+
+```json
+{
+  "executions": [
+    {
+      "id": "2547e89d-14ef-4b45-a533-beaf0961ec25",
+      "userId": "a399fb53-3747-4a9c-9812-9c333645f0c1",
+      "channelUserId": "dev-console-81085beb-a6fd-48dd-ad09-522da3b6b2516847",
+      "sessionId": "10a4faf2-ca4c-46e4-b4f9-559c9bd4dfd3",
+      "environmentId": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+      "blueprintId": "cfdfec80-b691-4c3a-a48f-f04ce6494d41",
+      "data": {},
+      "userData": {
+        "name": "my name"
+      },
+      "sessionData": {},
+      "text": "ssc",
+      "channel": "channel_dev",
+      "source": null,
+      "isStart": false,
+      "isTrigger": false,
+      "errors": null,
+      "response": {
+        "messages": [Object]
+      },
+      "logs": [Array],
+      "executionDuration": 0,
+      "startTime": "2020-07-22T16:47:22Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+</TabItem>
+<TabItem value="detailed">
+
+```json
+{
+  "executions": [
+    {
+      "id": "2547e89d-14ef-4b45-a533-beaf0961ec25",
+      "userId": "a399fb53-3747-4a9c-9812-9c333645f0c1",
+      "channelUserId": "dev-console-81085beb-a6fd-48dd-ad09-522da3b6b2516847",
+      "sessionId": "10a4faf2-ca4c-46e4-b4f9-559c9bd4dfd3",
+      "environmentId": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+      "blueprintId": "cfdfec80-b691-4c3a-a48f-f04ce6494d41",
+      "data": {},
+      "userData": {
+        "name": "my name"
+      },
+      "sessionData": {},
+      "text": "ssc",
+      "channel": "channel_dev",
+      "source": null,
+      "isStart": false,
+      "isTrigger": false,
+      "errors": null,
+      "response": {
+        "messages": [
+          {
+            "text": "",
+            "typingTime": 0,
+            "shouldBatch": true,
+            "graphId": 0,
+            "nodeId": 1039,
+            "blocks": null,
+            "data": {
+              "message": "",
+              "sender": null,
+              "quickReplies": null,
+              "phone": null,
+              "cards": null,
+              "cardCollections": null,
+              "images": null
+            },
+            "seq": 5
+          }
+        ]
+      },
+      "logs": [
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": null,
+          "ety": 2,
+          "eti": 0,
+          "cmo": {
+            "changes": [],
+            "logs": [],
+            "errors": []
+          }
+        },
+        {
+          "gid": -1,
+          "nid": 0,
+          "lid": null,
+          "ety": 1,
+          "eti": 2975,
+          "cmo": null
+        },
+        {
+          "gid": -1,
+          "nid": null,
+          "lid": 4,
+          "ety": 0,
+          "eti": 2263,
+          "cmo": null
+        },
+        {
+          "gid": -1,
+          "nid": null,
+          "lid": 6,
+          "ety": 0,
+          "eti": 737,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": 0,
+          "lid": null,
+          "ety": 1,
+          "eti": 866,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": 1009,
+          "ety": 0,
+          "eti": 472,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": 1014,
+          "ety": 0,
+          "eti": 291618,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": 1015,
+          "ety": 0,
+          "eti": 3621,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": 1018,
+          "ety": 0,
+          "eti": 698,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": 1019,
+          "ety": 0,
+          "eti": 964,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": 1020,
+          "ety": 0,
+          "eti": 1311,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": 1038,
+          "lid": null,
+          "ety": 1,
+          "eti": 75561,
+          "cmo": {
+            "changes": [
+              {
+                "type": 2,
+                "op": 0,
+                "key": "name",
+                "data": "my name"
+              }
+            ],
+            "logs": [],
+            "errors": []
+          }
+        },
+        {
+          "gid": 0,
+          "nid": null,
+          "lid": 1040,
+          "ety": 0,
+          "eti": 777,
+          "cmo": null
+        },
+        {
+          "gid": 0,
+          "nid": 1039,
+          "lid": null,
+          "ety": 1,
+          "eti": 141416,
+          "cmo": {
+            "changes": [],
+            "logs": [],
+            "errors": []
+          }
+        },
+        {
+          "gid": -1,
+          "nid": 3,
+          "lid": null,
+          "ety": 1,
+          "eti": 3760,
+          "cmo": {
+            "changes": [],
+            "logs": [],
+            "errors": []
+          }
+        }
+      ],
+      "executionDuration": 0,
+      "startTime": "2020-07-22T16:47:22Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Reference
+```QueryExecutions(matcher *ExecutionMatcher)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| matcher | \*ExecutionMatcher      | Required | ExecutionMatcher input type |

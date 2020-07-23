@@ -1,0 +1,87 @@
+---
+id: query-users
+title: Query Users
+sidebar_label: Query Users
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+Use the ```QueryUsers()``` method to query users from Convai bot. It returns a response and an error (error will not be nil if there's an error). The response is a **[UserQueryResults]()** type. It contains an array of type **[SuperUser]()** and the count of elements.
+
+The ```QueryUsers()``` method expects an input of **[UserQuery]()** type. You can use **[UserQueryBuilder]()** to build ```UserQuery``` input.
+
+#### Example Code
+
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+	userQuery := convai.UserQueryBuilder().Any().Where("id").Equals("2a34d08b-fecc-4154-a0ae-eabe6135bbab").Build()
+	res, err := convaiClient.QueryUsers(userQuery)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+		fmt.Println(string(prettyRes))
+	}
+}
+```
+
+#### Example Response
+```json
+{
+    "Users": [
+      {
+        "id": "2a34d08b-fecc-4154-a0ae-eabe6135bbab",
+        "environment_id": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+        "data": {},
+        "createdAt": "2020-07-20T18:08:13.886772Z",
+        "updatedAt": "2020-07-21T17:44:32.106733Z",
+        "channelUsers": [
+          {
+            "channelId": "dev-console-81085beb-a6fd-48dd-ad09-522da3b6b251",
+            "environmentId": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+            "channel": "channel_dev",
+            "data": null,
+            "superUserId": "2a34d08b-fecc-4154-a0ae-eabe6135bbab",
+            "session": {
+              "data": {},
+              "stack": {
+                "frames": [
+                  {
+                    "m": 0,
+                    "n": 0,
+                    "v": null
+                  }
+                ]
+              },
+              "ver": "",
+              "id": "676527d8-decc-4f95-8217-a8feeeff11cf"
+            },
+            "createdAt": "2020-07-20T18:08:13.893994Z",
+            "updatedAt": "2020-07-20T18:08:13.893994Z"
+          }
+        ]
+      }
+    ],
+    "Count": 1
+}
+```
+
+You can use the result to do most of the operations in Convai Go SDK
+
+## Reference
+```QueryUsers(query *UserQuery) (*UserQueryResult, error)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| input | \*UserQuery      | Required | UserQuery input type |

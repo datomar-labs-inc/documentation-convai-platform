@@ -1,0 +1,160 @@
+---
+id: merge-users
+title: Merge Users
+sidebar_label: Merge Users
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+Use ```MergeUsers()``` method to merge different super users into a single super user. It returns a response and an error (error will not be nil if there's an error). The response is a **[SuperUser]()** type.
+
+:::warning Important
+_**By default, ```MergeUsers()``` will add the key value pairs of both the users in a single super user. If there is a conflict in the key for both the users, the user which was created first will hold priority. This can be overwritten in the request.**_
+:::
+
+#### Example Code
+In practical situations, you will not need to know the ID of every Super User in order to merge. Use **[QueryUsers()](./query-users)** method to get a set of users.
+
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+    uuid "github.com/satori/go.uuid"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+    
+    // query users that has User Scope data "firstName" exists
+	userQuery := convai.UserQueryBuilder().All().Where("firstName").Exists().Build()
+	users, err := convaiClient.QueryUsers(userQuery)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+        // extract queried user IDs
+		var userIDs []uuid.UUID
+		for _, user := range users.Users {
+			userIDs = append(userIDs, user.ID)
+		}
+		
+		// merge users
+		res, err := convaiClient.MergeUsers(&convai.MergeUsersRequest{
+			SuperUserIDs: userIDs,
+			PreferNewUserFields: []string{"firstName"},
+		})
+
+		if err != nil {
+			fmt.Println(err.Error())
+		} else {
+			prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+			fmt.Println(string(prettyRes))
+		}
+	}
+}
+```
+
+#### Current Super Users
+```json
+// Super User 1 (Older User)
+{
+  "id": "96fd578e-7a5c-4a7f-a618-1614cb628297",
+  "environment_id": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+  "data": {
+    "firstName": "Jhon",
+    "lastName": "Snow"
+  },
+  "createdAt": "2020-07-22T19:35:36.392835Z",
+  "updatedAt": "2020-07-22T19:35:39.471159Z",
+  "channelUsers": [
+    {
+      "channelId": "dev-console-81085beb-a6fd-48dd-ad09-522da3b6b251",
+      "environmentId": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+      "channel": "channel_dev",
+      "data": null,
+      "superUserId": "96fd578e-7a5c-4a7f-a618-1614cb628297",
+      "session": {
+        "data": {},
+        "stack": {
+          "frames": [
+            {
+              "m": 0,
+              "n": 0,
+              "v": null
+            }
+          ]
+        },
+        "ver": "",
+        "id": "39c16015-c65e-4bb6-ab90-193b4dfec0fd"
+      },
+      "createdAt": "2020-07-22T19:35:36.394964Z",
+      "updatedAt": "2020-07-22T19:35:36.394964Z"
+    }
+  ]
+}
+
+// Super User 2 (New User)
+{
+  "id": "754a09f9-62ac-43ee-8b86-87c42e54caaf",
+  "environment_id": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+  "data": {
+    "firstName": "Convai",
+    "lastName": "Studio"
+  },
+  "createdAt": "2020-07-22T19:35:44.545998Z",
+  "updatedAt": "2020-07-22T19:35:47.796491Z",
+  "channelUsers": [
+    {
+      "channelId": "dev-console-81085beb-a6fd-48dd-ad09-522da3b6b2519535",
+      "environmentId": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+      "channel": "channel_dev",
+      "data": null,
+      "superUserId": "754a09f9-62ac-43ee-8b86-87c42e54caaf",
+      "session": {
+        "data": {},
+        "stack": {
+          "frames": [
+            {
+              "m": 0,
+              "n": 0,
+              "v": null
+            }
+          ]
+        },
+        "ver": "",
+        "id": "bb70d0a0-d6ff-4b99-bde0-fbc3ee28b509"
+      },
+      "createdAt": "2020-07-22T19:35:44.548715Z",
+      "updatedAt": "2020-07-22T19:35:44.548715Z"
+    }
+  ]
+}
+```
+
+#### Example Response
+```json
+// Notice how the firstName is of the new user and the lastName is of the old user
+{
+  "id": "89873269-704a-4561-a41b-8b6cd32987a9",
+  "environment_id": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+  "data": {
+    "_olduser_7824e962-9f8f-48d2-bfee-a2ae6c056004": true,
+    "firstName": "Jhon",
+    "lastName": "Studio"
+  },
+  "createdAt": "2020-07-22T19:25:29.474858Z",
+  "updatedAt": "2020-07-22T19:25:33.614429Z",
+  "channelUsers": null
+}
+```
+
+## Reference
+```MergeUsers(req *MergeUsersRequest) (*SuperUser, error)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| req | \*MergeUsersRequest      | Required | MergeUsersRequest input type |

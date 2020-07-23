@@ -1,0 +1,18 @@
+---
+id: setup
+title: Setup
+sidebar_label: Setup
+---
+
+Before using anying methods for Convai, you would need to configure the Convai Client.
+
+You can create an API key from ```Bot > Development > API Keys > Create Key```
+
+```go
+import (
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+var convaiClient *convai.Client
+convaiClient = convai.NewAPIClient(API_KEY)
+```

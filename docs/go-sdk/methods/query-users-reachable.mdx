@@ -1,0 +1,52 @@
+---
+id: query-users-reachable
+title: Query Users Reachable
+sidebar_label: Query Users Reachable
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+Use the ```QueryUsersReachable()``` method to query the numbers of users who are reachable for a certain user set from Convai bot. It returns a response and an error (error will not be nil if there's an error). The response is the count of users.
+
+The ```QueryUsersReachable()``` method expects an input of **[UserQuery]()** type. You can use **[UserQueryBuilder]()** to build ```UserQuery``` input.
+
+#### Example Code
+
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+	userQuery := convai.UserQueryBuilder().Any().Where("name").Equals("my name").Build()
+	res, err := convaiClient.QueryUsersReachable(userQuery)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+		fmt.Println(string(prettyRes))
+	}
+}
+
+```
+
+#### Example Response
+```json
+{
+    "count": 4
+}
+```
+
+## Reference
+```QueryUsersReachable(query *UserQuery) (*ReachableUserResult, error)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| input | \*UserQuery      | Required | UserQuery input type |

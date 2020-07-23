@@ -5,6 +5,45 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const goSdk =[
+    "go-sdk/introduction",
+    "go-sdk/installation",
+    "go-sdk/setup",
+    {
+        type: "category",
+        label: "Methods",
+        items:[
+            "go-sdk/methods/query-users",
+            "go-sdk/methods/query-users-reachable",
+            "go-sdk/methods/merge-users",
+            "go-sdk/methods/delete-channel-user",
+            "go-sdk/methods/delete-super-user",
+            "go-sdk/methods/update-user-data",
+            "go-sdk/methods/query-executions",
+            "go-sdk/methods/broadcast"
+        ]
+    },
+    {
+        type: "category",
+        label: "Input Builders",
+        items:["go-sdk/methods/query-users"]
+    },
+    {
+        type: "category",
+        label: "Types",
+        items:[
+            "go-sdk/setup"
+        ]
+    },
+    {
+        type: "category",
+        label: "Constants",
+        items:[
+            "go-sdk/setup"
+        ]
+    }
+];
+
 const nodes = [
 	"convai-studio/nodes/introduction",
 	{
@@ -193,6 +232,7 @@ const convaiStudio = [
 module.exports = {
 	someSidebar: {
 		"Convai Studio": convaiStudio,
-		"NodeJs SDK": nodeSdk,
+        "NodeJs SDK": nodeSdk,
+        "GO SDK": goSdk,
 	},
 };
