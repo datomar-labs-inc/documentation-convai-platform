@@ -1,0 +1,137 @@
+---
+id: user-query-builder
+title: User Query Builder
+sidebar_label: User Query Builder
+---
+
+The ```User Query Builder``` is used to stack conditions and build a single query to filter user results from the API.
+
+## Example
+
+```go
+userQuery := convai.UserQueryBuilder().All()
+    .Where("firstName").Equals("Jhon")
+    .Where("numberOfInteractions").GreaterThan("5")
+    .Offset(1)
+    .Build()
+```
+
+## Methods Summary
+
+| Method | Description |
+|--------|-------------|
+| [UserQueryBuilder](#userquerybuilder-uqbuilder)() \*UQBuilder | Constructor of the **[UQBuilder]()** type |
+| (u \*UQBuilder) [All](#u-uqbuilder-all-uqbuilder)() \*UQBuilder | Set the ```UQBuilder``` to All mode |
+| (u \*UQBuilder) [Any](#u-uqbuilder-any-uqbuilder)() \*UQBuilder | Set the ```UQBuilder``` to Any mode |
+| (u \*UQBuilder) [None](#u-uqbuilder-none-uqbuilder)() \*UQBuilder | Set the ```UQBuilder``` to None mode |
+| (u \*UQBuilder) [Where](#u-uqbuilder-wherefield-string-uqbuilder)(field string) \*UQBuilder | Intialize the query to be performed. This method handles the 'key' part of the query |
+| (u \*UQBuilder) [Equals](#u-uqbuilder-equalsvalues-string-uqbuilder)(values ...string) \*UQBuilder | Denotes that the return set from where 'key' is equal to 'value'|
+| (u \*UQBuilder) [NotEquals](#u-uqbuilder-notequalsvalues-string-uqbuilder)(values ...string) \*UQBuilder  | Denotes that the return set from where 'key' doesn't equal 'value' |
+| (u \*UQBuilder) [StartsWith](#u-uqbuilder-startswithvalues-string-uqbuilder)(values ...string) \*UQBuilder | Denotes that the return set from the where 'key' starts with 'value' |
+| (u \*UQBuilder) [GreaterThan](#u-uqbuilder-greaterthanvalues-string-uqbuilder)(values ...string) \*UQBuilder | Denotes that the return set from the where 'key' should be greater than 'value' |
+| (u \*UQBuilder) [LessThan](#u-uqbuilder-lessthanvalues-string-uqbuilder)(values ...string) \*UQBuilder | Denotes that the return set from the where 'key' should be less than 'value' |
+| (u \*UQBuilder) [Exists](#u-uqbuilder-exists-uqbuilder)() \*UQBuilder | Denotes that the user data should have the where 'key' |
+| (u \*UQBuilder) [NotExists](#u-uqbuilder-notexists-uqbuilder)() \*UQBuilder | Denotes that the user data should not have the where 'key' |
+| (u \*UQBuilder) [Offset](#u-uqbuilder-offsetoffset-int-uqbuilder)(offset int) \*UQBuilder | Set the offset of the query |
+| (u \*UQBuilder) [Limit](#u-uqbuilder-limitlimit-int-uqbuilder)(limit int) \*UQBuilder | Set the limit of the query |
+| (u \*UQBuilder) [Build](#u-uqbuilder-build-uqbuilder)() \*UserQuery | Build all the conditions into a single user query for API methods to use|
+
+## Methods
+
+:::tip Note
+_**NOTE: All the methods defined below return the latest instance of UserQueryBuilder. This allows to stack different conditions as defined above**_
+:::
+
+#### ```UserQueryBuilder() *UQBuilder```
+
+The UserQueryBuilder() method is the constructor of the **[UQBuilder]()** type that is used to stack conditions to filter users.
+
+#### ```(u *UQBuilder) All() *UQBuilder```
+
+The All() method is used to set the calling ```UQBuilder``` instance to All mode. All mode means the following stacked conditions should all be true.
+
+#### ```(u *UQBuilder) Any() *UQBuilder```
+
+The Any() method is used to set the calling ```UQBuilder``` instance to Any mode. Any mode means the any one of the following stacked conditions should be true.
+
+#### ```(u *UQBuilder) None() *UQBuilder```
+
+The None() method is used to set the calling ```UQBuilder``` instance to None mode. None mode means the following stacked conditions should not be true.
+
+#### ```(u *UQBuilder) Where(field string) *UQBuilder```
+
+The Where() method is used to filter records. It is used to extract only those records that fulfill a specified condition. This method handles the 'key' part of the query.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| field | string | Name of the key |
+
+#### ```(u *UQBuilder) Equals(values ...string) *UQBuilder```
+
+The Equals() method is used to compare the key and value. A ```Where("firstName").Equals("John")``` would mean return the data set of all the users with ```firstName``` **as** ```John```.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| values | string | Values of the key |
+
+
+#### ```(u *UQBuilder) NotEquals(values ...string) *UQBuilder```
+
+The NotEquals() method is used to compare the key and value. A ```Where("firstName").NotEquals("John")``` would mean return the data set of all the users with ```firstName``` **NOT as** ```John```.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| values | string | Values of the key |
+
+#### ```(u *UQBuilder) StartsWith(values ...string) *UQBuilder```
+
+The StartsWith() method is used to compare the key and value. A ```Where("firstName").StartsWith("John")``` would mean return the data set of all the users with ```firstName``` **starting from** ```John```.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| values | string | Values of the key |
+
+#### ```(u *UQBuilder) GreaterThan(values ...string) *UQBuilder```
+
+The GreaterThan() method is used to compare the key and value. A ```Where("numOfInteraction").GreaterThan("2")``` would mean return the data set of all the users with ```numOfInteraction``` **greater than** ```2```.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| values | string | Values of the key |
+
+#### ```(u *UQBuilder) LessThan(values ...string) *UQBuilder```
+
+The LessThan() method is used to compare the key and value. A ```Where("numOfInteraction").LessThan("10")``` would mean return the data set of all the users with ```numOfInteraction``` **less than** ```10```.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| values | string | Values of the key |
+
+#### ```(u *UQBuilder) Exists() *UQBuilder```
+
+The Exists() method is used to compare the key and value. A ```Where("previousLiveChat").Exists()``` would mean return the data set of all the users that **has** ```previousLiveChat``` as a key in their data.
+
+
+#### ```(u *UQBuilder) NotExists() *UQBuilder```
+
+The Exists() method is used to compare the key and value. A ```Where("previousLiveChat").NotExists()``` would mean return the data set of all the users that **DO NOT have** ```previousLiveChat``` as a key in their data.
+
+#### ```(u *UQBuilder) Offset(offset int) *UQBuilder```
+
+The SetOffset() method is used to set the offset for the user query.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| offset | int | Offset for the user query |
+
+#### ```(u *UQBuilder) Limit(limit int) *UQBuilder```
+
+The Limit() method is used to set the limit for the user query.
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| limit | int | Limit for the user query |
+
+#### ```(u *UQBuilder) Build() *UQBuilder```
+
+The Build() method is used to convert all the stacked conditions into a single [UserQuery]().

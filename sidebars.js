@@ -27,14 +27,10 @@ const goSdk =[
     },
     {
         type: "category",
-        label: "Input Builders",
-        items:["go-sdk/methods/query-users"]
-    },
-    {
-        type: "category",
         label: "Types",
         items:[
-            "go-sdk/setup"
+            "go-sdk/types/user-query-builder",
+            "go-sdk/types/execution-matcher",
         ]
     },
     {
