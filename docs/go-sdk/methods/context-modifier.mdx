@@ -1,0 +1,44 @@
+---
+id: context-modifier
+title: Context Modifier
+sidebar_label: Context Modifier
+---
+
+Context Modifier is used to change the context of the conversation. We can use its methods to set or delete variables in different scope of the conversation. For example, you can set variables that will be used in the current execution only like a message or if you want to save some data for the session, like ```liveChatStartedAt```, you can save that in the session scope data.
+
+Refer to **[ContextModifier]()** for more type information.
+
+## Example
+```go
+cm := NewContextModifier()
+
+cm.Set("message", "Hi. Thanks for contacting us. An agent will be with you shortly")
+cm.SetUser("numberOfAgents", 12)
+```
+
+## Methods Summary
+
+| Method | Description |
+|--------|-------------|
+| [NewContextModifier]()() \*ContextModifier | Constructor of the **ContextModifier** type |
+| [MergeContextModifiers]()(a, b \*ContextModifier) \*ContextModifier | Creating a new ContextModifier consisting of parts of a and b |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+
+
+## Methods

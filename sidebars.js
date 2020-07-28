@@ -11,28 +11,30 @@ const goSdk =[
     "go-sdk/setup",
     {
         type: "category",
-        label: "Methods",
+        label: "APIs",
         items:[
-            "go-sdk/methods/query-users",
-            "go-sdk/methods/query-users-reachable",
-            "go-sdk/methods/merge-users",
-            "go-sdk/methods/delete-channel-user",
-            "go-sdk/methods/delete-super-user",
-            "go-sdk/methods/update-user-data",
-            "go-sdk/methods/query-executions",
-            "go-sdk/methods/update-session",
-            "go-sdk/methods/delete-session",
-            "go-sdk/methods/broadcast"
+            "go-sdk/apis/query-users",
+            "go-sdk/apis/query-users-reachable",
+            "go-sdk/apis/merge-users",
+            "go-sdk/apis/delete-channel-user",
+            "go-sdk/apis/delete-super-user",
+            "go-sdk/apis/update-user-data",
+            "go-sdk/apis/query-executions",
+            "go-sdk/apis/update-session",
+            "go-sdk/apis/delete-session",
+            "go-sdk/apis/broadcast"
         ]
     },
     {
         type: "category",
-        label: "Types",
+        label: "Methods",
         items:[
-            "go-sdk/types/user-query-builder",
-            "go-sdk/types/execution-matcher",
-        ]
+            "go-sdk/methods/user-query-builder",
+            "go-sdk/methods/execution-matcher",
+            "go-sdk/methods/context-modifier"
+        ]        
     },
+    "go-sdk/types",
     {
         type: "category",
         label: "Constants",

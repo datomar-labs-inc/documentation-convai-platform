@@ -1,0 +1,119 @@
+---
+id: execution-matcher
+title: Execution Matcher
+sidebar_label: Execution Matcher
+---
+
+The `Execution Matcher` type is used to stack conditions and build a single query to filter execution results from the API.
+
+## Example
+
+```go
+executionMatcher := convai.NewExecutionMatcher()
+    .Where("userId").Equals("ef44ad85-b97a-477b-b314-abcdefghijkl")
+    .Where("channel").Equals("facebook")
+    .Not()
+```
+
+## Methods Summary
+
+| Method | Description |
+|--------|-------------|
+| [NewExecutionMatcher](#newexecutionmatcher-executionmatcher)() \*ExecutionMatcher | Constructor of the **ExecutionMatcher** type |
+| (e \*ExecutionMatcher) [Where](#e-executionmatcher-wherefield-string-executionmatcher)(field string) \*ExecutionMatcher | Intialize the query to be performed. This method handles the 'key' part of the query |
+| (e \*ExecutionMatcher) [Equals](#e-executionmatcher-equalsvalue-string-executionmatcher)(values ...string) \*ExecutionMatcher | Denotes that the return set from where 'key' is equal to 'value'|
+| (e \*ExecutionMatcher) [Exists](#e-executionmatcher-exists-executionmatcher)() \*ExecutionMatcher | Denotes that the return set should have the where 'key' |
+| (e \*ExecutionMatcher) [HasPrefix](#e-executionmatcher-hasprefixprefix-string-executionmatcher)(prefix string) \*ExecutionMatcher | Denotes that the return set from the where 'key' starts with 'prefix' |
+| (e \*ExecutionMatcher) [Between](#e-executionmatcher-betweenlow-high-string-inclusive-bool-executionmatcher)(low, high string, inclusive bool) \*ExecutionMatcher | Intialize the query to be performed. This method handles the 'key' part of the query |
+| (e \*ExecutionMatcher) [Not](#e-executionmatcher-not-executionmatcher)() \*ExecutionMatcher | Negate a condition |
+| (e \*ExecutionMatcher) [SortAsc](#e-executionmatcher-sortascfield-string-executionmatcher)(field string) \*ExecutionMatcher | Sort the executions by the field in ascending order |
+| (e \*ExecutionMatcher) [SortDesc](#e-executionmatcher-sortdescfield-string-executionmatcher)(field string) \*ExecutionMatcher | Sort the executions by the field in descending order |
+| (e \*ExecutionMatcher) [Offset](#e-executionmatcher-offsetoffset-int-executionmatcher)(offset int) \*ExecutionMatcher | Set the offset of the query |
+| (e \*ExecutionMatcher) [Limit](#e-executionmatcher-limitlimit-int-executionmatcher)(limit int) \*ExecutionMatcher | Set the limit of the query |
+
+
+## Methods
+
+:::tip Note
+_**NOTE: All the methods defined below return the latest instance of ExecutionMatcher. This allows to stack different conditions as defined in the example above**_
+:::
+
+#### ```NewExecutionMatcher() *ExecutionMatcher```
+The NewExecutionMatcher() method is the constructor of the **ExecutionMatcher** type
+
+#### ```(e *ExecutionMatcher) Where(field string) *ExecutionMatcher```
+The Where() method is used to filter records. It is used to extract only those records that fulfill a specified condition. This method handles the 'key' part of the query.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| field | string | Name of the key |
+
+#### ```(e *ExecutionMatcher) Equals(value ...string) *ExecutionMatcher```
+The Equals() method is used to compare the key and value. A ```Where('userId').Equals('ef44ad85-b97a-477b-b314-abcdefghijkl')``` would mean return the data set of all the executions with ```userId``` as ```ef44ad85-b97a-477b-b314-abcdefghijkl```.
+
+This methd will panic if a ```Where()``` method is not present
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| value | string |value |
+
+#### ```(e *ExecutionMatcher) Exists() *ExecutionMatcher```
+The Exists() method is used to compare the key and value. A `Where('userId').Exists()` would mean return the data set of all the executions that has userId as a key in their data.
+
+This method will panic if a `Where()` method is not present.
+
+#### ```(e *ExecutionMatcher) HasPrefix(prefix string) *ExecutionMatcher```
+The HasPrefix() method is used to compare the key and value. A ```Where('channel').HasPrefix('mes')``` would mean return the data set of all the executions with channel that starts with mes.
+
+This method will panic if a `Where()` method is not present.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| prefix | string |value |
+
+#### ```(e *ExecutionMatcher) Between(low, high string, inclusive bool) *ExecutionMatcher```
+The Between() method is used to compare the key and value. Denotes that the return set from the where 'key' should be between (low, high) for inclusive = false or [low, high] for inclusive = true.
+
+This method will panic if a `Where()` method is not present.
+
+| Name   | Type   | Description               |
+| ------ | ------ |------------------------- |
+| low | string |The lower number |
+| high | string |The higher number |
+| inclusive | bool |Specify if the lower and higher numbers should be inclusive or exclusive |
+
+#### ```(e *ExecutionMatcher) Not() *ExecutionMatcher```
+The Not() method is used to negate a condition. For example, if we want all the executions for a user except for the facebook channel
+```go
+executionMatcher := convai.NewExecutionMatcher()
+    .Where("userId").Equals("ef44ad85-b97a-477b-b314-abcdefghijkl")
+    .Where("channel").Equals("facebook").Not()
+```
+
+#### ```(e *ExecutionMatcher) SortAsc(field string) *ExecutionMatcher```
+The SortAsc() method is used to sort the executions by the field in **ascending** order
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| field | string |field to sort the executions by |
+
+#### ```(e *ExecutionMatcher) SortDesc(field string) *ExecutionMatcher```
+The SortDesc() method is used to sort the executions by the field in **descending** order
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| field | string |field to sort the executions by |
+
+#### ```(e *ExecutionMatcher) Offset(offset int) *ExecutionMatcher```
+The Offset() method is used to set the offset for the user query
+
+| Name   | Type   | Description               |
+| ------ | ------ | ------------------------- |
+| offset | int | Offset for the user query |
+
+#### ```(e *ExecutionMatcher) Limit(limit int) *ExecutionMatcher```
+The Limit() method is used to set the limit for the user query
+
+| Name   | Type   |  Description               |
+| ------ | ------ | ------------------------- |
+| limit | int | Limit for the user query |
