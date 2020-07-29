@@ -1,0 +1,448 @@
+---
+id: types
+title: Types
+sidebar_label: Types
+---
+
+## APIError
+| Field | Type |
+| ------| ---- |
+| Code   | int  |
+| Message | string |
+
+## ReachableUserResult
+| Field | Type |
+| ------| ---- |
+| Count   | uint64  |
+
+## BroadcastInput
+| Field | Type |
+| ------| ---- |
+| BroadcastType   | string  |
+| ContextModifier | \***[ContextModifier](#contextmodifier)** |
+| Channel | string |
+| UserQuery | **[UserQuery](#userquery)** |
+
+## TriggerRequest
+| Field | Type |
+| ------| ---- |
+| ContextModifier | \***[ContextModifier](#contextmodifier)** |
+| ChannelID | string |
+| Text | string |
+| IsStart | bool |
+| IsTrigger | bool |
+| Source | interface{} |
+
+## BroadcastResult
+| Field | Type |
+| ------| ---- |
+| Status | string |
+| Users | int |
+
+## MergeUsersRequest
+| Field | Type |
+| ------| ---- |
+| SuperUserIDs | []uuid.UUID |
+| PreferNewUserFields | []string |
+
+## CreateCombinedUserRequest
+| Field | Type |
+| ------| ---- |
+| EnvironmentID | uuid.UUID |
+| UserData | **[UserData](#userdata)** |
+| ChannelUsers | [] **[CreateChannelUser](#createchanneluser)** |
+
+## UserData
+```go
+map[string]interface{}
+```
+
+## CreateChannelUser
+| Field | Type |
+| ------| ---- |
+| Channel | string |
+| ChannelID | string |
+| Session | \***[Session](#session)** |
+
+## CreateCombinedUserResult
+| Field | Type |
+| ------| ---- |
+| SuperUserID | uuid.UUID |
+| ChannelUserIDs | []string |
+
+## CreateChannelUsersResult
+| Field | Type |
+| ------| ---- |
+| ChannelUserIDs | []string |
+
+## CreateChannelUsersRequest
+| Field | Type |
+| ------| ---- |
+| EnvironmentID | uuid.UUID |
+| SuperUserID | uuid.UUID |
+| ChannelUsers | [] **[CreateChannelUser](#createchanneluser)** |
+
+## UpdateUserDataInput
+| Field | Type |
+| ------| ---- |
+| Set | map[string]interface{} |
+| Delete | []string |
+
+## UserQueryResult
+| Field | Type |
+| ------| ---- |
+| Users | [] **[SuperUser](#superuser)** |
+| Count | uint64 |
+
+## SuperUser
+| Field | Type |
+| ------| ---- |
+| ID | uuid.UUID |
+| EnvironmentID | uuid.UUID |
+| Data | map[string]interface{} |
+| CreatedAt | *time.Time |
+| UpdatedAt | *time.Time |
+| ChannelUsers | [] **[ChannelUser](#channeluser)** |
+
+## ChannelUser
+| Field | Type |
+| ------| ---- |
+| ChannelId |  |
+| EnvironmentID | uuid.UUID |
+| Channel | string |
+| Data | map[string]interface{} |
+| SuperUserIDs | []uuid.UUID |
+| Session | \***[Session](#session)** |
+| CreatedAt | *time.Time |
+| UpdatedAt | *time.Time |
+
+## Execution
+| Field | Type |
+| ------| ---- |
+| ID | uuid.UUID |
+| UserID | uuid.UUID |
+| ChannelUserID | string |
+| SessionID | uuid.UUID |
+| EnvironmentID | uuid.UUID |
+| BlueprintID | uuid.UUID |
+| Data | map[string]interface{} |
+| UserData | map[string]interface{} |
+| SessionData | map[string]interface{} |
+| Text | string |
+| Channel | string |
+| Source | interface{} |
+| IsStart | bool |
+| IsTrigger | bool |
+| Errors | [] **[ExecError](#execerror)** |
+| Response | \***[Response](#response)** |
+| Logs | [] **[ExecutionLog](#executionlog)** |
+| ExecutionDuration | int64 |
+| StartTime | time.Time |
+
+## ExecutionQueryResult
+| Field | Type |
+| ------| ---- |
+| Executions | [] **[Execution](#execution)** |
+| Total | int |
+
+## QueryCheck
+| Field | Type |
+| ------| ---- |
+| Field | string |
+| Operation | int64 |
+| Values | []string |
+
+#### UserQuery
+| Field | Type |
+| ------| ---- |
+| Checks | []QueryCheck |
+| Mode | int64 |
+| Limit | int |
+| Offset | int |
+| ChannelSearch | bool |
+
+## Q
+```go
+map[string]interface{}
+```
+
+## ExecutionMatcher
+| Field | Type |
+| ------| ---- |
+| EnvID | string |
+| Lim | int |
+| Off | int |
+| Filters | [] **[ExecutionQueryItem](#executionqueryitem)** |
+| MustNot | [] **[ExecutionQueryItem](#executionqueryitem)** |
+| Sort | [] **[ExecutionSort](#executionsort)** |
+| NegateCurrent | bool |
+| CurrentItem | \***[ExecutionQueryItem](#executionqueryitem)** |
+
+## ExecutionSort
+| Field | Type |
+| ------| ---- |
+| Field | string |
+| Ascending | bool |
+
+## ExecutionQueryItem
+| Field | Type |
+| ------| ---- | 
+|Op      |   int      |
+|Field    |  string   |
+|Matcher   | []string |
+|LowerBound |*string  |
+|UpperBound |*string  |
+
+## ExecutionResult
+| Field | Type |
+| ------| ---- |
+| FinalContext | **[RequestContext](#requestcontext)** |
+| ExecutionLogs | [] **[ExecutionLog](#executionlog)** |
+| ExecutionTime | time.Duration  |
+
+## ExecutionLog
+| Field | Type |
+| ------| ---- |
+| GraphID | int64 |
+| NodeID | \*int64 |
+| LinkID | \*int64 |
+| ExecutionType | int16 |
+| ExecutionTime | int64 |
+| ContextModifier | \***[ContextModifier](#contextmodifier)** |
+
+
+## ContextModifier
+| Field | Type |
+| ------| ---- |
+| ContextChanges | [] **[ContextChange](#contextchange)** |
+| Logs | [] **[LogEntry](#logentry)**  |
+| Errors | [] **[ExecError](#execerror)** |
+
+## ContextChange
+| Field | Type |
+| ------| ---- |
+| Type | int |
+| Operation | int |
+| Key | string |
+| Data | interface{} |
+
+
+## LogEntry
+| Field | Type |
+| ------| ---- |
+| Level |  int |
+| Message | string |
+| Time | time.Time |
+
+## ExecError
+| Field | Type |
+| ------| ---- |
+| ErrorType | string |
+| GraphID | int64 |
+| NodeID | \*int64 |
+| LinkID | \*int64 |
+| Message | string |
+
+## RequestContext
+| Field | Type |
+| ------| ---- |
+|  | **[Flaggable](#flaggable)** |
+| ID | uuid.UUID |
+| User | [RequestUser]() |
+| Session | **[Session](#session)** |
+| EnvironmentData | map[string]interface{} |
+| Text | string |
+| Channel | string |
+| Source | interface{} |
+| IsStart | bool |
+| IsTrigger | bool |
+| Errors | [] **[ExecError](#execerror)** |
+| Response | \***[Response](#response)** |
+| LastError | \***[ExecError](#execerror)** |
+
+## RequestUser
+| Field | Type |
+| ------| ---- |
+|  | **[Flaggable](#flaggable)** |
+| ID | uuid.UUID |
+| ChannelID | string |
+
+## Flaggable
+| Field | Type |
+| ------| ---- |
+| FData | map[string]interface{} |
+
+## FlaggableChangeset
+| Field | Type |
+| ------| ---- |
+| Changes | [] **[FlaggableChange](#flaggablechange)** |
+
+## FlaggableChange
+| Field | Type |
+| ------| ---- |
+| Type | int |
+| Key | string |
+| Data | interface{} |
+
+## Session
+| Field | Type |
+| ------| ---- |
+|  | **[Flaggable](#flaggable)** |
+| Stack | **[Stack](#stack)** |
+| Version | string |
+| ID | uuid.UUID |
+
+## Frame
+| Field | Type |
+| ------| ---- |
+| Module | int64 |
+| Node | int64 |
+| Vars | map[string]string |
+
+## Stack
+| Field | Type |
+| ------| ---- |
+| Frames | [] **[Frame](#frame)** |
+
+## Signal
+| Field | Type |
+| ------| ---- |
+| EnvironmentID | uuid.UUID |
+| ContextModifier | **[ContextModifier](#contextmodifier)** |
+| ChannelID | string |
+| Channel | string |
+| Text | string |
+| RawRequest | interface{} |
+
+## WebhookRequest
+| Field | Type |
+| ------| ---- |
+| Name | string |
+| Context | **[RequestContext](#requestcontext)** |
+
+## WebhookHandler
+```go
+func(name string, ctx *RequestContext, cm *ContextModifier) error
+```
+
+## WebhookManager
+| Field | Type |
+| ------| ---- |
+| handlers | map[string]WebhookHandler |
+| catch | **[WebhookHandler](#webhookhandler)** |
+
+## Response
+| Field | Type |
+| ------| ---- |
+| Messages | [] **[Message](#message)** |
+
+## ResponseConfig
+| Field | Type |
+| ------| ---- |
+| Basic | **[MessageConfig](#messageconfig)** |
+| SendNow | bool |
+| CustomResponses | map[string]**[MessageConfig](#messageconfig)** |
+
+## Message
+| Field | Type |
+| ------| ---- |
+| ShouldBatch | bool |
+| GraphID | \*int64 |
+| NodeID | \*int64 |
+| Message | **[XMLMessage](#xmlmessage)** |
+| Seq | int |
+
+## MessageConfig
+| Field | Type |
+| ------| ---- |
+| ResponseXML | string |
+
+## XMLResponse
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Messages | [] **[XMLMessage](#xmlmessage)** |
+
+## XMLMessage
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| TypingTime | \*float64 |
+| Text | \*string |
+| FBTag | \*string |
+| Sender | \***[XMLSender](#xmlsender)** |
+| QuickReplies | [] **[XMLQR](#xmlqr)** |
+| CardCollection | \***[XMLCardCollection](#xmlcardcollection)** |
+| Image | \***[XMLImage](#xmlimage)** |
+
+## XMLQR
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Text | string |
+| Value | \*string |
+| Phone | bool |
+| Email | bool |
+| Image | \*string |
+| ImageURL | \*string |
+
+## XMLPhone
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Number | string |
+| Display | \*string |
+
+## XMLCardCollection
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Cards | [] **[XMLCard](#xmlcard)** |
+
+## XMLCard
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Title | string |
+| Subtitle | \*string |
+| Image | \***[XMLImage](#xmlimage)** |
+| Buttons | [] **[XMLButton](#xmlbutton)** |
+
+## XMLImage
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| ID | string |
+| Width | \*uint64 |
+| Height | \*uint64 |
+| X | \*uint64 |
+| Y | \*uint64 |
+| URL | string |
+
+## XMLButton
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Text | string |
+| Value | \*string |
+| URL | \*string |
+
+## XMLSender
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Name | string |
+| Persona | \*string |
+
+## XMLTextRandomizer
+| Field | Type |
+| ------| ---- |
+| XMLName | xml.Name |
+| Text | []string |
+
+## ResponseBlock
+| Field | Type |
+| ------| ---- |
+| Type | string |
+| Data | string |
+| Position | int |

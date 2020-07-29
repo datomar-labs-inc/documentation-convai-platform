@@ -1,0 +1,57 @@
+---
+id: delete-channel-user
+title: Delete Channel User
+sidebar_label: Delete Channel User
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+The ```DeleteChannelUser()``` method is used to delete a channel of a super user. It returns a response and an error (error will not be nil if there's an error). The response is a **[ChannelUser](../types#channeluser)** type that is the channel user deleted.
+
+The ```DeleteChannelUser()``` method expects the ID of channel user which is a String type. You can get the channel user ID in ```Users > Click on the user > find the super user id above Seesion Data section on the right```
+
+#### Example Code
+
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+	res, err := convaiClient.DeleteChannelUser("dev-console-81085beb-a6fd-48dd-ad09-522da3b6b2511548")
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+		fmt.Println(string(prettyRes))
+	}
+}
+```
+
+#### Example Response
+```json
+{
+  "channelId": "dev-console-81085beb-a6fd-48dd-ad09-522da3b6b2511548",
+  "environmentId": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+  "channel": "channel_dev",
+  "data": null,
+  "superUserId": "88628ae5-b7b1-4d49-b65c-26a2a6c6b4d3",
+  "session": null,
+  "createdAt": "2020-07-22T19:51:23.566771Z",
+  "updatedAt": "2020-07-22T19:51:23.566771Z"
+}
+```
+
+## Reference
+```DeleteChannelUser(userID string) (*ChannelUser, error)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| userID | string     | Required | Channel User ID |

@@ -5,6 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const goSdk =[
+    "go-sdk/introduction",
+    "go-sdk/installation",
+    "go-sdk/setup",
+    {
+        type: "category",
+        label: "APIs",
+        items:[
+            "go-sdk/apis/query-users",
+            "go-sdk/apis/query-users-reachable",
+            "go-sdk/apis/merge-users",
+            "go-sdk/apis/delete-channel-user",
+            "go-sdk/apis/delete-super-user",
+            "go-sdk/apis/update-user-data",
+            "go-sdk/apis/query-executions",
+            "go-sdk/apis/update-session",
+            "go-sdk/apis/delete-session",
+            "go-sdk/apis/broadcast",
+            "go-sdk/apis/create-channel-user",
+            "go-sdk/apis/create-super-user",
+            "go-sdk/apis/trigger"
+        ]
+    },
+    {
+        type: "category",
+        label: "Methods",
+        items:[
+            "go-sdk/methods/user-query-builder",
+            "go-sdk/methods/execution-matcher",
+            "go-sdk/methods/context-modifier",
+            "go-sdk/methods/flaggable",
+            "go-sdk/methods/request-context",
+            "go-sdk/methods/webhook"
+        ]        
+    },
+    "go-sdk/types"
+];
+
 const links = [
     "convai-studio/links/introduction",
     "convai-studio/links/basic-link",
@@ -210,6 +248,7 @@ const convaiStudio = [
 module.exports = {
 	someSidebar: {
 		"Convai Studio": convaiStudio,
-		"NodeJs SDK": nodeSdk,
+        "NodeJs SDK": nodeSdk,
+        "GO SDK": goSdk,
 	},
 };

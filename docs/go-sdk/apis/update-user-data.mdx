@@ -1,0 +1,91 @@
+---
+id: update-user-data
+title: Update User Data
+sidebar_label: Update User Data
+---
+
+The ```UpdateUserData()``` method is used to update the user data of the super user. It returns a response and an error (error will not be nil if there's an error). The response is a **[SuperUser](../types#superuser)** type that is the super user has User Data updated.
+
+The ```DeleteSuperUser()``` method expects the ID of super user which is a UUID type and the input which is **[UpdateUserDataInput](../types#updateuserdatainput)** type. You can get the super user ID in ```Users > Click on the user > find the super user id above User Data section on the right```.
+
+:::important
+Even though the API sends back the updated user instantly, there is a delay of **1 sec** to update the user data in the database.
+:::
+
+### Current User
+```json
+{
+    "Users": [
+      {
+        "id": "d56e7906-136c-4944-a8cc-73645d8389a1",
+        "environment_id": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+        "data": {
+          "firstName": "convai",
+          "lastName": "studio"
+        },
+        // Hide for brief
+        // ......
+      }
+    ],
+    "Count": 1
+}
+```
+
+#### Example Code
+```go
+package main
+
+import (
+    "fmt"
+    "encoding/json"
+    "github.com/datomar-labs-inc/convai-sdk-go"
+)
+
+const API_KEY = "YOUR API KEY"
+
+func main() {
+    convaiClient := convai.NewAPIClient(API_KEY)
+
+	// setup the data to be deleted and updated
+	var deleteData []string
+	deleteData = append(deleteData, "lastName")
+	updateData := make(map[string]interface{})
+    updateData["foo"] = "bar"
+    
+    //update user data
+	res, err := convaiClient.UpdateUserData("d56e7906-136c-4944-a8cc-73645d8389a1",&convai.UpdateUserDataInput{
+		Set:    updateData,
+		Delete: deleteData,
+	})
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		prettyRes, _ := json.MarshalIndent(&res, "", "\t")
+		fmt.Println(string(prettyRes))
+	}
+}
+```
+
+#### Example Response
+```json
+{
+  "id": "d56e7906-136c-4944-a8cc-73645d8389a1",
+  "environment_id": "31c45ad0-1d52-428b-ac08-0e4c5d49b400",
+  "data": {
+    "firstName": "convai",
+    "foo": "bar"
+  },
+  "createdAt": "2020-07-23T16:55:25.370556Z",
+  "updatedAt": "2020-07-23T16:55:29.326339Z",
+  "channelUsers": null
+}
+```
+
+## Reference
+```UpdateUserData(superUserId string, input *UpdateUserDataInput) (*SuperUser, error)```
+
+| Name  | Type             | Required | Description          |
+|-------|------------------|----------|----------------------|
+| superUserId | string     | Required | Super User ID |
+| input | \*UpdateUserDataInput | Required | UpdateUserDataInput type |
