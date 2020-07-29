@@ -31,40 +31,42 @@ In this tutorial we will be making a Trivia bot. We will be using Dialogflow's N
   <img alt="graph overview" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image66.png')} />
 
 ## Connecting NLP
-Let’s add the NLP integration as a starting point. Here we will use DialogFlow as the bot’s NLP. You can always check the [DialogFlow Integrations](/convai-studio/integrations/nlp/dialogflow) document if you don’t understand what we are doing here.
+1. Let’s add the NLP integration as a starting point. Here we will use DialogFlow as the bot’s NLP. Use the [DialogFlow Integrations](/convai-studio/integrations/nlp/dialogflow) guide to connect your Dialogflow bot to Convai.
 
-You can make your own dataset or you can download one from here - [_IMPORT ME IN DIALOGFLOW_](/ConvaiTutorial.zip)
+2. Import this dataset to your Dialogflow Bot - [_IMPORT ME IN DIALOGFLOW_](/ConvaiTutorial.zip)
 
-1. Once you are done with that, go to Settings > Graph > Extension Graph to add the Dialogflow node.
+3. Once you are done with that, go to Settings > Graph > Extension Graph to add the Dialogflow node.
 
 <img alt="go to extension" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image107.png')} />
 
-2. Add the DialogFlow Node to the graph. Connect it between the Request Node and Main Node for NLP to function.
+4. Add the DialogFlow Node to the graph. Connect it between the Request Node and Main Node for NLP to function.
 
 <img alt="add dialogflow node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image16.png')} />
 
-3. Now you are able to use the NLP using the Intent Links anywhere in the bot. Intent links are like normal if/else loop. For example, if (intent == 'welcome') { goForward() }. When you join 2 nodes, click on the link and on the right, you will see a link config. Change the link type to intent and the choose the intent.
+5. Now you are able to use the NLP using the Intent Links anywhere in the bot. Intent links are like normal if/else loop. For example, if (intent == 'welcome') { goForward() }. When you join 2 nodes, click on the link and on the right, you will see a link config. Change the link type to intent and the choose the intent.
 
 <img alt="intent link" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image95.png')} />
 
 <img alt="select intent" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image80.png')} />
 
 ## Adding Analytics
-Convai by itself has a Dashboard of Analytics, but you can use other chatbot analytics platform, such as Dashbot. In this section, we will use Dashbot integration to extend the Analytics in the bot. To integrate Dashbot Analytics. Check the [Dashbot Integration](/convai-studio/integrations/analytics/dashbot).
+Convai by itself has a Dashboard of Analytics, but you can use other chatbot analytics platform, such as Dashbot. In this section, we will use Dashbot integration to extend the Analytics in the bot.
 
-1. After you successfully integrated Dashbot. Go back to the bot’s graph. Go to Extension Graph via Paginator.
+1. Integrate Dashbot Analytics using the [Dashbot Integration](/convai-studio/integrations/analytics/dashbot) guide.
+
+2. After you successfully integrated Dashbot. Go back to the bot’s graph. Go to Extension Graph via Paginator.
 
   Add a Dashbot Node by Context Menu and make the graph like below
 
   <img alt="add dashbot node" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image16.png')} />
 
-2. In Dashbot under the Integration Code Section, click View Reports to go to the Dashboard.
+3. In Dashbot under the Integration Code Section, click View Reports to go to the Dashboard.
   
   <img alt="view reports" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image34.png')} />
 
   <img alt="dashboard" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image62.png')} />
 
-3. Back to Convai. Do some simple execution in the Dev Console.
+4. Back to Convai. Do some simple execution in the Dev Console.
 
   <img alt="simple execution" src={useBaseUrl('img/convai-studio/simple-bot/building-bot/image27.png')} />
 

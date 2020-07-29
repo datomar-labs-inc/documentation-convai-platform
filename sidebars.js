@@ -43,6 +43,18 @@ const goSdk =[
     "go-sdk/types"
 ];
 
+const links = [
+    "convai-studio/links/introduction",
+    "convai-studio/links/basic-link",
+    "convai-studio/links/intent-link",
+    "convai-studio/links/data-equals-link",
+    "convai-studio/links/text-link",
+    "convai-studio/links/error-link",
+    "convai-studio/links/channel-link",
+    "convai-studio/links/broadcast-type-link",
+    "convai-studio/links/priority-link"
+]
+
 const nodes = [
 	"convai-studio/nodes/introduction",
 	{
@@ -220,7 +232,12 @@ const convaiStudio = [
 		type: "category",
 		label: "Nodes",
 		items: nodes,
-	},
+    },
+    {
+        type: "category",
+        label: "Links",
+        items: links,
+    },
 	{
 		type: "category",
 		label: "Integrations",
