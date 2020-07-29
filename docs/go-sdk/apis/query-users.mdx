@@ -5,9 +5,9 @@ sidebar_label: Query Users
 ---
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-Use the ```QueryUsers()``` method to query users from Convai bot. It returns a response and an error (error will not be nil if there's an error). The response is a **[UserQueryResults]()** type. It contains an array of type **[SuperUser]()** and the count of elements.
+Use the ```QueryUsers()``` method to query users from Convai bot. It returns a response and an error (error will not be nil if there's an error). The response is a **[UserQueryResult](../types#userqueryresult)** type. It contains an array of type **[SuperUser](../types#superuser)** and the count of elements.
 
-The ```QueryUsers()``` method expects an input of **[UserQuery]()** type. You can use **[UserQueryBuilder](/go-sdk/types/user-query-builder)** to build ```UserQuery``` input.
+The ```QueryUsers()``` method expects an input of **[UserQuery](../types#userquery)** type. You can use **[UserQueryBuilder](/go-sdk/methods/user-query-builder)** to build ```UserQuery``` input.
 
 #### Example Code
 

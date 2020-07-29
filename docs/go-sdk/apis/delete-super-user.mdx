@@ -4,7 +4,7 @@ title: Delete Super User
 sidebar_label: Delete Super User
 ---
 
-The ```DeleteSuperUser()``` method is used to delete a channel of a super user. It returns a response and an error (error will not be nil if there's an error). The response is a **[SuperUser]()** type that is the super user deleted.
+The ```DeleteSuperUser()``` method is used to delete a channel of a super user. It returns a response and an error (error will not be nil if there's an error). The response is a **[SuperUser](../types#superuser)** type that is the super user deleted.
 
 The ```DeleteSuperUser()``` method expects the ID of super user which is a UUID type. You can get the super user ID in ```Users > Click on the user > find the super user id above User Data section on the right```. Parse the string value to UUID by using ```uuid.FromStringOrNil```.
 

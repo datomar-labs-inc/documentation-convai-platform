@@ -22,7 +22,10 @@ const goSdk =[
             "go-sdk/apis/query-executions",
             "go-sdk/apis/update-session",
             "go-sdk/apis/delete-session",
-            "go-sdk/apis/broadcast"
+            "go-sdk/apis/broadcast",
+            "go-sdk/apis/create-channel-user",
+            "go-sdk/apis/create-super-user",
+            "go-sdk/apis/trigger"
         ]
     },
     {
@@ -31,17 +34,13 @@ const goSdk =[
         items:[
             "go-sdk/methods/user-query-builder",
             "go-sdk/methods/execution-matcher",
-            "go-sdk/methods/context-modifier"
+            "go-sdk/methods/context-modifier",
+            "go-sdk/methods/flaggable",
+            "go-sdk/methods/request-context",
+            "go-sdk/methods/webhook"
         ]        
     },
-    "go-sdk/types",
-    {
-        type: "category",
-        label: "Constants",
-        items:[
-            "go-sdk/setup"
-        ]
-    }
+    "go-sdk/types"
 ];
 
 const nodes = [

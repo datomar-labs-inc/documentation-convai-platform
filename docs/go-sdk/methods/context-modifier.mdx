@@ -4,9 +4,9 @@ title: Context Modifier
 sidebar_label: Context Modifier
 ---
 
-Context Modifier is used to change the context of the conversation. We can use its methods to set or delete variables in different scope of the conversation. For example, you can set variables that will be used in the current execution only like a message or if you want to save some data for the session, like ```liveChatStartedAt```, you can save that in the session scope data.
+Context Modifier is used to change the context of the conversation, it is usually used in the **[Broadcast](../apis/broadcast)** API. We can use its methods to set or delete variables in different scope of the conversation. For example, you can set variables that will be used in the current execution only like a message or if you want to save some data for the session, like ```liveChatStartedAt```, you can save that in the session scope data.
 
-Refer to **[ContextModifier]()** for more type information.
+Refer to **[ContextModifier](../types#contextmodifier)** for more type information.
 
 ## Example
 ```go
@@ -20,25 +20,152 @@ cm.SetUser("numberOfAgents", 12)
 
 | Method | Description |
 |--------|-------------|
-| [NewContextModifier]()() \*ContextModifier | Constructor of the **ContextModifier** type |
-| [MergeContextModifiers]()(a, b \*ContextModifier) \*ContextModifier | Creating a new ContextModifier consisting of parts of a and b |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
+| [NewContextModifier](#newcontextmodifier-contextmodifier)() \*ContextModifier | Constructor of the **ContextModifier** type |
+| (cm \*ContextModifier) [Error](#cm-contextmodifier-errorerr-execerror-contextmodifier)(err ExecError) \*ContextModifier | Append an error in the Context Modifier |
+| (cm \*ContextModifier) [SetSession](#cm-contextmodifier-setsessionkey-string-data-interface-contextmodifier)(key string, data interface{}) \*ContextModifier | Set a session scope variable |
+| (cm \*ContextModifier) [Set](#cm-contextmodifier-setkey-string-data-interface-contextmodifier)(key string, data interface{}) \*ContextModifier | Set a context/execution scope variable |
+| (cm \*ContextModifier) [SetUser](#cm-contextmodifier-setuserkey-string-data-interface-contextmodifier)(key string, data interface{}) \*ContextModifier | Set a user scope variable |
+| (cm \*ContextModifier) [SetEnvironment](#cm-contextmodifier-setenvironmentkey-string-data-interface-contextmodifier)(key string, data interface{}) | Set an environment variable |
+| (cm \*ContextModifier) [DeleteSession](#cm-contextmodifier-deletesessionkey-string-contextmodifier)(key string) \*ContextModifier | Delete a session scope variable |
+| (cm \*ContextModifier) [Delete](#cm-contextmodifier-deletekey-string-contextmodifier)(key string) \*ContextModifier | Delete an execution scoped variable |
+| (cm \*ContextModifier) [DeleteUser](#cm-contextmodifier-deleteuserkey-string-contextmodifier)(key string) \*ContextModifier |  Delete a user scope variable |
+| (cm \*ContextModifier) [DeleteEnvironment](#cm-contextmodifier-deleteenvironmentkey-string-contextmodifier)(key string) \*ContextModifier | Delete an environment variable |
+| (cm \*ContextModifier) [ClearSession](#cm-contextmodifier-clearsession-contextmodifier)() \*ContextModifier |  Clear all session scope variables |
+| (cm \*ContextModifier) [ClearUser](#cm-contextmodifier-clearuser-contextmodifier)() \*ContextModifier | Clear all execution scoped variables |
+| (cm \*ContextModifier) [ClearEnvironment](#cm-contextmodifier-clearenvironment-contextmodifier)() \*ContextModifier | Clear all user scope variables |
+| (cm \*ContextModifier) [ClearContext](#cm-contextmodifier-clearcontext-contextmodifier)() \*ContextModifier | Clear all environment variables |
+| (cm \*ContextModifier) [LogTrace](#cm-contextmodifier-logtracemessage-string-contextmodifier)(message string) | Append Log of trace message in the Context Modifier|
+| (cm \*ContextModifier) [LogDebug](#cm-contextmodifier-logdebugmessage-string-contextmodifier)(message string) | Append Log of debug message in the Context Modifier |
+| (cm \*ContextModifier) [LogInfo](#cm-contextmodifier-loginfomessage-string-contextmodifier)(message string) | Append Log of info message in the Context Modifier |
+| (cm \*ContextModifier) [LogWarning](#cm-contextmodifier-logwarningmessage-string-contextmodifier)(message string) | Append Log of warning message in the Context Modifier |
+| (cm \*ContextModifier) [LogError](#cm-contextmodifier-logerrormessage-string-contextmodifier)(message string) | Append Log of error message in the Context Modifier |
 
 
 ## Methods
+
+#### ```NewContextModifier() *ContextModifier```
+The NewContextModifier() is the constructor of **[ContextModifer]()** type.
+
+
+
+#### ```(cm *ContextModifier) Error(err ExecError) *ContextModifier```
+The Error() method is used to append an error in the Context Modifier.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| err | **[ExecError]()** | ExecError type |
+
+#### ```(cm *ContextModifier) SetSession(key string, data interface{}) *ContextModifier```
+The SetSession() method is used to setup a variable that can be used in the current session of the user.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+| data | interface{} | value of the data |
+
+#### ```(cm *ContextModifier) Set(key string, data interface{}) *ContextModifier```
+The Set() method is used to setup a variable that will only be used in the current execution of the bot.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+| data | interface{} | value of the data |
+
+#### ```(cm *ContextModifier) SetUser(key string, data interface{}) *ContextModifier```
+The SetUser() method is used to add a key-value pair in the user data.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+| data | interface{} | value of the data |
+
+#### ```(cm *ContextModifier) SetEnvironment(key string, data interface{}) *ContextModifier```
+The SetEnvironment() method is used to setup an environment variable for the bot.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+| data | interface{} | value of the data |
+
+#### ```(cm *ContextModifier) DeleteSession(key string) *ContextModifier```
+The DeleteSession() method is used to delete a session scoped variable.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+
+#### ```(cm *ContextModifier) Delete(key string) *ContextModifier```
+The Delete() method is used to delete a current execution scope variable.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+
+#### ```(cm *ContextModifier) DeleteUser(key string) *ContextModifier```
+The DeleteUser() method is used to delete a user's key-value pair.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+
+#### ```(cm *ContextModifier) DeleteEnvironment(key string) *ContextModifier```
+The DeleteEnvironment() method is used to delete an environment variable.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| key | string | key of the variable |
+
+#### ```(cm *ContextModifier) ClearSession() *ContextModifier```
+The ClearSession() method is used to delete all the session scope variables.
+
+
+
+#### ```(cm *ContextModifier) ClearUser() *ContextModifier```
+The ClearUser() method is used to delete all the user data.
+
+
+
+#### ```(cm *ContextModifier) ClearEnvironment() *ContextModifier```
+The ClearEnvironment() method is used to delete all the environment variables.
+
+
+
+#### ```(cm *ContextModifier) ClearContext() *ContextModifier```
+The ClearContext() method is used to delete all the execution scope variables.
+
+
+
+#### ```(cm *ContextModifier) LogTrace(message string) *ContextModifier```
+The LogTrace() method is used to append a log of trace message in the Context Modifier.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| message | string | message of the log |
+
+#### ```(cm *ContextModifier) LogDebug(message string) *ContextModifier```
+The LogTrace() method is used to append a log of debug message in the Context Modifier.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| message | string | message of the log |
+
+#### ```(cm *ContextModifier) LogInfo(message string) *ContextModifier```
+The LogTrace() method is used to append a log of info message in the Context Modifier.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| message | string | message of the log |
+
+#### ```(cm *ContextModifier) LogWarning(message string) *ContextModifier```
+The LogTrace() method is used to append a log of warning message in the Context Modifier.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| message | string | message of the log |
+
+#### ```(cm *ContextModifier) LogError(message string) *ContextModifier```
+The LogTrace() method is used to append a log of error message in the Context Modifier.
+
+| Name   | Type   |Description               |
+| ------ | ------ |------------------------- |
+| message | string | message of the log |

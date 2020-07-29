@@ -5,7 +5,7 @@ sidebar_label: Merge Users
 ---
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-Use ```MergeUsers()``` method to merge different super users into a single super user. It returns a response and an error (error will not be nil if there's an error). The response is a **[SuperUser]()** type.
+Use ```MergeUsers()``` method to merge different super users into a single super user. It returns a response and an error (error will not be nil if there's an error). The response is a **[SuperUser](../types#superuser)** type.
 
 :::warning Important
 _**By default, ```MergeUsers()``` will add the key value pairs of both the users in a single super user. If there is a conflict in the key for both the users, the user which was created first will hold priority. This can be overwritten in the request.**_

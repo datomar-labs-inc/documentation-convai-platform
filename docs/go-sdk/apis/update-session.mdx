@@ -4,9 +4,9 @@ title: Update Session
 sidebar_label: Update Session
 ---
 
-The ```UpdateSession()``` method is used to update the session data of a session. It returns a response and an error (error will not be nil if there's an error). The response is a **[Session]()** type that is the session updated.
+The ```UpdateSession()``` method is used to update the session data of a session. It returns a response and an error (error will not be nil if there's an error). The response is a **[Session](../types#session)** type that is the session updated.
 
-The ```UpdateSession()``` method expects the ID of channel user which is a string type and the input which is **[```UpdateUserDataInput```]()** type. You can get the channel user ID in ```Users > Click on the user > find the channel user id above Session Data section on the right```.
+The ```UpdateSession()``` method expects the ID of channel user which is a string type and the input which is **[UpdateUserDataInput](../types#updateuserdatainput)** type. You can get the channel user ID in ```Users > Click on the user > find the channel user id above Session Data section on the right```.
 
 #### Current Session
 ```json
@@ -14,7 +14,7 @@ The ```UpdateSession()``` method expects the ID of channel user which is a strin
     //hide for brief
     "session": {
         "data": {
-        "random": "randomData"
+          "random": "randomData"
         },
         "stack": {
         "frames": [
