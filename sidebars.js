@@ -223,6 +223,7 @@ const simpleBot = [
 
 const convaiStudio = [
 	"convai-studio/introduction",
+	"convai-studio/concepts",
 	{
 		type: "category",
 		label: "Create a Simple Bot",
