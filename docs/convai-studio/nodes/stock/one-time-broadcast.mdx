@@ -10,11 +10,14 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 The one time broadcast is used to send an instant message to a user on any channel irrespective of the channel they are currently working on. It will only work if the channels are connected for the user.
 
-For example, if the user is currently connected on Facebook Messenger and you want to send a verification code via SMS, add a one time broadcast node, select an SMS channel (like Twilio SMS) and then connect it to the flow you want to send.
+## Example
+If the user is currently connected on Facebook Messenger and you want to send a verification code via SMS, add a one time broadcast node, select Twilio SMS Channel, set up the broadcast type.
 
-Typically, a one time broadcast is followed by a response node.
+<img alt="One Time Broadcast Node setup" src={useBaseUrl('img/nodes/stock/one-time-broadcast/image1.png')} />
 
-<img alt="One Time Broadcast Node explained" src={useBaseUrl('img/nodes/stock/one-time-broadcast/1.png')} />
+Then connect a Repsonse Node which is the verification code to the Trigger System Node via **[Broadcast Type Link](/convai-studio/links/broadcast-type-link)**, set up the broadcast type in the link's configuration. So once the bot's flow goes to the One Time Broadcast Node, it broadcasts a message with the broadcast type you set previously to the Twilio SMS Channel. The Trigger System Node receives the specific broadcasted type message. In Twilio SMS Channel the flow go to the Repsonse Node via **[Broadcast Type Link](/convai-studio/links/broadcast-type-link)**.
+
+<img alt="One Time Broadcast Node explained" src={useBaseUrl('img/nodes/stock/one-time-broadcast/image2.png')} />
 
 ## Configuration
 

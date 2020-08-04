@@ -1,0 +1,31 @@
+---
+id: luis
+title: LUIS Integration
+sidebar_label: LUIS
+description: How to connect LUIS with Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+This document outlines the process to integrate LUIS with Convai Studio.
+
+:::tip Note
+_**NOTE: If you are doing a new integration, add it into the Development environment before any other environments.**_
+:::
+
+1. Login to **[luis.ai](https://www.luis.ai/)**, create an new app.
+<img alt="create new app" src={useBaseUrl('img/convai-studio/integrations/nlp/luis/image1.png')} />
+
+2. Go to User Settings, copy the Primary Key.
+<img alt="copy primary key" src={useBaseUrl('img/convai-studio/integrations/nlp/luis/image2.png')} />
+
+3. Paste the Primary Key in Prediction Key and Authorizing Key field. Select Prediction Region and Authorizing Region
+<img alt="paste keys" src={useBaseUrl('img/convai-studio/integrations/nlp/luis/image3.png')} />
+
+4. Select the App
+<img alt="select app" src={useBaseUrl('img/convai-studio/integrations/nlp/luis/image4.png')} />
+
+5. If your LUIS App is not published, make sure you check Use Staging or the LUIS integration will not work.
+<img alt="use staging" src={useBaseUrl('img/convai-studio/integrations/nlp/luis/image5.png')} />
+
+6. Click on Save. LUIS is now connected to Convai. You can use LUIS as the **[NLP Node](/convai-studio/nodes/nlp/nlp)**.

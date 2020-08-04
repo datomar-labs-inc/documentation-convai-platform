@@ -52,7 +52,9 @@ const links = [
     "convai-studio/links/error-link",
     "convai-studio/links/channel-link",
     "convai-studio/links/broadcast-type-link",
-    "convai-studio/links/priority-link"
+    "convai-studio/links/priority-link",
+    "convai-studio/links/slack-message-subtype-link",
+    "convai-studio/links/twilio-no-speech-link"
 ]
 
 const nodes = [
@@ -72,7 +74,9 @@ const nodes = [
 			"convai-studio/nodes/stock/set-data",
 			"convai-studio/nodes/stock/webhook",
 		],
-	},
+    },
+    /*
+    * Disabled
 	{
 		type: "category",
 		label: "Knowledge AI",
@@ -80,7 +84,8 @@ const nodes = [
 			"convai-studio/nodes/knowledge-ai/knowledge",
 			"convai-studio/nodes/knowledge-ai/knowledge-feedback",
 		],
-	},
+    },
+    */
 	{
 		type: "category",
 		label: "NLP",
@@ -102,12 +107,27 @@ const nodes = [
 			"convai-studio/nodes/twilio/twilio-dial",
 			"convai-studio/nodes/twilio/twilio-twiml",
 		],
-	},
+    },
+    {
+        type: "category",
+		label: "Slack",
+		items: [
+			"convai-studio/nodes/slack/slack-action"
+		],
+    },
 	{
 		type: "category",
 		label: "Analytics",
-		items: ["convai-studio/nodes/analytics/dashbot"],
-	},
+		items: [
+            "convai-studio/nodes/analytics/dashbot",
+            "convai-studio/nodes/analytics/chatbase",
+        ],
+    },
+    {
+        type: "category",
+        label: "Email",
+        items: ["convai-studio/nodes/email/mailgun"],
+    }
 ];
 
 const nodeSdk = [
@@ -190,10 +210,18 @@ const analyticsIntegrations = [
 const channelIntegrations = [
 	"convai-studio/integrations/channels/facebook",
 	"convai-studio/integrations/channels/slack",
-	"convai-studio/integrations/channels/twilio",
+    "convai-studio/integrations/channels/twilio",
+    "convai-studio/integrations/channels/ms-teams",
 ];
 
-const nlpIntegrations = ["convai-studio/integrations/nlp/dialogflow"];
+const nlpIntegrations = [
+    "convai-studio/integrations/nlp/dialogflow",
+    "convai-studio/integrations/nlp/luis",
+];
+
+const emailIntegrations = ["convai-studio/integrations/email/mailgun"]
+
+const webchatIntegrations = ["convai-studio/integrations/webchat/webcaht"]
 
 const integrations = [
 	{
@@ -210,7 +238,17 @@ const integrations = [
 		type: "category",
 		label: "NLP",
 		items: nlpIntegrations,
-	},
+    },
+    {
+		type: "category",
+		label: "Email",
+		items: emailIntegrations,
+    },
+    {
+        type: "category",
+		label: "Webchat",
+		items: webchatIntegrations,
+    }
 ];
 
 const simpleBot = [
@@ -223,6 +261,7 @@ const simpleBot = [
 
 const convaiStudio = [
 	"convai-studio/introduction",
+	"convai-studio/concepts",
 	{
 		type: "category",
 		label: "Create a Simple Bot",
@@ -249,6 +288,6 @@ module.exports = {
 	someSidebar: {
 		"Convai Studio": convaiStudio,
         "NodeJs SDK": nodeSdk,
-        "GO SDK": goSdk,
+        "Go SDK": goSdk,
 	},
 };

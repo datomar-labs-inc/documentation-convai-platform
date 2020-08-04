@@ -10,19 +10,20 @@ import TabItem from '@theme/TabItem';
 
 ## Usage
 
-The webhook node is used to send a POST request to a URL. The webhook node sends the current execution data along with the user data and expects back a [ContextModifier](../../node-sdk/classes/context-modifier.mdx) Object to do any changes in the context.
+The webhook node is used to send a POST request to a URL. The webhook node sends the current execution data along with the user data and expects back a [ContextModifier](../../node-sdk/classes/context-modifier.mdx) Object to do any changes in the context. Usually we use the custom Webhook along with **Convai [NodeJS SDK](/node-sdk/introduction)/ [Go SDK](/go-sdk/introduction)**
 
 ## Steps
 
-1. Setup your webhook url. You can directly input it in the webhook node but I have added it in the extensions graph in case I need to change it. You can also add it as an environment variable and then access it using ```{{ e "webhookUrl" }}```.
-<img alt="Setup Webhook" src={useBaseUrl('img/nodes/stock/webhook/1.png')} />
+1. Setup your webhook url. You can directly input it in the webhook node. You can add it as an environment variable and then access it using ```{{env.WEBHOOK_URL}}```.
+<img alt="Setup Webhook" src={useBaseUrl('img/nodes/stock/webhook/image1.png')} />
 
-2. Setup your webhook node. Here I am accessing my webhookUrl using ```{{ d "webhookUrl" }}```
-<img alt="Setup Webhook" src={useBaseUrl('img/nodes/stock/webhook/2.png')} />
+2. Setup your webhook node. The Value Field is **[Configuration Templator](/convai-studio/concepts#configuration-templator)**. So here I am accessing my webhookUrl using ```{{env.WEBHOOK_URL}}```
+<img alt="Setup Webhook" src={useBaseUrl('img/nodes/stock/webhook/image2.png')} />
 
 3. Send the context change back in the response. The response needs to be in a certain format as shown in the following code. If you don't want to do any code change, you can just send an empty object back as the response.
 
 
+## NodeJS Example
 <Tabs
   defaultValue="withoutSdk"
   values={[
@@ -32,7 +33,7 @@ The webhook node is used to send a POST request to a URL. The webhook node sends
 }>
 <TabItem value="withoutSdk">
 
-You can read more about [Change object](../../node-sdk/models/context-change.mdx), [Log Entry](../../node-sdk/models/log-entry.mdx) and [Error object](../../node-sdk/models/error.mdx)
+You can read more about **[Change object](/node-sdk/models/context-change)**, **[Log Entry](/node-sdk/models/log-entry)** and **[Error object](/node-sdk/models/error)**
 ```js
 // In our example, we are setting a firstName and lastName for the user as John
 // and Snow respectively. Optionally, we are also logging in Convai that we
@@ -90,3 +91,60 @@ app.post('/verifyByEmail', (req, res, next) => {
 
 </TabItem>
 </Tabs>
+
+## Go Example
+Refer to the Go SDK **[Webhook](/go-sdk/methods/webhook)** page for more information. We use **[Gin Web Framework](https://github.com/gin-gonic/gin#gin-web-framework)** in this example as the HTTP web framework.
+```go
+// In our example, we are setting a firstName and lastName for the user as John
+// and Snow respectively. Optionally, we are also logging in Convai that we
+// have changed the firstName
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+
+	"github.com/datomar-labs-inc/convai-sdk-go"
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+    r := gin.Default()
+    wm := convai.NewWebhookManager()
+    
+    wm.Handle("verifyByEmail", func(name string, ctx *convai.RequestContext, cm *convai.ContextModifier) error {
+		cm.SetUser("firstName","John")
+		cm.SetUser("lastName","Snow")
+		cm.LogInfo("Change name to John Snow")
+		return nil
+	})
+	
+	wm.Catch(func(name string, ctx *convai.RequestContext, cm *convai.ContextModifier) error {
+		fmt.Println("UNHANDLED", name)
+		return nil
+	})
+
+	r.POST("/", func(c *gin.Context) {
+		var req convai.WebhookRequest
+
+		err := c.ShouldBindJSON(&req)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, err)
+			return
+		}
+
+		cm, err:= wm.Process(&req)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, cm)
+    })
+    
+    port := "8081"
+    r.Run(fmt.Sprintf(":%s", port))
+}
+```
