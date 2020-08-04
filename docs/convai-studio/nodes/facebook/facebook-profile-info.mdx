@@ -10,15 +10,31 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 Facebook profile info node is used to get the user profile information from facebook. This only works if the user is either connected to the bot on the Facebook channel or has sent atleast 1 message to the bot in the past.
 
-The node saves the profile information in the current execution scope. So we can access the following information:
+The node saves the profile information in the current execution scope. 
 
-- First Name - ```{{d "fbProfile.firstName" }}```
-- Last Name - ```{{d "fbProfile.lastName" }}```
-- Gender - ```{{d "fbProfile.gender" }}```
-- Locale - ```{{d "fbProfile.locale" }}```
-- Name - ```{{d "fbProfile.name" }}```
-- Profile picture - ```{{d "fbProfile.profilePicURL" }}```
-- Timezone - ```{{d "fbProfile.timezone" }}```
+```json
+{
+    "fbProfile" : {
+        "firstName": "firstNmae",
+        "lastName" : "lastName",
+        "gender": "gender",
+        "locale": "locale",
+        "name": "name",
+        "profilePicURL": "url",
+        "timezone": "0"
+    }
+}
+```
+
+So we can access the following information:
+
+- First Name - ```{{data.fbProfile.firstName}}```
+- Last Name - ```{{data.fbProfile.lastName}}```
+- Gender - ```{{data.fbProfile.gender}}```
+- Locale - ```{{data.fbProfile.locale}}```
+- Name - ```{{data.fbProfile.name}}```
+- Profile picture - ```{{data.fbProfile.profilePicURL}}```
+- Timezone - ```{{data.fbProfile.timezone}}```
 
 ## Configuration
 

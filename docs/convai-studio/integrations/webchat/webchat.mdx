@@ -1,0 +1,37 @@
+---
+id: webcaht
+title: Webchat
+sidebar_label: Webchat
+description: How to connect Convai Studio to Webchat
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+This document outlines the process to integrate Convai Studio to Webchat.
+
+1. Copy the Webchat Embed Code in Settings > Your Environment.
+<img alt="copy code" src={useBaseUrl('img/convai-studio/integrations/webchat/image1.png')} />
+
+2. Paste the the code in your page's HTML script tag or its corresponding javascript file.
+    ```html
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script>
+            const ENVIRONMENT_ID = "8f3c223a-2d4c-455e-b168-ab8f7e0ac362";
+
+            window.convaiWebChatSettings = {
+                environmentId: ENVIRONMENT_ID,
+                devAccountId: "81085beb-a6fd-48dd-ad09-522da3b6b251",
+                baseURL: "https://api.convai.dev",
+                defaultBotName: 'Bot',
+                headerText: 'Convai bot'
+            };
+
+            if("function"!=typeof ConvaiWebChat){const t=document.createElement("script");t.src="https://api.convai.studio/webchat/"+ENVIRONMENT_ID,t.type="text/javascript",t.async=!0;const e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}
+        </script>
+    </head>
+    ```
+
+3. save and run your server, access the page. you will have a webchat to the bot in Convai on your page.
+<img alt="webchat on page" src={useBaseUrl('img/convai-studio/integrations/webchat/image2.png')} />

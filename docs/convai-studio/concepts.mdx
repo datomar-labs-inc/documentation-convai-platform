@@ -3,6 +3,70 @@ id: concepts
 title: Concepts
 sidebar_label: Concepts
 ---
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Flow
-When bot executes, it goes through the flow.
+When bot executes, it starts from the extension graph through the nodes and links in it. Then go to the main graph through its nodes and links. If there are Modules, go to the Module's Graph, go through nodes and links in the module and then back to the main graph.
+
+In pesudo-code:
+```
+while(extension-graph){
+    main-graph(){
+        if meet-a-module {
+            go-to-module-graph () {
+                go-through-nodes-and-links()
+            }
+        }
+        go-through-nodes-and-links()
+    }
+}
+```
+
+## Data Scope
+In Convai, we store data at four different scope levels:
+
+- Execution: Execution data is stored for a single execution. This data is tracked from the moment the request enters Convai till it leaves. If you are using an input node to wait for user data, note that all the execution data that was saved before the input node will not be available once the user provides their input. To reference/use execution data in any node, refer to the documentation of that node.
+
+- Session: Session data is stored for a single session. This data is tracked from the time a user interacts with the bot until the session expires. Session data is valid for 24 hours by default but the settings can be changed under the [environment settings](#environments). To reference/use session data in any node, refer to the documentation of that node.
+
+- User: User data is considered as persistent data, it exists as long as the user exists. To reference/use user data in any node, refer to the documentation of that node.
+
+- Module: Module data is only accessible in a module. This data is like setting up variables that can be used later in the module. The module data is initialized when the instance of the module is initialized. To reference/use module data in any node, refer to the documentation of that node.
+
+## Configuration Templator
+The Configuration Templator exists nearly every where in node's configurations.
+
+When you see such configuration editor, it is a Configuration Templator:
+<img alt="configuration templator" src={useBaseUrl('img/convai-studio/concepts/image1.png')} />
+
+In Configuration Templator, you can access bot's **[Context Object](/convai-studio/nodes/stock/script#context-object-structure)** by using double curly braces ```{{statement}}```
+
+So using ```{{id}}``` is just like access ```ctx.id```
+
+Here is a list of frequent used access statements:
+- To access execution scope data: ```{{data.key}}```
+- To access session scope data: ```{{session.data.key}}```
+- To access user scope data: ```{{user.data.key}}```
+- To access user input text: ```{{text}}```
+
+## Environment
+Most of the bot settings are configurable at an environment level. Consider an environment as a Github branch and the bot as a Github repository. Just like the build of a project is dependent on the branch, the build of a bot is dependent on the environment.
+
+## Keyboard Shortcuts
+- Copy: ```Ctrl+C``` or ```CMD+C```
+- Paste: ```Ctrl+V``` or ```CMD+V```
+- Delte: ```Ctrl+D``` or ```CMD+D```
+- Undo: ```Ctrl+Z``` or ```CMD+Z```
+- Multi-select: ```Shift+Left Click```
+
+## Deployment
+For best practices, we should use versioning in the bot so in case you update the logic for the graph, it doesn’t affect the production bot. Check **[Deployment Documentation](/convai-studio/simple-bot/deployment)**
+
+## Analytics
+Convai Bot has a Dashboard which shows the analytics of this bot.
+
+## Key Interaction
+Enable Key Interaction on some nodes will record the Key Interaction of user set name in the Dashboard analytics.
+
+## Testing
+User can record a flow test in the Dev Console to have an automated test.

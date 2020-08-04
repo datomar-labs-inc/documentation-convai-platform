@@ -1,0 +1,77 @@
+---
+id: slack-action
+title: Slack Action Node
+sidebar_label: Slack Action Node
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+You can use the Slack Action Node to Get User Info or Add Reaction to the User Message.
+
+## Get User Info
+When Get User Info is executed. Slack returns a **[User Object](https://api.slack.com/types/user)** which is stored in the Execution Data **slackUserInfo**.
+
+You access the Slack User Object by using ```{{data.slackUserInfo.[slack user object key]}}```
+
+#### Example Slack User Object
+```json
+{
+    "id": "W012A3CDE",
+    "team_id": "T012AB3C4",
+    "name": "spengler",
+    "deleted": false,
+    "color": "9f69e7",
+    "real_name": "Egon Spengler",
+    "tz": "America/New_York",
+    "tz_label": "Eastern Daylight Time",
+    "tz_offset": -14400,
+    "profile": {
+        "title": "",
+        "phone": "",
+        "skype": "",
+        "real_name": "Egon Spengler",
+        "real_name_normalized": "Egon Spengler",
+        "display_name": "spengler",
+        "display_name_normalized": "spengler",
+        "status_text": "Print is dead",
+        "status_emoji": ":books:",
+        "status_expiration": 1502138999,
+        "avatar_hash": "ge3b51ca72de",
+        "first_name": "Matthew",
+        "last_name": "Johnston",
+        "email": "spengler@ghostbusters.example.com",
+        "image_original": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+        "image_24": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+        "image_32": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+        "image_48": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+        "image_72": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+        "image_192": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+        "image_512": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+        "team": "T012AB3C4"
+    },
+    "is_admin": true,
+    "is_owner": false,
+    "is_primary_owner": false,
+    "is_restricted": false,
+    "is_ultra_restricted": false,
+    "is_bot": false,
+    "is_stranger": false,
+    "updated": 1502138686,
+    "is_app_user": false,
+    "is_invited_user": false,
+    "has_2fa": false,
+    "locale": "en-US"
+}
+```
+
+
+
+## Add Reaction
+This Action adds a reaction to the message sent by user from Slack.
+
+## Configuration
+| Name          | Required |                      Description                                     |
+| ------------- | -------- | -------------------------------------------------------------------- |
+| Title         | Required | The title of the node                                                |
+| Action Select | Required | Select Get User Info or Add Reaction |
+| Reaction Select |  | When Add reaction is selected, this configuration allows the user to select reaction emoji of the reaction |

@@ -1,0 +1,31 @@
+---
+id: mailgun
+title: Mailgun
+sidebar_label: Mailgun
+description: How to connect Mailgun with Convai Studio
+---
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+This document outlines the process to integrate Mailgun with Convai Studio.
+
+:::tip Note
+_**NOTE: If you are doing a new integration, add it into the Development environment before any other environments.**_
+:::
+
+1. Login to your mailgun. Go to Sending > Overview. Click on the "Select" Button in the API section
+
+    <img alt="mailgun overview" src={useBaseUrl('img/convai-studio/integrations/email/image1.png')} />
+
+2. Click on any of the Language Selections. Copy the API Key.
+
+    <img alt="copy api key" src={useBaseUrl('img/convai-studio/integrations/email/image2.png')} />
+
+3. In Convai, add the Mailgun Integration. Paste the API Key you just copied.
+
+    <img alt="paste api key to convai" src={useBaseUrl('img/convai-studio/integrations/email/image3.png')} />
+
+4. Select the domain you want to use. Click on Save.
+
+    <img alt="select domain" src={useBaseUrl('img/convai-studio/integrations/email/image4.png')} />
+
+5. Mailgun is now connected to Convai, you can use **[Mailgun Node](/convai-studio/nodes/email/mailgun)** to send emails.

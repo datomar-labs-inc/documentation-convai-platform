@@ -1,0 +1,54 @@
+---
+id: ms-teams
+title: Microsoft Teams Integration
+sidebar_label: Microsoft Teams
+description: How to connect Microsoft Teams with Convai Studio
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+This document outlines the process to integrate Microsoft Teams with Convai Studio.
+
+You can also check docs about **[Create a Bot Channel Registration in Azure portal](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-quickstart-registration?view=azure-bot-service-3.0&viewFallbackFrom=azure-bot-service-4.0)** and skip this tutorial to **[Bot Settings in Convai](#bot-settings-in-convai)**
+
+## Create a Bot Channel Registration in Azure portal
+1. Login to Azure portal
+2. Create a resource
+3. Search for “Bot Channel Registration” and Click Create
+4. In the Bot Channel Registration Page. Provide information about the bot.
+<img alt="create bot channel registration" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image1.png')} />
+
+5. For now leave the Messaging endpoint empty.
+
+## Get Microsoft App ID and App Password
+1. In resource list, click on the resource you just created
+2. In Settings page, copy the generated Microsoft App ID and Save it to a file
+3. Click the Manage link by Microsoft App ID
+<img alt="copy app id" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image4.png')} />
+
+4. In Certificates & secrets page, click New client secret button
+<img alt="new client secret" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image5.png')} />
+
+5. Add description, select expiration time, and click the Add button
+<img alt="expiration time" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image9.png')} />
+
+6. This will generate a new password for the bot. Copy and save this password to a file. This is the only time you will see this password. If the password is not saved, you need to repeat the process to create a new password for use.
+
+## Bot Settings in Convai
+1. In Settings of your bot. Click Edit to edit the environment
+<img alt="edit env" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image3.png')} />
+
+2. Add the Microsoft Teams Integration to your bot
+<img alt="add teams integration" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image2.png')} />
+
+3. Configure Microsoft Teams integration by entering the Microsoft App ID and password you saved before. Click the Validate button to generate the Messaging Endpoint. Click the Copy URL button to copy the generated Messaging endpoint. Then click Save button to save the integration configuration
+<img alt="copy app id and password" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image8.png')} />
+
+4. Paste the generated Messaging endpoint in your Azure resource and save it.
+<img alt="paste endpoint" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image6.png')} />
+
+## Test the bot in Teams
+1. In the Azure resource you created, go to Channels page. Under Add a featured Channel, click the Teams button to create Teams Channel.
+
+2. Save it and go back to Channels page. Click on the Teams Channel, you will be directed to the bot in Teams Desktop App or Browser App.
+<img alt="connect to channel" src={useBaseUrl('img/convai-studio/integrations/channels/ms-teams/image7.png')} />

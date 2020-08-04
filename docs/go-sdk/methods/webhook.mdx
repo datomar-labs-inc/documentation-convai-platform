@@ -4,4 +4,20 @@ title: Webhook
 sidebar_label: Webhook
 ---
 
-#### Coming soon...
+The ```Webhook``` is used to work together with **[Webhook Node](/convai-studio/nodes/stock/webhook)** to do operations or modifications in the bot during execution.
+
+## Methods
+
+#### NewWebhookManager() *WebhookManager
+Constructor of a new **[WebhookManager](../types#webhookmanager)**
+
+#### (w *WebhookManager) Handle(name string, handler WebhookHandler)
+Registers a **[WebhookHandler](../types#webhookhandler)** that will be called when a webhook request is received with a matching name Field
+
+#### (w *WebhookManager) Catch(handler WebhookHandler)
+Register a **[WebhookHandler](../types#webhookhandler)** that will be called when no other handlers are matched
+
+#### (w *WebhookManager) Process(req *WebhookRequest) (*ContextModifier, error)
+Processes the **[WebhookRequest](../types#webhookrequest)**
+
+

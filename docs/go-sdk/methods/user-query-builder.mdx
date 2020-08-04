@@ -20,7 +20,7 @@ userQuery := convai.UserQueryBuilder().All()
 
 | Method | Description |
 |--------|-------------|
-| [UserQueryBuilder](#userquerybuilder-uqbuilder)() \*UQBuilder | Constructor of the **[UQBuilder]()** type |
+| [UserQueryBuilder](#userquerybuilder-uqbuilder)() \*UQBuilder | Constructor of the **[UQBuilder](../types#uqbuilder)** type |
 | (u \*UQBuilder) [All](#u-uqbuilder-all-uqbuilder)() \*UQBuilder | Set the ```UQBuilder``` to All mode |
 | (u \*UQBuilder) [Any](#u-uqbuilder-any-uqbuilder)() \*UQBuilder | Set the ```UQBuilder``` to Any mode |
 | (u \*UQBuilder) [None](#u-uqbuilder-none-uqbuilder)() \*UQBuilder | Set the ```UQBuilder``` to None mode |
@@ -44,7 +44,7 @@ _**NOTE: All the methods defined below return the latest instance of UserQueryBu
 
 #### ```UserQueryBuilder() *UQBuilder```
 
-The UserQueryBuilder() method is the constructor of the **[UQBuilder]()** type that is used to stack conditions to filter users.
+The UserQueryBuilder() method is the constructor of the **[UQBuilder](../types#uqbuilder)** type that is used to stack conditions to filter users.
 
 #### ```(u *UQBuilder) All() *UQBuilder```
 
@@ -134,4 +134,4 @@ The Limit() method is used to set the limit for the user query.
 
 #### ```(u *UQBuilder) Build() *UQBuilder```
 
-The Build() method is used to convert all the stacked conditions into a single [UserQuery]().
+The Build() method is used to convert all the stacked conditions into a single **[UserQuery](../types#userquery)**.

@@ -1,0 +1,22 @@
+---
+id: mailgun
+title: Mailgun Node
+sidebar_label: Mailgun Node
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Usage
+Mailgun Node is used to send HTML/Plain Text Email to others.
+
+<img alt="mailgun node" src={useBaseUrl('img/nodes/email/image1.png')} />
+
+## Configuration
+| Name          | Required |                      Description                                     |
+| ------------- | -------- | -------------------------------------------------------------------- |
+| Title         | Required | The title of the node                                                |
+| Send From | Required | Name of the sender |
+| Send To | Required | Email Recipient's address. If there are multiple recipients, seperate with semicolons |
+| Subject | Required | Subject of the email |
+| Contents Editor | Required | Contents of the email, by default it is HTML format |
+| Send as Plain Text |  | When this configuration is selected. The email will be send as plain text |

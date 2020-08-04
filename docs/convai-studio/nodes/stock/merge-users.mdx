@@ -16,8 +16,8 @@ Let's say a user has in the past interacted with the bot on SMS and on Facebook.
 
 1. Setup an intent in Dialogflow to capture the phone numbers. In the example, we have named it PhoneNumber. We have also used Dialogflow's PhoneNumber system entity to extract the phone number.
 
-2. Dialogflow returns the phone number in the ```phone-number``` parameter which can then be extracted using ```{{ d "phone-number" }}```
-<img alt="Merge Users node explained" src={useBaseUrl('img/nodes/stock/merge-users/1.png')} />
+2. Dialogflow returns the phone number in the ```PhoneNumber``` parameter which can then be extracted using ```{{data.PhoneNumber}}```
+<img alt="Merge Users node explained" src={useBaseUrl('img/nodes/stock/merge-users/image1.png')} />
 
 ## Configuration
 
@@ -28,4 +28,6 @@ The configuration of the node is as defined below:
 | Title         | Required | The title of the node                                                |
 | Asynchronous  |          | Determine if the message should be sent asynchronously or not        |
 | Mode          | Required | Any - One of the condition should satisfy<br></br>All - All the conditions should satisy<br></br>None - None of the conditions should satisfy|
-| Script Editor | Required | Script to extract the data for the specific channel (Ex. Phone number for Twilio SMS) |
+| Checks Field  | Required | User Scope Data to be checked                                        |
+| Check Operations| Required | Operations of the check                                            |
+| Script Editor | Required | Script to extract the data for the specific channel (Ex. Phone number for Twilio SMS) to compare to the user data|

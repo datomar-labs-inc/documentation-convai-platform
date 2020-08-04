@@ -16,5 +16,41 @@ _**NOTE: If you are doing a new integration, add it into the Development environ
 :::
 
 2. In the integration settings, click on Add Integration and select Slack. You will see something like this:
+<img alt="slack configs" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image1.png')} />
 
-Coming Soon!!!
+3. Go to **[Slack API](https://api.slack.com/apps)**, Login and create a new app
+
+4. Go to Features > OAuth & Permissions. Add Following Bot Token Scope. For more information, check **[Slack API Scopes documentation](https://api.slack.com/scopes)**
+    - app_mentions:read
+    - channels:history
+    - groups:history
+    - im:history
+
+5. Install App to workspace, allow its permissions to your workspace.
+
+6. Copy Bot User OAuth Access Token
+<img alt="copy slack token" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image2.png')} />
+
+7. Go to Settings > Basic Information. Copy Signing Secret.
+<img alt="copy signing secret" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image3.png')} />
+
+8. Paste the Bot User OAuth Access Token to Slack Token Field. And paste the Signing Secret.
+
+9. Check Only reply to text messages sent by users to allow the direct message conversion of bot and person in the workspace
+<img alt="paste token and secret" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image4.png')} />
+
+10. Don't worry about Display Name and Image URL.
+
+11. Go to Features > Event Subscriptions. Enable Events.
+<img alt="enable events" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image5.png')} />
+
+12. Copy the Slack Message Webhook in Convai
+<img alt="coopy slack message webhook" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image6.png')} />
+
+13. Paste it in the Request URL
+<img alt="paste slack message webhook" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image7.png')} />
+
+14. Under Subscribe to bot events, add ```message.im``` event. Save Changes.
+<img alt="bot events" src={useBaseUrl('img/convai-studio/integrations/channels/slack/image8.png')} />
+
+11. Click on Save in Convai's Slack Configuration, Slack is now connected to Convai. You can test the bot in Slack.
